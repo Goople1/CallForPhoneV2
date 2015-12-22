@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+	 <div class="contentpanel">
+                    <!-- content goes here... -->
+                    
+	    <div class="row">
+
+		        <div class="table-responsive">
+		                <div id="table1_wrapper" class="dataTables_wrapper no-footer">
+		                <table class="table dataTable no-footer table-hidaction table-hover" id="table1" role="grid" aria-describedby="table1_info">
+		                  <thead>
+		                         <tr role="row">
+		                            <th class="sorting_asc" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="activate to sort column ascending" style="width: 182px;">#</th>
+
+
+		                            <th class="sorting" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Empleado: activate to sort column ascending" style="width: 233px;">Realizado por</th>
+
+		                            <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Monto Venta: activate to sort column ascending" style="width: 153px;">Monto Venta</th>
+
+		                            <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Fecha: activate to sort column ascending" style="width: 110px;">Fecha </th>
+		                            <th class="sorting" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Codigo: activate to sort column ascending" style="width: 253px;"> Ver</th>
+
+		                        </tr>
+		                  </thead>
+
+
+		                  <tbody>
+
+		                    {% for  venta in  ventas %}
+
+		                        <tr class="gradeA odd" role="row">
+
+		                            <td class ="gradeA {% cycle 'odd' 'even' %}"> {{forloop.counter}}</td>
+		                            <td>{{venta.empleado.trabajador.get_full_name}}</td>
+		                            <td class = "center">{{venta.total}}</td>
+		                            <td class ="center">{{venta.fecha_emision| date:" D d M Y" }}  {{venta.fecha_emision|date:"P"}}</td>
+		                            <td class = "center">
+
+		                            	<a  class ="ventaDetalle" href ="#" data-venta ="{{venta.id}}" data-target=".bs-example-modal-lg" data-toggle="modal">ver</a>
+		                            </td>
+		                        </tr>
+
+		                    {% empty %}
+
+		                        <tr class="gradeA odd" role="row">  
+
+
+		                            <td class ="center" > No hay Ventas Registradas</td>
+		                            <td></td>
+		                            <td></td>
+		                            <td></td>
+		                            <td></td>
+		                            
+		                             
+		                        </tr>
+
+		                        
+		                    {% endfor %}
+
+		                 </tbody>
+		               </table>
+		           </div>
+		    </div>
+
+		<!-- tabla 2-->
+
+
+					
+	    </div><!-- row -->
+
+ 
+
+<div aria-hidden="true" aria-labelledby="myLargeModalLabel" role="dialog" tabindex="-1" class="modal fade bs-example-modal-lg" style="display: none;">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title">Detalle Venta</h4>
+        </div>
+        <div class="modal-body">...</div>
+      
+    </div>
+  </div>
+</div>
+
+                   
+
+
+    </div> <!-- Content Panel -->
+{% endblock content %}
+{% block javascript %}
+{%load staticfiles%}
+    <script src="{% static "static/js/csrf.js"%}"></script>
+
+<script type="text/javascript">
+
+$(".ventaDetalle").on("click" , function(){
+
+ 	console.log("me llamaron ");
+
+ 	var codigo = $(this).attr( "data-venta" );
+ 		console.log(codigo);
+	  $.ajax({
+
+              data : {'codigo' : codigo },
+              url :"/ventas/reporte/venta/detalle/",
+              type : 'GET',
+              })
+	  		  .done(function(data){
+
+               console.log(data.length);
+              	var table =  createTable();
+              	var result = []
+
+              	for( var i = 0  ;  i<data.length ; i++){
+
+              	var row = $("<tr>"+
+              		"<td>"+(i+1)+"</td>"+
+              		"<td>"+data[i].producto+"</td>"+
+              		"<td>"+data[i].tipo_precio+"</td>"+
+              		"<td>"+data[i].cantidad+"</td>"+
+              		"<td>"+data[i].precio+"</td>"+
+             		"<td>"+data[i].descripcion+"</td>"+
+	          		"<td>"+data[i].importe+"</td>"+
+              		+"</tr>");
+
+              		result.push(row)
+
+              	}
+
+              	var tbody  = $("<tbody/>");
+              	tbody.append(result);
+              	tbody.appendTo(table);
+
+
+                $('.modal-body').html("");
+      		    $('.modal-body').append(table);
+              
+               	
+
+              })
+              .fail(function(){
+                alert("fail");
+              });
+
+})
+
+
+function createTable(){
+
+	var table  = $(" <table class='table dataTable no-footer table-hidaction table-hover' id='table1' role='grid' aria-describedby='table1_info'>") ;
+	var thead = $(" <thead> <tr> <td>#</td><td>producto</td><td>tipo_precio</td><td>CANT</td><td>P.UNIT</td><td>DESCRIPCIÓN</td><<td>IMPORTE</td><tr></thead>");
+
+
+	thead.appendTo(table);
+	return table;
+
+}
+
+
+
+
+</script>
+
+	
+{% endblock javascript %}
+	

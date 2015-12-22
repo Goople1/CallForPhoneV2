@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    {% load staticfiles %}
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>JK Catalogo</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static "static/css/sucursal/bootstrapjk.min.css"%}" rel="stylesheet">
+    <style type="text/css">
+/* navbar */
+body{
+  background: #F5F5F5;
+}
+.navbar-default {
+    background-color: #49659F;
+    border-color: #49659F;
+}
+/* title */
+.navbar-default .navbar-brand {
+    color: #FFFFFF;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: #FFFFFF;
+}
+/* link */
+.navbar-default .navbar-nav > li > a {
+    color: #FFFFFF;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #FFFFFF;
+    font-weight: bold;
+}
+.navbar-default .navbar-nav > .active > a, 
+.navbar-default .navbar-nav > .active > a:hover, 
+.navbar-default .navbar-nav > .active > a:focus {
+    color: #555;
+    background-color: #E7E7E7;
+}
+.navbar-default .navbar-nav > .open > a, 
+.navbar-default .navbar-nav > .open > a:hover, 
+.navbar-default .navbar-nav > .open > a:focus {
+    color: #555;
+    background-color: #D5D5D5;
+}
+/* caret */
+.navbar-default .navbar-nav > .dropdown > a .caret {
+    border-top-color: #777;
+    border-bottom-color: #777;
+}
+.navbar-default .navbar-nav > .dropdown > a:hover .caret,
+.navbar-default .navbar-nav > .dropdown > a:focus .caret {
+    border-top-color: #333;
+    border-bottom-color: #333;
+}
+.navbar-default .navbar-nav > .open > a .caret, 
+.navbar-default .navbar-nav > .open > a:hover .caret, 
+.navbar-default .navbar-nav > .open > a:focus .caret {
+    border-top-color: #555;
+    border-bottom-color: #555;
+}
+/* mobile version */
+.navbar-default .navbar-toggle {
+    border-color: #DDD;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+    background-color: #49659F;
+}
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #CCC;
+}
+@media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+        color: #777;
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #333;
+    }
+}
+    </style>
+<!--     <link href="css/bootstrap.min.css" rel="stylesheet">
+ -->
+    <!-- Custom CSS -->
+<!--     <link href="css/round-about.css" rel="stylesheet">
+ -->
+    <link href="{% static "static/css/sucursal/round-about.css"%}" rel="stylesheet">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">JK Mobile</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#">About</a>
+                    </li>
+                    <li>
+                        <a href="#">Services</a>
+                    </li>
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Introduction Row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">JK Mobile
+                  
+                </h1>
+            </div>
+        <div class = "row">
+
+          <div class="col-lg-12">
+
+
+            <div class = "col-lg-4">
+
+              <label> Suscursal : </label>
+
+              <select  id = "cmb_sucursal"class="select2 js-cmb form-control" data-placeholder="Sucursal...">
+                                        {% if sucursales %}
+          
+                                           <option value = "0"> todas </option>
+                                              {% for sucursal in  sucursales %}
+            
+                                               <option value = "{{sucursal.id}}">{{sucursal.nombre}} - {{sucursal.codigo_puesto}}  </option>
+
+                                              {% endfor %}                              
+                                        {% else %}
+
+                                        <option > no hay Datos</option>
+                                        {% endif %}
+                </select>
+            </div>
+
+            <div class = "col-lg-4">
+              <label>Marca :</label>
+                    <select  id = "cmb_marca"class="select2 js-cmb form-control" data-placeholder="Marca......">
+                                      {% if marcas %}
+
+                                        <option value = "0"> todas </option>
+
+                                        {% for marca in marcas %}
+                                          <option value ="{{marca.id}}"> {{marca.nombre}}</option>
+                                          
+                                        {% endfor %}
+
+                                      {% else %}
+                                        <option> No Hay datos</option>
+                                        
+                                      {% endif %}
+                    </select>
+            </div>
+
+            <div class = "col-lg-4">
+              <label> Tipo Producto : </label>
+                           <select  id = "cmb_tipo"class="select2 js-cmb form-control" data-placeholder="TIPO......">
+                                        {% if tipos %}
+
+                                        <option value = "0"> todas </option>
+
+                                        {% for tipo in  tipos %}
+
+                                        <option value ="{{tipo.id}}"> {{tipo.nombre}}</option>
+                                          
+                                          
+
+                                        {% endfor %}
+
+                                      {% else %}
+
+                                        <option> No Hay datos</option>
+                                      {% endif %}
+                </select>
+            </div>
+
+
+
+          </div>
+
+
+
+
+        
+
+
+        </div>
+
+        <!-- Team Members Row -->
+        <div class="row" id = "result">
+            <div class="col-lg-12">
+                <h2 class="page-header">Nuestros Productos</h2>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Your Website 2014</p>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </footer>
+
+    </div>
+    <!-- /.container -->
+</div>
+    <!-- jQuery -->
+    <!--
+    <script src="js/jquery.js"></script>
+
+
+
+    -->
+    <script src="{% static "static/js/sucursal/jquery-1.11.1.min.js"%}"></script>
+    <script src="{% static "static/js/init.js"%}"type="text/javascript"></script>
+
+
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static "static/js/sucursal/bootstrap.min.js"%}"></script>
+
+    <script type="text/javascript">
+
+  $(".js-cmb").on("change", function(){
+
+
+    $(".item").remove();
+
+
+    var id_sucursal = $("#cmb_sucursal").val();
+    var id_marca  = $("#cmb_marca").val();
+    var id_tipo = $ ("#cmb_tipo").val();
+
+     console.log( id_sucursal,id_marca,id_tipo);
+
+
+     $.ajax({
+
+    data : {"sucursal_id":id_sucursal ,
+        "producto_id":id_marca,
+        "tipo_id": id_tipo,},
+    type:"get",
+    url : "/producto/filtrocriterio/",
+
+  
+
+  })
+  .done(function(data){
+
+    console.log("change")
+
+    console.log("arrayyy....",typeof(data))
+
+    if (data.length > 0 ) {
+
+      var result = []
+      for (var i = 0 ; i < data.length ; i ++){
+
+        console.log("data" , data[i].producto.marca.nombre);
+
+          result.push(to_show2(data[i]));
+
+      }
+
+
+      console.log("result  : ", result)
+
+      $("#result").append(result);
+
+      console.log(data);
+
+      console.log("fin : " + data.length)
+      
+    }
+
+    else {
+
+      var resp = "<div class ='item'> NO  EXISTEN COINCIDENCIAS </div>"
+
+     $("#result").append(resp);
+    }
+
+
+  })
+
+  .fail(function(data){
+
+    console.log(data);
+
+  });
+
+  });
+
+
+
+
+
+
+
+
+
+function to_show2 (data){
+
+
+  
+
+
+
+     var div_item = $("<div/>" , {"class": "col-lg-4 col-sm-6 text-center item"});
+         var img = $("<img/>"  , {"class":"img-circle img-responsive img-center" , "src" :  data.producto.imagen ,"height": "200px" , "width":"200px"});
+         img.appendTo(div_item);
+
+         var h3 = $("<h3>"+
+          "<small>"+data.producto.marca.nombre+"</small><br/>"+
+          "<small>"+data.producto.codigo+"</small><br/>"+
+          "<strong>"+data.producto.tipo_producto.nombre+"</strong>"+
+
+          "<p>"+ "<span class ='glyphicon glyphicon-home'></span> "+ data.sucursal.nombre+"</p>"+
+          "</h3>");
+
+         h3.appendTo(div_item);
+
+
+
+    return div_item;
+
+
+
+
+}
+
+
+
+
+function to_show(data){
+
+   article =  $("<article/>",{"class":"grid-item on async-photo"});
+      header = $("<header/>",{"class" : "grid-item-header"})
+        h2 = $("<h2/>" , {"class" : "grid-item-title"})
+            h2.text(data.producto.marca.nombre);
+              p = $("<p/>")
+              p.text(data.producto.codigo + "  " + data.producto.color + "  " + data.producto.tipo_producto.nombre );
+
+              p.appendTo(h2);
+            h2.appendTo(header);
+
+        header.appendTo(article);
+
+        div_multimedia = $("<div/>", { "class" : "multimedia-canvas"});
+          figure = $("<figure/>" , {"class":"image-canvas"});
+            img  = $("<img/>" , {"src" : data.producto.imagen,"height": "140px"});
+            img.appendTo(figure);
+          figure.appendTo(div_multimedia);
+      div_multimedia.appendTo(article);
+
+
+      div_content = $(" <div class='grid-item-content'>"+
+                "<p style = 'margin:0px;'>  Sucursal: "+ data.sucursal.nombre+"</p>"+ 
+                "<p style = 'margin:0px;''>  Direccion: "+ data.sucursal.direccion +" "+ data.sucursal.departamento+"</p>"+
+                //"<p>Telefono: "+ data.sucursal.telefono+"<p/>"+
+                //"<p>Cel: "+ data.sucursal.celular+"<p/>"+
+
+               " <p>Stock"+
+               "<span class='grid-item-price atm-equipo-precio' >"+
+                    data.stock+" </span></p></div>");
+
+
+      div_content.appendTo(article);
+
+
+
+
+    return article;
+}
+
+
+  </script>
+
+
+</body>
+
+</html>

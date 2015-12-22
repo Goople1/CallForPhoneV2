@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+
+{% block sucursalname %}
+	{{sucursal.nombre}}	
+{% endblock sucursalname %}
+
+{% block sucursal %}
+    {{sucursal.nombre}}  
+{% endblock sucursal %}
+
+{% block sucursalPageHeader %}
+
+    {{sucursal.nombre}}  
+    
+{% endblock sucursalPageHeader %}
+
+
+{% block content %}
+
+
+    <div class="row">
+
+
+    	
+
+
+<!-- tabla 2 -->
+
+        <div class="table-responsive">
+                <div id="table1_wrapper" class="dataTables_wrapper no-footer">
+                <table class="table dataTable no-footer table-hidaction table-hover" id="table1" role="grid" aria-describedby="table1_info">
+                  <thead>
+                         <tr role="row">
+                            <th class="sorting_asc" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="activate to sort column ascending" >#</th>
+
+                            <th class="sorting" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="TIPO: activate to sort column ascending" >TIPO</th>
+
+                            <th class="sorting" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="MARCA: activate to sort column ascending" >MARCA</th>
+
+                            <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Modelo Venta: activate to sort column ascending" >Modelo</th>
+
+                            <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="COLOR: activate to sort column ascending" >COLOR </th>
+
+
+
+                            <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="STOCK: activate to sort column ascending" >STOCK </th>
+
+                            <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Precio: activate to sort column ascending"  style ="width:100px;">Precio x Menor </th>
+
+
+                            <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Precio: activate to sort column ascending" style ="width:100px;" >Precio x Mayor</th>
+
+                          
+                        </tr>
+                  </thead>
+
+
+                  <tbody>
+
+                    {% for  producto in  detalle_sucursal_almacen_productos %}
+
+                        <tr class="gradeA {% cycle 'odd' 'even' %}" role="row">
+
+                            <td> {{forloop.counter}}</td>
+                            <td>{{producto.producto_id.tipo_producto.nombre}}</a></td>
+                            <td>{{producto.producto_id.marca.nombre}}</td>
+                            <td class = "center">{{producto.producto_id.codigo}}</td>
+                            <td class = "center">{{producto.producto_id.get_color_display}}</td>
+                            <td class = "center">{{producto.stock}}</td>
+                            <td class = "center">{{producto.producto_id.precio_x_menor}}</td>
+                            <td class = "center">{{producto.producto_id.precio_x_mayor}}</td>
+                          
+                        </tr>
+
+                    {% empty %}
+
+                        <tr class="gradeA odd" role="row">  
+
+
+                            <td class ="center" > No hay Ventas Registradas</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            
+                             
+                        </tr>
+
+                        
+                    {% endfor %}
+
+                 </tbody>
+               </table>
+           </div>
+    </div>
+
+<!-- tabla 2-->
+
+
+			
+    </div><!-- row -->
+
+
+	
+
+
+
+	
+{% endblock content %}

@@ -1,0 +1,223 @@
+{% extends "baseAdmin.html" %}
+{% block css %}
+  {% load staticfiles %}
+
+  
+{% endblock css %}
+
+{% block content %}
+  {% load staticfiles %}
+
+  <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="panel-btns">
+                           <!-- <a href="" class="panel-close">×</a>-->
+                          <a href="" class="minimize">−</a>
+                          </div><!-- panel-btns -->
+                          <h3 class="panel-title">Registrar Productos a Sucursales</h3>
+                        </div>
+            <div class="panel-body">
+                         
+                <div class="form-group">
+                  <label class="col-sm-3 control-label">Producto <span class="asterisk">*</span></label>
+                  <div class="col-sm-9">
+
+                    <select id ="cmb_producto" class="select2" data-placeholder="Escoger Producto...">
+                          <option value=""></option>
+                          {%for producto in productos%}
+                          <option value="{{producto.producto_id.id}}">{{producto.producto_id}}</option>
+                          {%endfor%}
+                    </select>
+                  </div>
+                </div>
+                
+
+                 <div class="form-group">
+                      <label class="col-sm-3 control-label">Stock Disponible</label>
+                      <div class="col-sm-9"> 
+                        <div class="row">
+                          <div class="col-sm-3">
+                               <input type="text" id="stock_dispo" readonly="readonly" class="form-control" />
+                          </div>
+                          <span class="help-block">Enhance a text input for entering numeric values, with up/down buttons and arrow key handling.</span>
+                        </div>
+                      </div>
+                </div>
+                 <div class="form-group">
+                      <label class="col-sm-3 control-label">Stock a Asignar</label>
+                      <div class="col-sm-9">
+                         <div class="row">
+                          <div class="col-sm-3">
+                            <input type="text" id="stock_add" class="spinner form-control" />
+                          </div>
+                            <span class="help-block">Enhance a text input for entering numeric values, with up/down buttons and arrow key handling.</span>
+                        </div>
+                      </div>
+                </div>
+
+         </div>
+
+            <div class="panel-footer">
+             <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                  <button id = "submit" class="btn btn-primary">Registrar</button>&nbsp;
+                  <button class="btn btn-default">Limpiar</button>
+                </div>
+             </div>
+          </div><!-- panel-footer -->
+
+
+                      </div><!-- panel -->
+            </div>
+
+                  <span id = "sucursal" style = "visibility: hidden;"> {{id_sucursal}} </span>
+
+
+      </div><!-- row -->
+  
+{% endblock content %}
+
+{% block javascript %}
+  {% load staticfiles %}
+     <script src="{% static "static/js/sucursal/select2.min.js"%}"></script>
+     <script src="{% static "static/js/csrf.js"%}"></script>
+     <script src="{% static "static/js/sucursal/jquery-ui-1.10.3.min.js"%}"></script>
+
+<script>
+jQuery(document).ready(function(){
+    
+    "use strict";
+  // Select2
+  jQuery(".select2").select2({
+    width: '100%'
+  });
+
+ // Spinner
+var spinner = jQuery('.spinner').spinner();
+  spinner.spinner('value', 0);
+  spinner.spinner({min: 0});
+});
+
+
+ $('#cmb_producto').on("change",function(){
+
+      var id_producto = $(this).val()
+
+
+    $.ajax({
+
+        data: {"codigo_producto": id_producto},
+        url:'/mantenimientoSucursal/dameStock/',
+        type:'get',
+        success: function(data){
+          if (data) {
+            stock = data 
+            $("#stock_dispo").val(stock);
+            console.log(data);
+
+            }
+                  
+            else{
+
+              $("#stock_dispo").val("");
+              console.log("no hay nada");
+            }
+        
+
+          }
+                
+      }),
+
+
+      console.log("cambio"  +  id_producto );
+     });
+
+
+
+ function isInteger(x) {
+        return (typeof x === 'number') && (x % 1 === 0);
+    }
+
+
+$("#stock_add").on("blur",function(){
+
+    var valor  = $(this).val();
+
+    var type = isInteger(parseInt(valor));
+
+    
+
+    if  (type && valor > 0 ){
+
+         $("#stock_add").css('background' , '');
+         $("#submit").removeAttr("disabled", "disabled");
+
+        
+      }
+
+      else {
+        
+        $("#stock_add").css('background' , 'red');
+        $("#submit").attr("disabled", "disabled");
+      }
+
+    
+});
+
+
+  $("#submit").on("click",function(){
+
+
+      var stock_dispo = $("#stock_dispo").val();
+      var stock_add = $("#stock_add").val();
+      var sucursal_id  = $("#sucursal").text();
+      var  producto_id =  $("#cmb_producto").val();
+    
+      
+      if(parseInt(stock_add) > parseInt(stock_dispo)){
+    
+        $("#stock_add").css('background' , 'red');
+        $("#submit").attr("disabled", "disabled");
+
+      }
+
+      else{
+
+        console.log("Enviando Datos  al  Servidor ")
+          $.ajax({
+
+            data: {"producto_id": producto_id,
+                "stock_add" : stock_add,
+                "sucursal_id": sucursal_id
+                },
+
+            url:'/mantenimientoSucursal/addProductotoSucursal/',
+            type:'post',
+
+            success: function(data){
+
+              if (data) {
+
+                console.log(data);
+
+                //buscar Otra opc para refrescar la pagina para que se actulice la nueva lista de DetalleAlmacen
+                window.location.reload();
+              
+                }
+                      
+                else{
+                  console.log("no hay nada");
+                }
+              } 
+
+          });
+
+        }
+  });
+
+</script>
+
+  
+{% endblock javascript %}

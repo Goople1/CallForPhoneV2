@@ -1,0 +1,22 @@
+<!Doctype html>
+<html lang="es">
+<head>
+	<title>Lista de Sucursales</title>
+</head>
+<body>
+<!-- Lista de Sucursales -->
+<h1>Lista de Sucursales</h1>
+<ol>
+{%for sucursal in sucursales %}
+	{% if sucursal.id_estadoSucursal.nombre_estado == "Disponible" %} 
+	<li>
+		<a href="{% url operation sucursal.id %}" >{{sucursal.nombre}} {{operation}}/{{sucursal.id}}</a>
+	</li>
+	  <!-- <option value = "{{categoria.id}}">{{categoria.titulo}}</option> -->
+	{% endif %}
+{% empty %}
+<li>No hay Sucursales disponibles</li>
+{%endfor%}
+</ol>
+</body>
+</html>

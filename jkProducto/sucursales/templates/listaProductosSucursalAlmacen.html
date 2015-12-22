@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Lista de Prodcutos en Sucursales</title>
+</head>
+
+<body>
+
+<div>
+	<h1>
+	<label> 	Sucursal : </label> 
+	 {{sucursal.nombre}} 
+	</h1>
+	<br>
+	<label> Codigo   Puesto </label> : {{sucursal.codigo_puesto}}
+
+	<label>Direccion :</label>   {{sucursal.direccion}}  <br>
+	<label>Departamento :  </label>  {{sucursal.get_departamento_display}}
+	<label>Telefono</label> : {{sucursal.telefono}}
+</div>	
+
+
+	<table>
+
+		<tr>
+				<th>Producto Codigo</th>
+				<th>Stock Disponible</th>
+				<th>Fecha Ingreso</th>
+			
+		</tr>
+
+
+
+		{% for  producto in  detalle_sucursal_almacen_productos %}
+
+
+		<tr>
+			<td align = "center">
+
+				<ul>
+					<li> {{producto.producto_id}}</li>
+				</ul>
+				
+			</td>
+			<td align = "center"> {{producto.stock}}</td>
+			<td>{{producto.fecha_ingreso}}</td>
+
+			
+		</tr>
+			
+		{% endfor %}
+
+
+
+
+
+
+	</table>
+
+
+
+		
+</body>
+</html>

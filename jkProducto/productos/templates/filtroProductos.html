@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Filtro de productos  </title>
+</head>
+
+<body>
+{% load staticfiles %}
+<div id = "div_cmb"  >
+	<label> Sucursales: </label>
+	<select id = "cmb_sucursal" class = "js-cmb">
+			{% if sucursales %}
+				
+				<option value = "0"> todas </option>
+				{% for sucursal in  sucursales %}
+					
+					<option value = "{{sucursal.id}}">{{sucursal.nombre}} - {{sucursal.codigo_puesto}}  </option>
+
+				{% endfor %}
+			{% else %}
+
+				<option > no hay Datos</option>
+			{% endif %}
+	</select>
+
+	<label> Marca: </label>
+	<select id = "cmb_marca" class = "js-cmb">
+		{% if marcas %}
+
+			<option value = "0"> todas </option>
+
+			{% for marca in marcas %}
+				<option value ="{{marca.id}}"> {{marca.nombre}}</option>
+				
+			{% endfor %}
+
+		{% else %}
+			<option> No Hay datos</option>
+			
+		{% endif %}
+	</select>
+
+	<label>Tipo Produto : </label>
+
+	<select id = "cmb_tipo" class ="js-cmb">
+
+		{% if tipos %}
+
+			<option value = "0"> todas </option>
+
+			{% for tipo in  tipos %}
+
+			<option value ="{{tipo.id}}"> {{tipo.nombre}}</option>
+				
+				
+
+			{% endfor %}
+
+		{% else %}
+
+			<option> No Hay datos</option>
+		{% endif %}
+
+	</select>
+</div>
+
+
+
+<script src="{% static "static/js/jquery-1.8.3.min.js"%}"></script>
+<script src="{% static "static/js/init.js"%}"type="text/javascript"></script>
+  <script type="text/javascript">
+
+  $(".js-cmb").on("change", function(){
+
+
+  	var id_sucursal = $("#cmb_sucursal").val();
+  	var id_marca  = $("#cmb_marca").val();
+  	var id_tipo = $ ("#cmb_tipo").val();
+
+  	 console.log( id_sucursal,id_marca,id_tipo);
+
+
+  	 $.ajax({
+
+		data : {"sucursal_id":id_sucursal ,
+				"producto_id":id_marca,
+				"tipo_id": id_tipo,},
+		type:"get",
+		url : "/producto/filtrocriterio/",
+
+	
+
+	})
+	.done(function(data){
+
+		console.log("change")
+
+		console.log("arrayyy....",typeof(data))
+
+		if (data.length > 0 ) {
+			for (var i = 0 ; i < data.length ; i ++){
+
+				console.log("data" , data[i].producto.marca.nombre);
+			}
+
+			console.log(data);
+
+			console.log("fin" + data.length)
+			
+		}
+
+		else {
+
+			console.log("No hay datos");
+		}
+
+
+	})
+
+	.fail(function(data){
+
+		console.log(data);
+
+	});
+
+  });
+
+
+
+  </script>
+
+
+</body>
+</html>

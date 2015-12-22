@@ -1,0 +1,208 @@
+{% extends "baseAdmin.html" %}
+{% block css %}
+    {% load staticfiles %}
+     <link href="{% static "static/css/jquery.datatables.css"%}" rel="stylesheet">
+    
+{% endblock css %}
+
+{% block content %}
+
+{% load staticfiles %}
+
+ <div class="row">
+
+
+      
+
+
+<!-- tabla 2 -->
+
+        <div class="table-responsive">
+                <div id="table1_wrapper" class="dataTables_wrapper no-footer">
+                <table class="table dataTable no-footer table-hidaction table-hover" id="table1" role="grid" aria-describedby="table1_info">
+                  <thead>
+                         <tr role="row">
+                            <th class="sorting_asc" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="activate to sort column ascending" style="width: 182px;">#</th>
+
+                            <th class="sorting" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Empleado: activate to sort column ascending" style="width: 233px;">Empleado</th>
+
+                            <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Monto Venta: activate to sort column ascending" style="width: 153px;">Monto Venta</th>
+
+                            <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Fecha: activate to sort column ascending" style="width: 110px;">Fecha </th>
+
+                            <th class="sorting" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Codigo: activate to sort column ascending" style="width: 253px;"> Ver</th>
+
+                        </tr>
+                  </thead>
+
+
+                  <tbody>
+
+                    {% for  venta in  ventas %}
+
+                        <tr class="gradeA odd" role="row">
+
+                            <td class ="gradeA {% cycle 'odd' 'even' %}"> {{forloop.counter}}</td>
+                            <td>{{venta.empleado.trabajador.get_full_name}}</td>
+                            <td class = "center">{{venta.total}}</td>
+                            <td class ="center">{{venta.fecha_emision| date:" D d M Y" }}  {{venta.fecha_emision|date:"P"}}</td>
+                            <td>
+                               <a  class ="ventaDetalle" href ="#" data-venta ="{{venta.id}}" data-target=".bs-example-modal-lg" data-toggle="modal">ver</a>
+                            </td>
+                        </tr>
+
+                    {% empty %}
+
+                        <tr class="gradeA odd" role="row">  
+
+
+                            <td class ="center" > No hay Ventas Registradas</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            
+                             
+                        </tr>
+
+                        
+                    {% endfor %}
+
+                 </tbody>
+               </table>
+           </div>
+    </div>
+
+<!-- tabla 2-->
+        
+        <div aria-hidden="true" aria-labelledby="myLargeModalLabel" role="dialog" tabindex="-1" class="modal fade bs-example-modal-lg" style="display: none;">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">DETALLE DE VENTA</h4>
+                    </div>
+                <div class="modal-body">...</div>
+      
+                </div>
+            </div>
+        </div>
+
+                  
+    </div><!-- row -->
+
+
+
+    
+{% endblock content %}
+
+{% block javascript %}
+    {% load staticfiles %}
+    <script src="{% static "static/js/jquery.datatables.min.js"%}"></script>
+
+    <script>
+  jQuery(document).ready(function() {
+    
+    "use strict";
+    
+    jQuery('#table1').dataTable();
+    
+   
+    
+    // Select2
+    
+    
+    
+    // Delete row in a table
+    jQuery('.delete-row').click(function(){
+      var c = confirm("Continue delete?");
+      if(c)
+        jQuery(this).closest('tr').fadeOut(function(){
+          jQuery(this).remove();
+        });
+        
+        return false;
+    });
+    
+    // // Show aciton upon row hover
+    // jQuery('.table-hidaction tbody tr').hover(function(){
+    //   jQuery(this).find('.table-action-hide a').animate({opacity: 1});
+    // },function(){
+    //   jQuery(this).find('.table-action-hide a').animate({opacity: 0});
+    // });
+  
+  
+  });
+</script>
+
+<script type="text/javascript">
+
+$(".ventaDetalle").on("click" , function(){
+
+    console.log("me llamaron ");
+
+    var codigo = $(this).attr( "data-venta" );
+        console.log(codigo);
+      $.ajax({
+
+              data : {'codigo' : codigo },
+              url :"/mantenimientoSucursal/detalle/ver/",
+              type : 'GET',
+              })
+              .done(function(data){
+
+               console.log(data);
+                var table =  createTable();
+                var result = []
+
+                for( var i = 0  ;  i<data.length ; i++){
+
+                var row = $("<tr>"+
+                    "<td>"+(i+1)+"</td>"+
+                    "<td>"+data[i].producto+"</td>"+
+                    "<td>"+data[i].tipo_precio+"</td>"+
+                    "<td>"+data[i].cantidad+"</td>"+
+                    "<td>"+data[i].precio_real+"</td>"+
+                    "<td>"+data[i].precio+"</td>"+
+                    "<td>"+data[i].descripcion+"</td>"+
+                    "<td>"+data[i].importe+"</td>"+
+                    +"</tr>");
+
+                    result.push(row)
+
+                }
+
+                var tbody  = $("<tbody/>");
+                tbody.append(result);
+                tbody.appendTo(table);
+
+
+                $('.modal-body').html("");
+                $('.modal-body').append(table);
+              
+                
+
+              })
+              .fail(function(){
+                alert("fail");
+              });
+
+})
+
+
+function createTable(){
+
+    var table  = $(" <table class='table dataTable no-footer table-hidaction table-hover' id='table1' role='grid' aria-describedby='table1_info'>") ;
+    var thead = $(" <thead> <tr> <td>#</td><td>producto</td><td>tipo precio</td><td>CANT</td><td>Pre.Real</td><td>Pre.Vendido</td><td>DESCRIPCIÓN</td><<td>IMPORTE</td><tr></thead>");
+
+
+    thead.appendTo(table);
+    return table;
+
+}
+
+
+</script>
+
+    
+{% endblock javascript %}

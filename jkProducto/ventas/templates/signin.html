@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<head>
+	<title>Iniciar Sesi&oacute;n</title>
+	
+	
+
+  <meta name="viewport" content="width=device-width, minimal-ui"/>
+{% load staticfiles %}
+	<link rel="stylesheet" href="{% static "static/css/all.css"%}" type="text/css" />
+	
+
+</head>
+
+<body class="signin">
+  <!--
+
+-->
+
+<div class="topHead">
+	<!--<a href="index.html" class="logo">carbonmade</a>-->
+</div>
+
+<div id="content">
+	<div id="inner">
+		<h1 id="signinLogo"><a href="index.html"></a></h1>
+		<h1 id="headline">Tic Solutions</h1>
+		
+		<div id="signinBlock">
+			<span class="formContainer">			    
+ 				<form id="signInForm" action="." method="POST" data-ajax="true">
+ 					{% csrf_token %}
+					<span class="field signinRow ">
+						<span class="message"></span>
+						<span class="errorBlip"></span>
+						<!-- <input class="fillin validated " autofocus="true" name="email" value="" title="Email" type="email" required="required" placeholder="Email" spellcheck="false"/> -->
+						{{ form_iniciar_sesion.username }}
+					</span>
+					
+					<span class="field signinRow passRow ">
+						<span class="message"></span>
+						<span class="errorBlip"></span>
+						{{ form_iniciar_sesion.password }}
+						<!-- <input class="fillin validated " name="password" title="Password" type="password" required="required" placeholder="Password"/> -->
+						<!--<a class="resetPassLink" href="passwordresets/new.html">Forgot?</a>-->
+					</span>
+				
+					<div class="error">
+						<span class="message"></span>
+					</div>
+
+					<div class="buttonWrap">
+						<input type="hidden" name="persist" value="true"/>
+						<input type="hidden" name="returnTo" value="/"/>
+
+						
+
+						<input class="button" type="submit" alt="Sign in!" value="Ingresar"/>
+					</div>
+				</form>	
+			</span>
+		</div>
+
+		<h1>{{error}}</h1>
+		
+		<div class="topHead">
+    	<a href="javascript:history.go(-1);" class="close">Cancelar</a>
+    	<!--<a href="signup.html" class="signUp">Need an account?</a> -->
+    </div>
+    
+	</div>
+</div>
+
+	
+  <script src="cmsites.a.ssl.fastly.net/kits/138/base/modern.js"></script>
+  <script src="cmsites.a.ssl.fastly.net/kits/138/forms/forms.js"></script>
+	
+  <script src="cmsites.a.ssl.fastly.net/marketing/129/authentication/scripts/signin.js" crossorigin="anonymous"></script>
+</body>
+</html>

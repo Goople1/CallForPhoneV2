@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	 <div class="contentpanel">
+                    <!-- content goes here... -->
+                    
+	    <div class="row">
+
+		        <div class="table-responsive">
+		                <div id="table1_wrapper" class="dataTables_wrapper no-footer">
+		                <table class="table dataTable no-footer table-hidaction table-hover" id="table1" role="grid" aria-describedby="table1_info">
+		                  <thead>
+		                         <tr role="row">
+		                           
+
+
+		                            <th class="sorting" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Empleado: activate to sort column ascending" style="width: 233px;">Empleado</th>
+
+		                            <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Monto Venta: activate to sort column ascending" style="width: 153px;">Ingreso</th>
+
+		                            <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Fecha: activate to sort column ascending" style="width: 110px;">Salida</th>
+
+		                        </tr>
+		                  </thead>
+
+
+		                  <tbody>
+
+		                    {% for  asistencia in  asistencias %}
+
+		                        <tr class="gradeA odd" role="row">
+
+		                            <td>{{asistencia.trabajador.trabajador}}</td>
+		                            <td class ="center">{{asistencia.hora_ingreso| date:" D d M Y" }}  {{asistencia.hora_ingreso|date:"P"}}</td>
+		                            <td class ="center">{{asistencia.hora_salida| date:" D d M Y" }}  {{asistencia.hora_salida|date:"P"}}</td>
+		                            
+		                        </tr>
+
+		                    {% empty %}
+
+		                        <tr class="gradeA odd" role="row">  
+
+
+		                            <td class ="center" > No hay Asistencias Registradas</td>
+		                            <td></td>
+		                            <td></td>
+		                            <td></td>
+		                            <td></td>
+		                            
+		                             
+		                        </tr>
+
+		                        
+		                    {% endfor %}
+
+		                 </tbody>
+		               </table>
+		           </div>
+		    </div>
+
+		<!-- tabla 2-->
+
+
+					
+	    </div><!-- row -->
+                   
+
+
+    </div> <!-- Content Panel -->
+{% endblock content %}

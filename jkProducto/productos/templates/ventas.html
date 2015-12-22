@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Productos JK - Ventas</title>
+    <!-- Bootstrap core CSS -->
+     {% load staticfiles %}
+     <link href="{% static "static/css/bootstrap.min.css"%}" rel="stylesheet">
+    <link href="{% static "static/css/ventas.css" rel="stylesheet"%}">
+
+</head>
+<body>
+    <nav class="navbar navbar-default col-lg-8 col-lg-offset-2">
+      <div class="container-fluid">
+        <div class="navbar-header col-lg-12">
+            <p class="navbar-text col-lg-3">JK Mobile</p>
+            <a class="navbar-brand text-center col-lg-4" id="tituloVenta" href="#">REGISTRO DE VENTAS</a>
+            <span class="navbar-text col-lg-3 pull-right" id="sucursal">G-59</span>
+
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+        <form class="form-sales col-lg-12">
+            <h4 class="form-sales-heading col-lg-6" id="fecha">Fecha: 13/03/2015</h4>
+            <h4 class="form-sales-heading col-lg-6 pull-right" id="numeroVenta">N° 0000182</h4>
+            <div class="row">
+                <div class="col-lg-10" id="clientName">
+                    <label for="inputName" class="sr-only">Cliente</label>
+                    <input type="text" id="inputName" class="form-control" placeholder="Nombre del cliente" required autofocus>
+                </div>
+
+                <div class="input-group col-lg-2 id="pormenor"">
+                    <button type="button" class="btn btn-success">Por menor</button>
+                </div><!-- /input-group -->
+            </div>
+
+            <table class="table table-bordered" id="tab_logic">
+              <thead>
+                <tr>
+                  <th class="col-md-1">#</td>
+                  <th class="col-md-1">CANT.</th>
+                  <th class="col-md-6">DESCRIPCIÓN</th>
+                  <th class="col-md-2">P.UNIT</th>
+                  <th class="col-md-2">IMPORTE</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr id='addr0'>
+                  <th scope="row">1</th>
+                  <td>
+                      <input type="text" id="inputCantidad" class="form-control"></input>
+                  </td>
+                  <td>
+                      <input type="text" id="inputProductName" class="form-control"></input>
+                  </td>
+                  <td>
+                      <input type="text" id="unitPrice" class="form-control"></input>
+                  </td>
+                  <td>
+                      <input type="text" id="inputImport" class="form-control"></input>
+                  </td>
+                </tr>
+                <tr id='addr1'>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="row col-lg-12">
+                <div class="col-lg-1">
+                    <a id="add_row" class="btn btn-default pull-left">+</a>
+                </div>
+
+                <div class="col-lg-1">
+                    <a id="delete_row" class="pull-right btn btn-default">-</a>
+                </div>
+
+                <div class="col-lg-1 col-lg-offset-6">
+                    <span class="col-lg-6">Total</span>
+                </div>
+
+                <div class="col-lg-3">
+                    <input type="text" id="total" class="form-control col-lg-4"></input>
+                </div>
+            </div>
+            <div class="row col-lg-2 col-lg-offset-10" id="btn-vender">
+                <input class="btn btn-primary pull-right" type="submit" value="Vender">
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+    <!-- Javascript for tables -->
+    <script src="{% static "static/js/jquery-1.8.3.min.js"%}"></script>
+    <script src="{% static "static/js/ventas.js"%}"></script>
+</body>
+</html>

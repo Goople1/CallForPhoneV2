@@ -1,0 +1,9 @@
+Img que usan->
+icon-search.png
+images/plus.png
+images/minus.png
+
+/*background-color: #43c1be;*/
+  background-color:#ebccd1;
+
+#signinBlock input.button:hover { background: #a94442;  } /* #36d8d6; */
