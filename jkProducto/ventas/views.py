@@ -42,52 +42,62 @@ def home_ventas(request):
     template = "homeEmpleado.html"
     datos = request.session["datos"]
 
+    if  datos.get("cargo") == "empl":
+        return render_to_response(template , {'datos':datos} ,context_instance=RequestContext(request))
+    else : 
+        if datos.get("cargo") == "admi":
+            print "soy admin"
+            return HttpResponseRedirect("/admin/")
+
+
+
     #return render_to_response(template , {"trabajador": trabajador , 'datos':datos} ,context_instance=RequestContext(request))
-    return render_to_response(template , {'datos':datos} ,context_instance=RequestContext(request))
+    
 
 
 @login_required(login_url='/cuenta/')
 def lista_producto(request):
    
-    user_id = request.user.id
-    try:
-        trabajador = SucursalTrabajador.objects.get(trabajador=user_id)
-        print trabajador
+    
+    datos = request.session["datos"]
 
-    except Exception , e :
-        print e
-        user = User.objects.get(id = user_id)
-        if user.is_staff:
+    if  datos.get("cargo") == "empl":        
+        trabajador = SucursalTrabajador.objects.get(trabajador=request.user.id)
+        
+        lista_producto = DetalleSucursalAlmacen.objects.filter(sucursal_id = trabajador.sucursal.id)
+        template = "homeListaProductoSucursal.html"
+        return render_to_response(template,{"detalle_sucursal_almacen_productos":lista_producto ,  "datos":datos} , context_instance = RequestContext(request))
+    else : 
+        if datos.get("cargo") == "admi":
             return HttpResponseRedirect("/admin/")
 
+
     
-    trabajador_sucursal_id = trabajador.sucursal.id
-    sucursal  = Sucursal.objects.get(pk =trabajador_sucursal_id )
-    lista_producto = DetalleSucursalAlmacen.objects.filter(sucursal_id = trabajador_sucursal_id)
-    template = "homeListaProductoSucursal.html"
-    datos = request.session["datos"]
-    return render_to_response(template,{"detalle_sucursal_almacen_productos":lista_producto , "sucursal" :sucursal , "datos":datos} , context_instance = RequestContext(request))
 
 @login_required(login_url='/cuenta/')
 def venta (request):	
 
     if request.method == "GET":
-
-        user_id = request.user.id
-        try:
-            trabajador = SucursalTrabajador.objects.get(trabajador=user_id)
-        except Exception , e :
-            print e
-            user = User.objects.get(id = user_id)
-            if user.is_staff:
-                return HttpResponseRedirect("/admin/")
-
-        trabajador_sucursal_id = trabajador.sucursal.id
-        lista_productos = DetalleSucursalAlmacen.objects.filter(sucursal_id = trabajador_sucursal_id)
-        template = "homeVentas.html"
-        venta  = True
+        
         datos = request.session["datos"]
-        return  render_to_response( template , {"venta":venta,"productos": lista_productos, "trabajador":trabajador, "datos":datos} , context_instance = RequestContext(request))
+
+        if  datos.get("cargo") == "empl":
+
+            try:
+                trabajador = SucursalTrabajador.objects.get(trabajador=request.user.id)
+            except Exception , e :
+                print e 
+                return HttpResponse("Error de BD :/")
+
+            trabajador_sucursal_id = trabajador.sucursal.id
+            lista_productos = DetalleSucursalAlmacen.objects.filter(sucursal_id = trabajador_sucursal_id)
+            template = "homeVentas.html"
+            venta  = True
+            return  render_to_response( template , {"venta":venta,"productos": lista_productos, "trabajador":trabajador, "datos":datos} , context_instance = RequestContext(request))
+
+        else : 
+            if datos.get("cargo") == "admi":
+                return HttpResponseRedirect("/admin/")
 
 
 
@@ -154,24 +164,29 @@ def addVenta(request):
 def modificar_venta(request):
 
     if request.method == "GET":
-        #primero saber en que sucursal estoy  ....
-        #Sacar la info del trabajador
-        template = "homeModificarVentas.html"
-        try:
-            trabajador = SucursalTrabajador.objects.get(trabajador = request.user.id)
-        except Exception,e :
-            print e
-            user = User.objects.get(id =request.user.id)
-            if user.is_staff:
-                return HttpResponseRedirect("/admin/")
-        trabajador_sucursal  = trabajador.sucursal
-        try:
-            ventas = Venta.objects.filter(sucursal = trabajador_sucursal , estado  = True).order_by('-fecha_emision')
-        except Exception,e:
-            print e
+
 
         datos = request.session["datos"]
-        return render_to_response( template , {"ventas":ventas , "trabajador" :trabajador , "datos":datos}, context_instance = RequestContext(request))
+
+        if  datos.get("cargo") == "empl":
+        
+            try:
+                trabajador = SucursalTrabajador.objects.get(trabajador = request.user.id)
+            except Exception,e :
+                print e
+           
+            trabajador_sucursal  = trabajador.sucursal
+            try:
+                ventas = Venta.objects.filter(sucursal = trabajador_sucursal , estado  = True).order_by('-fecha_emision')
+            except Exception,e:
+                print e
+            template = "homeModificarVentas.html"
+            return render_to_response( template , {"ventas":ventas , "trabajador" :trabajador , "datos":datos}, context_instance = RequestContext(request))
+        else : 
+            if datos.get("cargo") == "admi" :
+                print "admi"
+                return HttpResponseRedirect("/admin/")
+
 
 @login_required(login_url='/login/')
 def reporte_asistencia(request):
