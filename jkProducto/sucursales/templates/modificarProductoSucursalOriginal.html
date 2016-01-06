@@ -74,7 +74,7 @@
             <div class="panel-footer">
              <div class="row">
                 <div class="col-sm-6 col-sm-offset-3">
-                  <button id = "guardar" class="btn btn-primary">Modificar</button>&nbsp;
+                  <button id = "guardar" class="btn btn-primary"  disabled>Modificar</button>&nbsp;
                   <button class="btn btn-default">Limpiar</button>
                 </div>
              </div>
@@ -102,9 +102,9 @@
 <script src="{% static "static/js/csrf.js"%}"></script>
 
 
-</script>
 
 <script type="text/javascript">
+
 
 jQuery(document).ready(function(){
     
@@ -200,26 +200,37 @@ var spinner = jQuery('.spinner').spinner();
 
 
 
-   $("#stock_adcional") .keyup(function(e){
+   $("#stock_adcional").keyup(function(e){
 
       var stk_add = parseInt($(this).val());
       var stk_dispo = parseInt($("#stock_dispo").val());
 
       console.log("stk_add" , stk_add   + " and " +  "stk_dispo" , stk_dispo);
 
-        bool = stk_add <= stk_dispo 
+      bool = stk_add <= stk_dispo 
       console.log(bool);
 
 
-      if( stk_add <= stk_dispo )
+      if( (stk_add <= stk_dispo)  )
       {
          $("#guardar").removeAttr("disabled", "disabled");
       }
       else{
         $("#guardar").attr("disabled", "disabled");
+
       }
 
+      if (stk_add === 0) {
+
+        $("#guardar").attr("disabled", "disabled");
+
+      }
+
+
+
+
    });
+
 
 
 
@@ -251,7 +262,7 @@ var spinner = jQuery('.spinner').spinner();
 
     .done(function(data){
 
-      console.log(data);
+      alert(data);
       window.location.reload();
 
 

@@ -6,15 +6,15 @@ from actions import export_as_csv
 # Register your models here.
 
 class DetalleAlmacenAdmin(admin.ModelAdmin):
-    list_display = ('producto_id','stock','adicional_stock','fecha_ingreso','get_Mayor','get_Menor',)
+    list_display = ('producto_id','stock','adicional_stock','fecha_ingreso','precio_Mayor','precio_Menor',)
 #field_options = {'fields': (('stock', 'adicional')),}
     list_filter = ('producto_id',)
     search_fields = ('producto_id__tipo_producto__nombre',)
     list_editable =('adicional_stock',)
     actions = [export_as_csv]
-    def get_Mayor(self, obj):
+    def precio_Mayor(self, obj):
         return obj.producto_id.precio_x_mayor
-    def get_Menor(self, obj):
+    def precio_Menor(self, obj):
     	return obj.producto_id.precio_x_menor
 
 class AlmacenAdmin(admin.ModelAdmin):

@@ -3,7 +3,11 @@ Thumbs.db
 ehthumbs.db
 
 # env
+<<<<<<< HEAD
 /home/systeme/Documentos/Proyectos/CFPV2/env_cfp/**/*
+=======
+/home/systeme/Documentos/Proyectos/CFPV2/env_cfp/
+>>>>>>> 2169aaf01483d9729622914b63ae42f1eb988a99
 
 # Folder config file
 Desktop.ini
