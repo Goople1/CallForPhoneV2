@@ -40,7 +40,7 @@
                             
                           </div>
                           <div class="col-sm-8"></div>
-                          <span class="help-block">Enhance a text input for entering numeric values, with up/down buttons and arrow key handling.</span>
+                          <span class="help-block">Stock disponible, m&aacute;ximo en el almacen.</span>
                         </div>
                         
                       </div>
@@ -52,7 +52,7 @@
                           <div class="col-sm-3">
                                <input type="text" id="stock_actual" readonly="readonly" class="form-control" />
                           </div>
-                          <span class="help-block">Enhance a text input for entering numeric values, with up/down buttons and arrow key handling.</span>
+                          <span class="help-block">Stock registrado actual, en la sucursal.</span>
                         </div>
 
                       </div>
@@ -64,7 +64,13 @@
                           <div class="col-sm-3">
                             <input type="text" id="stock_adcional" class="spinner form-control" />
                           </div>
-                        <span class="help-block">Enhance a text input for entering numeric values, with up/down buttons and arrow key handling.</span>
+                        
+                           <div role="alert" class="col-sm-9 alert alert-danger fade in hide numIncorrecto" style="padding: 9px;">
+                              <strong>Error!</strong> Ingrese un n&uacute;mero correcto o mayor a "0"
+                            </div>
+                            <div role="alert" class="col-sm-9 alert alert-danger fade in hide numMaximo" style="padding: 9px;">
+                              <strong>Error!</strong> Ingrese un n&uacute;mero menor a la cantidad m&aacute;xima en stock.
+                            </div>
                         </div>
                       </div>
                 </div>

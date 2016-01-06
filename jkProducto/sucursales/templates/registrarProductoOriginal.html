@@ -41,7 +41,7 @@
                           <div class="col-sm-3">
                                <input type="text" id="stock_dispo" readonly="readonly" class="form-control" />
                           </div>
-                          <span class="help-block">Stock disponible, m&aacute;ximo en la sucursal.</span>
+                          <span class="help-block">Stock disponible, m&aacute;ximo en el almacen.</span>
                         </div>
                       </div>
                 </div>
@@ -54,9 +54,9 @@
                             </div>
                             <!-- <span class="help-block"> -->
                             <div role="alert" class="col-sm-9 alert alert-danger fade in hide numIncorrecto" style="padding: 9px;">
-                              <strong>Error!</strong> Ingrese un n&uacute;mero correcto.
+                              <strong>Error!</strong> Ingrese un n&uacute;mero correcto o mayor a "0"
                             </div>
-                            <div role="alert" class="col-sm-9 alert alert-danger fade in hide" style="padding: 9px;">
+                            <div role="alert" class="col-sm-9 alert alert-danger fade in hide numMaximo" style="padding: 9px;">
                               <strong>Error!</strong> Ingrese un n&uacute;mero menor a la cantidad m&aacute;xima en stock.
                             </div>
                             <!-- </span> -->
@@ -94,7 +94,7 @@
             <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
             <h4 class="modal-title">Mensaje</h4>
         </div>
-        <div class="modal-body">Kalena twinem</div>
+        <div class="modal-body"></div>
     </div>
   </div>
 </div>
@@ -168,20 +168,40 @@ $("#stock_add").on("blur",function(){
     var valor  = $(this).val();
 
     var type = isInteger(parseInt(valor));
+    var stock_dispo = $("#stock_dispo").val();
+    var tipoAdd = isInteger(parseInt(stock_dispo));
 
-    $('.bs-example-modal-sm').modal('show');
-
-    if  (type && valor > 0 ){
+    if(type && valor > 0 )
+    {
 
          //$("#stock_add").css('background' , '');
          $('.numIncorrecto').addClass('hide').removeClass('in');
-         $("#submit").removeAttr("disabled", "disabled");
+         //$('.numMaximo').addClass('hide').removeClass('in');
+        if(tipoAdd && parseInt(stock_dispo) >= parseInt(valor))
+        {
+          
+          
 
+          $('.numIncorrecto').addClass('hide').removeClass('in');
+          $('.numMaximo').addClass('hide').removeClass('in');
+          $("#submit").removeAttr("disabled", "disabled");
+
+        }
+        else
+        {
+                            
+          if(tipoAdd && parseInt(valor) > parseInt(stock_dispo))
+          {
+            $('.numMaximo').addClass('in').removeClass('hide');
+            //$("#stock_add").css('background' , 'red');
+          }
+          $("#submit").attr("disabled", "disabled");
+
+        }
         
       }
 
       else {
-        
         //$("#stock_add").css('background' , 'red');
         $('.numIncorrecto').addClass('in').removeClass('hide');
         $("#submit").attr("disabled", "disabled");
@@ -202,13 +222,15 @@ $("#stock_add").on("blur",function(){
       
       if(parseInt(stock_add) > parseInt(stock_dispo)){
     
-        $("#stock_add").css('background' , 'red');
+        //$("#stock_add").css('background' , 'red');
+         $('.numMaximo').addClass('in').removeClass('hide');
         $("#submit").attr("disabled", "disabled");
-
+        
       }
 
       else{
-
+          $('.numIncorrecto').addClass('hide').removeClass('in');
+          $('.numMaximo').addClass('hide').removeClass('in');
         console.log("Enviando Datos  al  Servidor ")
           $.ajax({
 
@@ -224,16 +246,19 @@ $("#stock_add").on("blur",function(){
 
               if (data) {
 
-                console.log(data);
-
+                //console.log(data);
+                $('.modal-body').text(data)
                 //buscar Otra opc para refrescar la pagina para que se actulice la nueva lista de DetalleAlmacen
                 window.location.reload();
               
                 }
                       
                 else{
+                  $('.modal-body').text("No hay stock disponible")
                   console.log("no hay nada");
                 }
+
+                $('.bs-example-modal-sm').modal('show');
               } 
 
           });
