@@ -374,33 +374,41 @@ def editProductotoSucursal(request):
 
 		if(producto_id != 0 )& (producto_id > 0):
 
-			try:
-				producto_detalle_sucursal_almacen = DetalleSucursalAlmacen.objects.get(sucursal_id=sucursal_id , producto_id=producto_id)
-			except Exception,e :
-				print e
-				return HttpResponse("No Es Posible Editar  el Producto  en  la Sucursal ")
+			if (stock_add !=0) & (producto_id > 0):
 
-			print producto_detalle_sucursal_almacen.producto_id
-			print producto_detalle_sucursal_almacen.stock
 
-			try:
-				detalle_almacen = DetalleAlmacen.objects.get(producto_id=producto_id)
-			except Exception, e:
-				print e
-				return HttpResponse ("Problemas con el Server")
+				try:
+					producto_detalle_sucursal_almacen = DetalleSucursalAlmacen.objects.get(sucursal_id=sucursal_id , producto_id=producto_id)
+				except Exception,e :
+					print e
+					return HttpResponse("No Es Posible Editar  el Producto  en  la Sucursal ")
 
-			if(detalle_almacen.stock >= stock_add): 
-				detalle_almacen.stock-=stock_add
-				antes_dsa = producto_detalle_sucursal_almacen.stock
-				producto_detalle_sucursal_almacen.stock+=stock_add
-				detalle_almacen.save()
-				producto_detalle_sucursal_almacen.save()
-				HistorialDetalleSucursalAlmacen.objects.create(stock_actual =antes_dsa,stock_adicional= stock_add,id_detalle_sucursal_almacen=producto_detalle_sucursal_almacen)
-				return HttpResponse("Modificacion  del Producto hecha")
+				print producto_detalle_sucursal_almacen.producto_id
+				print producto_detalle_sucursal_almacen.stock
+
+				try:
+					detalle_almacen = DetalleAlmacen.objects.get(producto_id=producto_id)
+				except Exception, e:
+					print e
+					return HttpResponse ("Problemas con el Server")
+
+				if(detalle_almacen.stock >= stock_add): 
+					detalle_almacen.stock-=stock_add
+					antes_dsa = producto_detalle_sucursal_almacen.stock
+					producto_detalle_sucursal_almacen.stock+=stock_add
+					detalle_almacen.save()
+					producto_detalle_sucursal_almacen.save()
+					HistorialDetalleSucursalAlmacen.objects.create(stock_actual =antes_dsa,stock_adicional= stock_add,id_detalle_sucursal_almacen=producto_detalle_sucursal_almacen)
+					return HttpResponse("Modificacion  del Producto hecha")
+				else:
+					mensaje = "La Cantidad En el Almacen  no es Suficiente para su Pedido"
+					print mensaje
+					return HttpResponse(mensaje)
 			else:
-				mensaje = "La Cantidad En el Almacen  no es Suficiente para su Pedido"
-				print mensaje
+
+				mensaje = "no se Puede Agregar esta cantidad  , Cambiela porfavor"
 				return HttpResponse(mensaje)
+
 		else:
 			mensaje = "Imposible encontrar el producto"
 			print mensaje

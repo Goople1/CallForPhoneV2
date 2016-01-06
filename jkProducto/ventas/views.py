@@ -27,20 +27,23 @@ from asistencia.models import AsistenciaTrabajador
 @login_required(login_url='/cuenta/')
 def home_ventas(request):
     print request.user.id
-    user_id = request.user.id
-    try :
-        trabajador = SucursalTrabajador.objects.get(trabajador = user_id)
-    except Exception , e :
-        print e
-        user = User.objects.get(id = user_id)
-        print user
-        if user.is_staff:
-           return HttpResponseRedirect("/admin/")
-            #return HttpResponse("Es  Usuario , Pero no Trabajador")
-    #template = "empleado_home.html"
+    #user_id = 
+    print request.user.id
+    # try :
+    #     trabajador = SucursalTrabajador.objects.get(trabajador = user_id)
+    # except Exception , e :
+    #     print e
+    #     user = User.objects.get(id = user_id)
+    #     print user
+    #     if user.is_staff:
+    #        return HttpResponseRedirect("/admin/")
+    #         #return HttpResponse("Es  Usuario , Pero no Trabajador")
+    # #template = "empleado_home.html"
     template = "homeEmpleado.html"
     datos = request.session["datos"]
-    return render_to_response(template , {"trabajador": trabajador , 'datos':datos} ,context_instance=RequestContext(request))
+
+    #return render_to_response(template , {"trabajador": trabajador , 'datos':datos} ,context_instance=RequestContext(request))
+    return render_to_response(template , {'datos':datos} ,context_instance=RequestContext(request))
 
 
 @login_required(login_url='/cuenta/')
@@ -272,7 +275,7 @@ def cargar_productos(request):
 
 # Create your views here.
 def iniciarSesion(request):
-    template = "login.html"
+    
     template = "signin.html"
     if not request.user.is_authenticated():
         if request.method == "POST":
