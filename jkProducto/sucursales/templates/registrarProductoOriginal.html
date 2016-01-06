@@ -41,7 +41,7 @@
                           <div class="col-sm-3">
                                <input type="text" id="stock_dispo" readonly="readonly" class="form-control" />
                           </div>
-                          <span class="help-block">Enhance a text input for entering numeric values, with up/down buttons and arrow key handling.</span>
+                          <span class="help-block">Stock disponible, m&aacute;ximo en la sucursal.</span>
                         </div>
                       </div>
                 </div>
@@ -49,10 +49,17 @@
                       <label class="col-sm-3 control-label">Stock a Asignar</label>
                       <div class="col-sm-9">
                          <div class="row">
-                          <div class="col-sm-3">
-                            <input type="text" id="stock_add" class="spinner form-control" />
-                          </div>
-                            <span class="help-block">Enhance a text input for entering numeric values, with up/down buttons and arrow key handling.</span>
+                            <div class="col-sm-3">
+                              <input type="text" id="stock_add" class="spinner form-control" />
+                            </div>
+                            <!-- <span class="help-block"> -->
+                            <div role="alert" class="col-sm-9 alert alert-danger fade in hide numIncorrecto" style="padding: 9px;">
+                              <strong>Error!</strong> Ingrese un n&uacute;mero correcto.
+                            </div>
+                            <div role="alert" class="col-sm-9 alert alert-danger fade in hide" style="padding: 9px;">
+                              <strong>Error!</strong> Ingrese un n&uacute;mero menor a la cantidad m&aacute;xima en stock.
+                            </div>
+                            <!-- </span> -->
                         </div>
                       </div>
                 </div>
@@ -77,6 +84,21 @@
 
       </div><!-- row -->
   
+<!-- Modal -->
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-header" style="
+    background-color: #428bca;
+">
+            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+            <h4 class="modal-title">Mensaje</h4>
+        </div>
+        <div class="modal-body">Kalena twinem</div>
+    </div>
+  </div>
+</div>
+
 {% endblock content %}
 
 {% block javascript %}
@@ -147,11 +169,12 @@ $("#stock_add").on("blur",function(){
 
     var type = isInteger(parseInt(valor));
 
-    
+    $('.bs-example-modal-sm').modal('show');
 
     if  (type && valor > 0 ){
 
-         $("#stock_add").css('background' , '');
+         //$("#stock_add").css('background' , '');
+         $('.numIncorrecto').addClass('hide').removeClass('in');
          $("#submit").removeAttr("disabled", "disabled");
 
         
@@ -159,7 +182,8 @@ $("#stock_add").on("blur",function(){
 
       else {
         
-        $("#stock_add").css('background' , 'red');
+        //$("#stock_add").css('background' , 'red');
+        $('.numIncorrecto').addClass('in').removeClass('hide');
         $("#submit").attr("disabled", "disabled");
       }
 
