@@ -225,6 +225,9 @@
 
 
 
+
+
+
                   </div><!--panel-body-->
                 </div><!-- panel -->
        </div>
@@ -234,8 +237,35 @@
 
 
 
+<!-- Modal -->
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-header" style="
+    background-color: #428bca;
+">
+            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+            <h4 class="modal-title">Mensaje</h4>
+        </div>
+        <div class="modal-body"></div>
+    </div>
+  </div>
+</div>
 
-
+<!-- Modal Error -->
+<div class="modal fade bs-example-modal-sm error-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-header" style="
+    background-color: #428bca;
+">
+            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+            <h4 class="modal-title">Mensaje</h4>
+        </div>
+        <div class="modal-body"></div>
+    </div>
+  </div>
+</div>
 
 	
 
@@ -254,9 +284,9 @@
 	<!-- JS ADDED-->
 
 
-	    <script src="{% static "static/js/jquery-1.8.3.min.js"%}"></script>
+	 <!-- <script src="{% static "static/js/jquery-1.8.3.min.js"%}"></script> -->
     <script src="{% static "static/js/csrf.js"%}"></script>
-
+    <script src="{% static "static/js/sucursal/jquery-ui-1.10.3.min.js"%}"></script>
     <script src="{% static "static/js/agregarVenta.js" %}"></script>
     <script src="{% static "static/js/modificarVenta.js" %}"></script>
     <script src="{% static "static/js/sucursal/select2.min.js"%}"></script>
@@ -489,7 +519,7 @@
 
    
 function calcular_importe( cantidad, precio ){
-  var importe  = cantidad * precio; 
+  var importe  = parseFloat(cantidad) * parseFloat(precio); 
   return importe;
 }
 
@@ -631,13 +661,13 @@ function getPrecio(producto , tipo){
               cantidad = parseInt($(this).val());
               //console.log("CANTIDAD : " , cantidad  ,  $(this).val() )  ;
                if (!isNaN(cantidad)){
-    
+                    console.log("si es numero");
                     $(this).val(cantidad);
                }
 
 
                else{
-
+                  console.log("no es numero");
                   cantidad = 1;
                   $(this).val("")
 
@@ -647,21 +677,85 @@ function getPrecio(producto , tipo){
 
             catch(exception){
 
-             $(this).val("1"); 
+             $(this).val(1); 
 
-             console.log("DIEGO :D");
 
             }
             finally
             {
                var precio = inputPrecioUnitario.val();
-
+              console.log("cantidad-precio"+cantidad+"-"+precio);
               inputImporte.val(calcular_importe(cantidad,precio));
               $("#total").val(calcular_total()); 
             }
         });
 
   $('body').delegate(".precioPro",'keyup' , function(){
+
+          var row = $(this).parent().parent();
+          var precio  = $(this).val();
+          var cantidad = row.find('td:eq(3)').children().val(); 
+          //var inputPrecioUnitario=$(this).parent().parent().parent().find('td:eq(5)').find("input:text");
+          //var inputPrecioUnitario=row.find('td:eq(5)').find("input:text");
+          var inputImporte = row.find('td:eq(6)').children();
+          // este input inporte hace referencia a  primero que encuentra ,  no a la fila que pertenece
+
+          //Si el precio Unitario es ""
+          if($.trim(precio) == "")
+          {
+            return;
+          }
+
+            try{
+              precio = parseFloat($(this).val());
+              //console.log("CANTIDAD : " , cantidad  ,  $(this).val() )  ;
+               if (!isNaN(precio)){
+    
+                    $(this).val(precio);
+               }
+
+
+               else{
+
+
+                  var valueComboProducto = row.find('td:eq(1)').children().val();
+                  
+                  var tipoPrecio = row.find('td:eq(2)').children().val();
+                  
+                  producto = pro[valueComboProducto];
+
+
+
+                  $(this).val(getPrecio(producto,tipoPrecio));
+                  precio = $(this).val();
+
+
+               }
+              
+            }
+
+            catch(exception){
+
+                var valueComboProducto = row.find('td:eq(1)').children().val();
+                var tipoPrecio = row.find('td:eq(2)').children().val();
+                producto = pro[valueComboProducto];
+
+
+
+                $(this).val(getPrecio(producto,tipoPrecio));
+
+
+            }
+            finally
+            {
+              
+
+              inputImporte.val(calcular_importe(cantidad,precio));
+              $("#total").val(calcular_total()); 
+            }
+        });
+
+ $('body').delegate(".precioPro",'blur' , function(){
 
           var row = $(this).parent().parent();
           var precio  = $(this).val();
@@ -708,7 +802,6 @@ function getPrecio(producto , tipo){
 
                 $(this).val(getPrecio(producto,tipoPrecio));
 
-                console.log("DIEGO :D");
 
             }
             finally
@@ -719,6 +812,7 @@ function getPrecio(producto , tipo){
               $("#total").val(calcular_total()); 
             }
         });
+
 
 
 $('body').delegate('.cantidadPro','blur', function(){
@@ -743,11 +837,13 @@ $('body').delegate('.cantidadPro','blur', function(){
           }
           catch(exception )
           {
-            $(this).val("1");
+            $(this).val(1);
           }
           finally
           {
-            var precio = inputPrecioUnitario.val()
+
+            var precio = inputPrecioUnitario.val();
+
             inputImporte.val(calcular_importe(cantidad,precio))
             $("#total").val(calcular_total()); 
           }

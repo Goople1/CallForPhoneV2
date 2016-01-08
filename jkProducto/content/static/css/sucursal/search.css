@@ -1,0 +1,75 @@
+/***** 10.8 SEARCH RESULTS */
+.nav-sr li {
+    border-bottom: 1px solid #ddd;  
+}
+
+.nav-sr li a {
+    padding: 5px 0;
+    color: #555;
+}
+
+.nav-sr li a:hover {
+    background: none;
+    color: #333;
+}
+
+.nav-sr li a i {
+    margin-right: 5px;
+}
+
+.results-list .media {
+    border-bottom: 1px solid #eee;
+}
+
+.results-list .media-object {
+    width: 125px;
+    margin-right: 10px;
+}
+
+.results-list .filename {
+    margin: 0;
+    font-size: 16px;
+}
+
+.results-list .media-body {
+    line-height: 18px;
+}
+
+/***** 10.8 SEARCH RESULTS */
+
+
+.nav-sr li {
+    border-bottom: 1px solid #ddd;  
+}
+
+.nav-sr li a {
+    padding: 5px 0;
+    color: #555;
+}
+
+.nav-sr li a:hover {
+    background: none;
+    color: #333;
+}
+
+.nav-sr li a i {
+    margin-right: 5px;
+}
+
+.results-list .media {
+    border-bottom: 1px solid #eee;
+}
+
+.results-list .media-object {
+    width: 125px;
+    margin-right: 10px;
+}
+
+.results-list .filename {
+    margin: 0;
+    font-size: 16px;
+}
+
+.results-list .media-body {
+    line-height: 18px;
+}
