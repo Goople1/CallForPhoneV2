@@ -148,10 +148,10 @@
                             <input type="text" id="inputProductName{{forloop.counter0}}" class="form-control" value = "{{detalle.descripcion}}" disabled></input>
                       </td>
                       <td>
-                            <input type="text" id="unitPrice{{forloop.counter0}}" value = "{{detalle.precio}}" class="form-control precioPro" disabled></input>
+                            <input type="text" id="unitPrice{{forloop.counter0}}" value = "{{detalle.precio|floatformat}}" class="form-control precioPro" disabled></input>
                       </td>
                       <td>
-                            <input type="text" id="inputImport{{forloop.counter0}}" value = "{{detalle.importe}}"class="form-control" disabled></input>
+                            <input type="text" id="inputImport{{forloop.counter0}}" value = "{{detalle.importe|floatformat}}"class="form-control" disabled></input>
                       </td>
                       <td>
                           <div class="col-lg-1">

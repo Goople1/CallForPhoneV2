@@ -109,7 +109,7 @@ def addVenta(request):
         try:
             with transaction.atomic():
                 trabajador = SucursalTrabajador.objects.get(trabajador = request.user.id)
-                my_json_products_to_dict = json.loads(request.POST.get("json"))
+                my_json_products_to_dict = json.loads(request.POST.get("json_detalle_venta"))
                 if my_json_products_to_dict:
                     total = Utilidades().validarIngresoNum(request.POST.get("total"))
                     venta = Venta(empleado = trabajador , sucursal = trabajador.sucursal , total = total)
