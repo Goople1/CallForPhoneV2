@@ -1,0 +1,133 @@
+{% extends "baseAdmin.html" %}
+{% block css %}
+    {% load staticfiles %}
+     <link href="{% static "static/css/jquery.datatables.css"%}" rel="stylesheet">
+{% endblock css %}
+
+{% block content %}
+
+{% load staticfiles %}
+
+ <div class="row">
+
+<div class="col-sm-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="panel-btns">
+                           <!-- <a href="" class="panel-close">×</a>-->
+                          <a href="" class="minimize">−</a>
+                          </div><!-- panel-btns -->
+                          <h3 class="panel-title">Historial de Sucursales</h3>
+                        </div>
+                        <div class="panel-body">
+           
+<!-- tabla 2 -->
+
+        <div class="table-responsive">
+                <div id="table1_wrapper" class="dataTables_wrapper no-footer">
+                <table class="table dataTable no-footer table-hidaction table-hover" id="table1" role="grid" aria-describedby="table1_info">
+                  <thead>
+                         <tr role="row">
+                            <th class="sorting_asc" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="activate to sort column ascending" style="width: 182px;">#</th>
+
+                            <th class="sorting" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Puesto: activate to sort column ascending" style="width: 233px;">Puesto</th>
+
+                            <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Nombre: activate to sort column ascending" style="width: 153px;">Nombre</th>
+                            <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Departamento: activate to sort column ascending" style="width: 153px;">Departamento</th>
+                            <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Direccion: activate to sort column ascending" style="width: 153px;">Direcci&oacute;n</th>
+
+                            <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Estado Anterior: activate to sort column ascending" style="width: 110px;">Estado Anterior </th>
+
+                            <th class="sorting" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Estado Actual: activate to sort column ascending" style="width: 253px;"> Estado Actual</th>
+
+                            <th class="sorting" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Fecha Registro: activate to sort column ascending" style="width: 253px;"> Fecha de Registro</th>
+
+                            <th class="sorting" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Fecha Cambio: activate to sort column ascending" style="width: 253px;"> Fecha de Cambio</th>
+
+                        </tr>
+                  </thead>
+
+
+                  <tbody>
+
+                    {% for  historial in  historialSucursal %}
+
+                        <tr class="gradeA odd" role="row">
+
+                            <td class ="gradeA {% cycle 'odd' 'even' %}"> {{forloop.counter}}</td>
+                            <td>{{historial.id_sucursal.codigo_puesto}}</td>
+                            <td class = "center">{{historial.id_sucursal.nombre}}</td>
+                            <td class = "center">{{historial.id_sucursal.get_departamento_display}}</td>
+                            <td class = "center">{{historial.id_sucursal.direccion}}</td>
+                            <td class = "center">{{historial.estado_antes}}</td>
+                            <td class = "center">{{historial.estado_actual}}</td>
+                            <td class ="center">{{historial.id_sucursal.fecha_registro| date:" D d M Y" }}  {{historial.id_sucursal.fecha_registro|date:"P"}}</td>
+
+                            <td class ="center">{{historial.fecha| date:" D d M Y" }}  {{historial.fecha|date:"P"}}</td>
+                            
+                        </tr>
+
+                    {% empty %}
+
+                        <tr class="gradeA odd" role="row">  
+
+
+                            <td class ="center" > No hay Sucursales Registradas</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>          
+                        </tr>
+
+                            
+                        {% endfor %}
+
+                     </tbody>
+                   </table>
+               </div>
+        </div>
+
+    <!-- tabla 2-->
+        
+            
+                    
+                        </div>
+                 </div><!-- panel -->
+</div>
+    
+
+
+
+
+                  
+    </div><!-- row -->
+
+    
+{% endblock content %}
+
+{% block javascript %}
+    {% load staticfiles %}
+    <script src="{% static "static/js/jquery.datatables.min.js"%}"></script>
+   
+    
+
+    <script type="text/javascript">
+  jQuery(document).ready(function() {
+    
+    "use strict";
+    
+    jQuery('#table1').dataTable();
+    // // Show aciton upon row hover
+    // jQuery('.table-hidaction tbody tr').hover(function(){
+    //   jQuery(this).find('.table-action-hide a').animate({opacity: 1});
+    // },function(){
+    //   jQuery(this).find('.table-action-hide a').animate({opacity: 0});
+    // });
+  });
+</script>
+  
+{% endblock javascript %}

@@ -20,8 +20,24 @@ def reporte_asistencia(request):
             elif request.user.is_active:
                 asistenciaTodas = AsistenciaTrabajador.objects.all()
                 datos = request.session["datos"]
-
                 return render_to_response( template , {"asistencias":asistenciaTodas ,"datos":datos}, context_instance = RequestContext(request))
+
+        except:
+            return HttpResponse("")
+
+@login_required(login_url='/login/')
+def historial_asistencia(request):
+    if request.method == "GET":
+        template = "reporteHistorialAsistencia.html"
+        try:
+            if request.user.is_staff:
+                #pero tb redireccionar a la misma plantilla pero con if...si es trabajador o admin
+                asistenciaTodas = AsistenciaTrabajador.objects.all()
+                datos = request.session["datos"]
+                print "3"
+                return render_to_response( template , {"asistencias":asistenciaTodas ,"datos":datos}, context_instance = RequestContext(request))             
+            elif request.user.is_active:
+                return HttpResponseRedirect("/ventas/")
 
         except:
             return HttpResponse("")

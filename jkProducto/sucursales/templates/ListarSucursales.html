@@ -8,7 +8,7 @@
 <h1>Lista de Sucursales</h1>
 <ol>
 {%for sucursal in sucursales %}
-	{% if sucursal.id_estadoSucursal.nombre_estado == "Disponible" %} 
+	{% if sucursal.nombre_estado == "Dis" %} 
 	<li>
 		<a href="{% url operation sucursal.id %}" >{{sucursal.nombre}} {{operation}}/{{sucursal.id}}</a>
 	</li>

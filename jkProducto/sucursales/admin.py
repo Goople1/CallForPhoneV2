@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Sucursal, SucursalTrabajador ,Cliente,EstadoSucursal
+from .models import Sucursal, SucursalTrabajador ,Cliente#,EstadoSucursal
 #,HistorialSucursal
 #from productos.models import Producto, Marca, TipoProducto
 #from actions import export_as_csv
@@ -17,8 +17,8 @@ from .models import Sucursal, SucursalTrabajador ,Cliente,EstadoSucursal
 #     	return obj.producto_id.precio_x_menor
 
 class SucursalAdmin(admin.ModelAdmin):
-	list_display = ('codigo_puesto', 'nombre', 'departamento', 'id_estadoSucursal')
-	list_filter = ('codigo_puesto', 'departamento','nombre','id_estadoSucursal',)
+	list_display = ('codigo_puesto', 'nombre', 'departamento', 'nombre_estado')
+	list_filter = ('codigo_puesto', 'departamento','nombre','nombre_estado',)
 	search_fields = ('codigo_puesto', 'departamento')
 	#list_editable = ('codigo_puesto', 'departamento','id_estadoSucursal',)
 
@@ -37,7 +37,7 @@ class AlmacenAdmin(admin.ModelAdmin):
 
 #list_display = ('codigo','marca','tipo_producto','color','stock','adicional','mayor','menor','fecha_ingreso',)
 
-admin.site.register(EstadoSucursal)
+#admin.site.register(EstadoSucursal)
 #admin.site.register(Almacen, AlmacenAdmin)
 #admin.site.register(DetalleAlmacen,DetalleAlmacenAdmin)
 admin.site.register(Sucursal, SucursalAdmin)

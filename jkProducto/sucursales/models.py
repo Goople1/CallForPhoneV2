@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-
+from django.db import transaction, IntegrityError
 from datetime import date
 from productos.models import Producto
 from almacen.models import Almacen
@@ -63,15 +63,15 @@ def validate_only_one_instance(obj,cantidad):
 # 		else:
 # 			super(DetalleAlmacen, self).save()
 
-class EstadoSucursal(models.Model):
-    nombre_estado = models.CharField(max_length=60)
-    def clean(self):
-        self.nombre_estado = self.nombre_estado
+# class EstadoSucursal(models.Model):
+#     nombre_estado = models.CharField(max_length=60)
+#     def clean(self):
+#         self.nombre_estado = self.nombre_estado
 
-    def __str__(self):
-        return self.nombre_estado
-    class Meta:
-    	verbose_name_plural= "Registro de Estados de Sucursales"
+#     def __str__(self):
+#         return self.nombre_estado
+#     class Meta:
+#     	verbose_name_plural= "Registro de Estados de Sucursales"
 
 class Sucursal(models.Model):
 	id_almacen = models.ForeignKey(Almacen)
@@ -80,10 +80,12 @@ class Sucursal(models.Model):
 	fecha_registro = models.DateTimeField(auto_now=True,editable=False)
 	todos_departamento = (('Ama','Amazonas'), ('Anc','Ancash'),('Apu','Apurimac'),('Are','Arequipa'),('Aya','Ayacucho'),('Caj','Cajamarca'),('Cal','Callao'),('Cuz','Cuzco'),('Hua','Huancavelica'),('Hun','Huanuco'),('Ica','Ica'),('Jun','Junin'),('Lal','La Libertad'),('Lam','Lambayeque'),('Lim','Lima'),('Lor','Loreto'),('Mad','Madre de Dios'),('Moq','Moquegua'),('Pas','Pasco'),('Piu','Piura'),('Pun','Puno'),('San','San Martin'),('Piu','Piura'),('Tac','Tacna'),('Tum','Tumbes'),('Uca','Ucayali'),)
 	departamento = models.CharField(max_length=20, choices=todos_departamento, default='Lim')
+	todos_nombre_estado = (('Dis', 'Disponible'),('Fue', 'Fuera de Servicio'),('Man', 'En Mantenimiento'),('Cer','Cerrado'),)
+	nombre_estado = models.CharField(max_length=20, choices=todos_nombre_estado, default='Dis')
 	direccion = models.CharField(max_length=80)
 	telefono = models.CharField(max_length=20)
 	celular = models.CharField(max_length=20)
-	id_estadoSucursal = models.ForeignKey(EstadoSucursal)
+	#id_estadoSucursal = models.ForeignKey(EstadoSucursal)
 	descripcion = models.TextField(max_length=400)
 	def clean(self):
 		self.codigo_puesto = self.codigo_puesto.capitalize()
@@ -96,14 +98,22 @@ class Sucursal(models.Model):
 		return " %s de la ciudad: %s con el codigo: %s" %(self.nombre,self.departamento,self.codigo_puesto)
 	def save(self):
 		try:
-			estado = Sucursal.objects.get(pk=self.id)
-			estado =estado.id_estadoSucursal
-			HistorialSucursal.objects.create(estado_antes = estado  ,estado_actual= self.id_estadoSucursal.nombre_estado,id_sucursal = self )
-			super(Sucursal, self).save()
+			with transaction.atomic():
+				estado = Sucursal.objects.get(pk=self.id)	
+				estado = estado.get_nombre_estado_display()
+				if estado != self.get_nombre_estado_display():
+					HistorialSucursal.objects.create(estado_antes = estado  ,estado_actual= self.get_nombre_estado_display(),id_sucursal = self )
+				super(Sucursal, self).save()
 		except Exception, e:
-			super(Sucursal, self).save()
-			HistorialSucursal.objects.create(estado_antes = self.id_estadoSucursal.nombre_estado  ,estado_actual= self.id_estadoSucursal.nombre_estado,id_sucursal = self )
-			print '%s' %(e)
+			print 'Error Historial 1: %s' %(e)
+			print '***********'
+			try:
+				with transaction.atomic():
+					super(Sucursal, self).save()
+					HistorialSucursal.objects.create(estado_antes = self.get_nombre_estado_display()  ,estado_actual= self.get_nombre_estado_display() ,id_sucursal = self )
+			except Exception, e:
+				print 'Error Historial 2: %s' %(e)
+				print '****************************'
 
 # class HistorialDetalleAlmacen(models.Model):
 # 	adicional_producto = models.PositiveIntegerField()

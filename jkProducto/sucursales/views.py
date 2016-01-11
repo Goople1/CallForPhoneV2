@@ -9,7 +9,7 @@ from django.views.generic.base import TemplateView
 import json
 import djqscsv
 
-from .models import Sucursal, DetalleSucursalAlmacen, HistorialDetalleSucursalAlmacen
+from .models import Sucursal, DetalleSucursalAlmacen, HistorialDetalleSucursalAlmacen,HistorialSucursal
 from almacen.models import DetalleAlmacen 
 from productos.models import Producto
 from sucursales.utilidades import Utilidades
@@ -111,6 +111,23 @@ def Historial_ventas_Sucursal_Admin(request,id):
 	else:
 		return HttpResponseRedirect("/ventas/")
 
+@login_required(login_url='/cuenta/')
+def historialSucursal(request):
+
+	if is_admin(request.user.id):
+		historialSucursal = [] 
+		try:
+			print "kalena"
+			historialSucursal  = HistorialSucursal.objects.all().order_by('-fecha')
+		except Exception,e :
+			print e
+
+		template  = "reporteHistorialSucursal.html"
+		datos = request.session["datos"]
+		return render_to_response(template , {"historialSucursal":historialSucursal , "datos" : datos} , context_instance  = RequestContext(request))
+
+	else:
+		return HttpResponseRedirect("/ventas/")
 
 @login_required(login_url='/cuenta/')
 def addSucursalA(request,id):

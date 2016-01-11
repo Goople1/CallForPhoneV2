@@ -13,7 +13,7 @@
                         </div>
                         <div class="panel-body">
            {%for sucursal in sucursales %}
-            {% if sucursal.id_estadoSucursal.nombre_estado == "Disponible" %}
+            {% if sucursal.nombre_estado == "Dis" %}
             <a href="{% url operation sucursal.id %}">               
                     <div class="col-sm-6 col-md-3">
                       <div class="panel panel-success panel-stat">
