@@ -2,7 +2,7 @@
 {% block css %}
     {% load staticfiles %}
      <link href="{% static "static/css/jquery.datatables.css"%}" rel="stylesheet">
-    
+    <link href="{% static "static/css/bootstrap-datetimepicker.min.css"%}" rel="stylesheet">
 {% endblock css %}
 
 {% block content %}
@@ -12,9 +12,41 @@
  <div class="row">
 
 
+    <div class="row">
+
+        <div class='col-md-4'>
+            <div class="form-group">
+                <label class="control-label">Inicio:</label>
+                <div class='input-group date' id='datetimepicker1' >
+                        <input type='text' class="form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                </div>
+            </div>
+        </div>
+        <div class='col-md-4'>
+            <label class="control-label">Fin:</label>
+                <div class="form-group">
+                    <div class='input-group date' id='datetimepicker2' >
+                        <input type='text' class="form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+        </div>
+
       
-
-
+          
+        <div class='col-md-4'>
+            <label class="control-label">Acci&oacute;n:</label>
+            <div class="form-group">
+                  <button id="buscar" class="btn btn-primary">Buscar</button>
+                  <button id="buscarTotal" class="btn btn-danger">Ganancia</button>
+            </div>
+        </div>
+    </div>
 <!-- tabla 2 -->
 
         <div class="table-responsive">
@@ -93,14 +125,37 @@
 
 
 
+
+
+<!-- Modal Ganancia-->
+<div class="modal fade ganacia-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+        <div class="modal-header" style="
+    background-color: #428bca;
+">
+            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+            <h4 class="modal-title">Ganancia</h4>
+        </div>
+        <div class="modal-body"></div>
+    </div>
+  </div>
+</div>
+
+
     
 {% endblock content %}
 
 {% block javascript %}
     {% load staticfiles %}
     <script src="{% static "static/js/jquery.datatables.min.js"%}"></script>
+    <script src="{% static "static/js/sucursal/moment.min.js"%}"></script>
+    <script src="{% static "static/js/sucursal/bootstrap-datetimepicker.min.js"%}"></script>
+    <script src="{% static "static/js/sucursal/moment-local.es.js"%}" charset="UTF-8"></script>
+    
+    
 
-    <script>
+    <script type="text/javascript">
   jQuery(document).ready(function() {
     
     "use strict";
@@ -124,6 +179,28 @@
         return false;
     });
     
+
+
+
+       $('#datetimepicker1').datetimepicker({
+         format:'DD/MM/YYYY',
+         locale:'es'
+         
+       });
+        $('#datetimepicker2').datetimepicker({
+            format:'DD/MM/YYYY',
+            locale:'es',
+            //useCurrent: false //Important! See issue #1075
+
+        });
+        $("#datetimepicker1").on("dp.change", function (e) {
+            $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
+        });
+        $("#datetimepicker2").on("dp.change", function (e) {
+            $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
+        });
+
+
     // // Show aciton upon row hover
     // jQuery('.table-hidaction tbody tr').hover(function(){
     //   jQuery(this).find('.table-action-hide a').animate({opacity: 1});
@@ -131,11 +208,6 @@
     //   jQuery(this).find('.table-action-hide a').animate({opacity: 0});
     // });
   
-  
-  });
-</script>
-
-<script type="text/javascript">
 
 $(".ventaDetalle").on("click" , function(){
 
@@ -202,7 +274,8 @@ function createTable(){
 }
 
 
+  
+  });
 </script>
-
-    
+  
 {% endblock javascript %}
