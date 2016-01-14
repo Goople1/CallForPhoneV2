@@ -18,7 +18,7 @@
             <div class="form-group">
                 <label class="control-label">Inicio:</label>
                 <div class='input-group date' id='datetimepicker1' >
-                        <input type='text' class="form-control" />
+                        <input type='text' class="form-control"  id ="dateValueInicio" />
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -28,8 +28,8 @@
         <div class='col-md-4'>
             <label class="control-label">Fin:</label>
                 <div class="form-group">
-                    <div class='input-group date' id='datetimepicker2' >
-                        <input type='text' class="form-control" />
+                    <div class='input-group date' id='datetimepicker2'  >
+                        <input type='text' class="form-control"  id = "dateValueFin"/>
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -199,6 +199,59 @@
         $("#datetimepicker2").on("dp.change", function (e) {
             $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
         });
+
+
+
+    //Boton para buscar el resultado de la fechas en un Rango de días 
+
+    $("#buscar").on("click", function(){
+
+
+        var fechaInicio  =  $("#dateValueInicio").val();
+        console.log("#fechaInicial:  " ,fechaInicio);
+        var fechaFinal = $("#dateValueFin").val();
+        console.log("fechaFinal:  " ,fechaFinal);
+
+
+
+        $.ajax({
+
+
+            data:{'fechaInicio' : fechaInicio  , 'fechaFinal' : fechaFinal},
+            url : "/mantenimientoSucursal/ventasRangoFecha/",
+            type:'GET',
+
+        })
+
+        .done(function(data){
+
+            console.log("data" , data );
+
+        })
+        .fail(function(){
+
+        });
+
+
+
+
+
+
+
+
+        //alert(fechaInicial,"",fechaFinal);
+
+
+    });
+
+
+
+
+
+
+
+
+
 
 
     // // Show aciton upon row hover

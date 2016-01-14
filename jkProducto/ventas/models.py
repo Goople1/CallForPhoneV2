@@ -13,8 +13,7 @@ class Venta(models.Model):
 	estado = models.BooleanField(default=True)
 	total  = models.FloatField( blank=True , default=0.0)
 
-	def __unicode__(self):
-		pass
+	
 	
 
 class DetalleVenta(models.Model):
@@ -28,9 +27,7 @@ class DetalleVenta(models.Model):
 	descripcion = models.CharField(max_length=50 ,blank=True)
 	importe = models.FloatField(default=0.0)
 
-	def __unicode__(self):
-		pass
-
+	
 # class AsistenciaTrabajador(models.Model):
 # 	trabajador = models.ForeignKey(SucursalTrabajador)
 # 	hora_ingreso = models.DateTimeField(null = True)

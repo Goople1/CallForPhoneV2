@@ -5,9 +5,13 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic.base import TemplateView
+from django.utils import timezone
+from django.db.models import Q
+
 
 import json
 import djqscsv
+import datetime
 
 from .models import Sucursal, DetalleSucursalAlmacen, HistorialDetalleSucursalAlmacen
 from almacen.models import DetalleAlmacen 
@@ -478,6 +482,74 @@ def ver_detalle(request):
 
 	else :
 		return HttpResponse("Zorry")
+
+
+
+
+
+@login_required(login_url='/cuenta/')
+def getVentasbyDateRange(request):
+
+	if request.method == 'GET':
+		fecha_inicio = map(int ,request.GET.get("fechaInicio").split("/"))
+		print fecha_inicio
+		fecha_inicio = timezone.make_aware(datetime.datetime(day = int(fecha_inicio[0]) , month = int(fecha_inicio[1]) , year = int(fecha_inicio[2])))
+		
+		fecha_fin = request.GET.get("fechaFinal").split("/")
+		#fecha_fin = timezone.make_aware(datetime.datetime(day = int(fecha_fin[0]) , month = int(fecha_fin[1]) , year = int(fecha_fin[2])))
+
+		print fecha_inicio.date , " --- " , fecha_fin
+
+
+
+
+
+
+
+		 # buscar todas la ventas en ese rango de fechas : 
+
+		#ventas_date_range = Venta.objects.filter(fecha_emision__range=(fecha_inicio, fecha_fin))
+		try:
+			#ventas_date_range = Venta.objects.filter(Q(fecha_emision__gte=(datetime.date(day = fecha_inicio[0] , month = fecha_inicio[1] , year = fecha_inicio[2]))), Q(estado = True))
+
+			ventas_date_range = Venta.objects.filter(Q(fecha_emision__gte=fecha_inicio) ,  Q(estado = True))
+
+
+
+			print "test try"
+			print ventas_date_range.count()
+			
+		except Exception, e:
+			
+			print e
+		
+		print "test 123"
+
+		
+
+		return HttpResponse("hola");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
+
+
 
 
 
