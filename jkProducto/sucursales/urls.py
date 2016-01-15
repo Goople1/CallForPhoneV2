@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     url(r'^editProductotoSucursal/$', views.editProductotoSucursal,name='editProductotoSucursal'), 
     url(r'^historialVentas/$', views.historialVentas,name='historialVentas'), 
     url(r'^historialVentas/(?P<id>[\w-]+)/$', views.Historial_ventas_Sucursal_Admin,name='histoSucursalVentasAdm'), 
+    url(r'^historialSucursal/$', views.historialSucursal,name='historialSucursal'),
     url(r'^detalle/ver/$', views.ver_detalle,name='algo1'), 
     url(r'^ventasRangoFecha/$', views.getVentasbyDateRange,name='ventas_rango_fechas'),
 
