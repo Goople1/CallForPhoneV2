@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic.base import TemplateView
 from django.utils import timezone
-from django.db.models import Q
+from django.db.models import Q,Sum, F
 
 
 import json
@@ -518,15 +518,7 @@ def getVentasbyDateRange(request):
 		fecha_fin = timezone.make_aware(datetime.datetime(day = int(fecha_fin[0]) , month = int(fecha_fin[1]) , year = int(fecha_fin[2]) , hour =23  , minute  = 59 , second = 59 ))
 
 		print fecha_inicio , " --- " , fecha_fin
-
-
-
-
-
-
-
 		 # buscar todas la ventas en ese rango de fechas : 
-
 		#ventas_date_range = Venta.objects.filter(fecha_emision__range=(fecha_inicio, fecha_fin))
 		try:
 			#ventas_date_range = Venta.objects.filter(Q(fecha_emision__gte=(datetime.date(day = fecha_inicio[0] , month = fecha_inicio[1] , year = fecha_inicio[2]))), Q(estado = True))
@@ -534,18 +526,60 @@ def getVentasbyDateRange(request):
 			ventas_date_range = Venta.objects.filter(Q(fecha_emision__gte=fecha_inicio) ,Q(fecha_emision__lte = fecha_fin),  Q(estado = True))
 			
 			print ventas_date_range.count()
+
+
+			# total_ventas = Venta.objects.annotate(total_venta = Sum('total'))
+			# print "total" ,  total_ventas
+			#sum_ventas  = ventas_date_range.aggregate(totalus  =  Sum(F('total')))
+			#print sum_ventas
+
 			
 		except Exception, e:
 			
 			print e
-		
+	
 		print "test 123"
-
 		venta_json_format = [Utilidades().venta_to_json(venta) for venta in ventas_date_range]
 		print venta_json_format
 
-
 		return HttpResponse( json.dumps(venta_json_format) , content_type='application/json')
+
+
+
+@login_required(login_url='/cuenta/')
+def getGananciabyDateRange(request):
+
+	print "LA GANACIA ES.............."
+	if request.method == 'GET':
+
+		fecha_inicio = map(int ,request.GET.get("fechaInicio").split("/"))
+		fecha_inicio = timezone.make_aware(datetime.datetime(day = int(fecha_inicio[0]) , month = int(fecha_inicio[1]) , year = int(fecha_inicio[2])))
+		
+		fecha_fin = request.GET.get("fechaFinal").split("/")
+		fecha_fin = timezone.make_aware(datetime.datetime(day = int(fecha_fin[0]) , month = int(fecha_fin[1]) , year = int(fecha_fin[2]) , hour =23  , minute  = 59 , second = 59 ))
+
+		try:
+			ventas = Venta.objects.filter(Q(fecha_emision__gte=fecha_inicio) ,Q(fecha_emision__lte = fecha_fin),  Q(estado = True))
+			sum_ventas  = ventas.aggregate(suma_totales_venta  =  Sum(F('total')))
+
+			print sum_ventas
+
+		except Exception, e:
+			print e
+
+		return HttpResponse( json.dumps(sum_ventas) , content_type='application/json')
+		
+
+
+
+
+
+
+
+
+
+
+
 
 
 

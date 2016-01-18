@@ -135,7 +135,7 @@
     background-color: #428bca;
 ">
             <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
-            <h4 class="modal-title">Ganancia</h4>
+            <h4 class="modal-title">TOTAL VENTAS</h4>
         </div>
         <div class="modal-body"></div>
     </div>
@@ -266,6 +266,39 @@
 
 
 
+        })
+        .fail(function(){
+
+        });
+
+        //alert(fechaInicial,"",fechaFinal);
+
+    });
+
+//---------------------------------------------------------------------------------------
+
+
+    $("#buscarTotal").on("click", function(){
+
+        var fechaInicio  =  $("#dateValueInicio").val();
+        var fechaFinal = $("#dateValueFin").val();
+        $.ajax({
+
+            data:{'fechaInicio' : fechaInicio  , 'fechaFinal' : fechaFinal},
+            url : "/mantenimientoSucursal/totalVentasRangoFecha/",
+            type:'GET',
+        })
+
+        .done(function(data){
+
+            console.log(data);
+
+           // alert(data.suma_totales_venta);
+
+            $('.modal-body').text(data.suma_totales_venta);
+            $('.ganacia-example-modal-sm').modal('show');
+
+
 
 
 
@@ -273,15 +306,6 @@
         .fail(function(){
 
         });
-
-
-
-
-
-
-
-
-        //alert(fechaInicial,"",fechaFinal);
 
 
     });

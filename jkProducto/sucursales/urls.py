@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     url(r'^historialSucursal/$', views.historialSucursal,name='historialSucursal'),
     url(r'^detalle/ver/$', views.ver_detalle,name='algo1'), 
     url(r'^ventasRangoFecha/$', views.getVentasbyDateRange,name='ventas_rango_fechas'),
+    url(r'^totalVentasRangoFecha/$', views.getGananciabyDateRange,name='total_rango_fechas'),
 
 
   	)
