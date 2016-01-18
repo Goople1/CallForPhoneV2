@@ -40,6 +40,12 @@ class Utilidades():
 		return to_json
 
 
+
+	def venta_to_json(self,ObjVenta):
+		to_json = {"id": ObjVenta.id , "empleado" : str(ObjVenta.empleado.trabajador.get_full_name()) , "sucursal": str(ObjVenta.sucursal.nombre), "fecha_emision" : str(ObjVenta.fecha_emision) , "total": ObjVenta.total	}
+		return to_json
+
+
 	def detalle_venta_to_json(self,ObjDetalleVenta):
 
 		to_json = {"producto":str(ObjDetalleVenta.detalle_Sucursal_almacen_id.producto_id), "tipo_precio" : ObjDetalleVenta.tipo_precio ,"cantidad" :ObjDetalleVenta.cantidad , "precio":ObjDetalleVenta.precio , "descripcion" : ObjDetalleVenta.descripcion ,"importe": ObjDetalleVenta.importe , "precio_real":ObjDetalleVenta.precio_real}

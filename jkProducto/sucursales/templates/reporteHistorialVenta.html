@@ -68,7 +68,7 @@
                   </thead>
 
 
-                  <tbody>
+                  <tbody id = "result">
 
                     {% for  venta in  ventas %}
 
@@ -224,8 +224,50 @@
         })
 
         .done(function(data){
+  //          alert("test1");
 
-            console.log("data" , data );
+            //var info = $.parseJSON(data);
+
+//            alert("test1.5");
+
+            console.log(data[0].empleado)
+
+            //console.log(info);
+
+
+            var tabla_body = $("#result");
+
+
+            tabla_body.empty();
+
+            var result = [];
+
+
+
+            for (var i = 0 ; i < data.length ; i++){
+
+
+                  var row = $("<tr>"+
+                    "<td>"+(i+1)+"</td>"+
+                    "<td>"+data[i].empleado+"</td>"+
+                    "<td>"+data[i].total+"</td>"+
+                    "<td>"+data[i].fecha_emision+"</td>"+
+                    
+
+                    "<td> <a  class ='ventaDetalle' href ='#' data-venta = " + data[i].id +" "+ "data-target ='.bs-example-modal-lg' data-toggle='modal'>ver</a><td>"+ 
+                    "</tr>");
+
+                    result.push(row)
+
+            }
+
+
+                tabla_body.append(result);
+
+
+
+
+
 
         })
         .fail(function(){
@@ -262,7 +304,11 @@
     // });
   
 
-$(".ventaDetalle").on("click" , function(){
+//$(".ventaDetalle").on("click" , function(){
+
+
+    $('body').delegate('.ventaDetalle','click', function(){
+
 
     console.log("me llamaron ");
 

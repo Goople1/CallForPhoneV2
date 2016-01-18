@@ -23,6 +23,8 @@ from ventas.models import DetalleVenta
 
 
 
+
+
 # Create your views here.
 
 @login_required(login_url='/cuenta/')
@@ -513,9 +515,9 @@ def getVentasbyDateRange(request):
 		fecha_inicio = timezone.make_aware(datetime.datetime(day = int(fecha_inicio[0]) , month = int(fecha_inicio[1]) , year = int(fecha_inicio[2])))
 		
 		fecha_fin = request.GET.get("fechaFinal").split("/")
-		#fecha_fin = timezone.make_aware(datetime.datetime(day = int(fecha_fin[0]) , month = int(fecha_fin[1]) , year = int(fecha_fin[2])))
+		fecha_fin = timezone.make_aware(datetime.datetime(day = int(fecha_fin[0]) , month = int(fecha_fin[1]) , year = int(fecha_fin[2]) , hour =23  , minute  = 59 , second = 59 ))
 
-		print fecha_inicio.date , " --- " , fecha_fin
+		print fecha_inicio , " --- " , fecha_fin
 
 
 
@@ -529,11 +531,8 @@ def getVentasbyDateRange(request):
 		try:
 			#ventas_date_range = Venta.objects.filter(Q(fecha_emision__gte=(datetime.date(day = fecha_inicio[0] , month = fecha_inicio[1] , year = fecha_inicio[2]))), Q(estado = True))
 
-			ventas_date_range = Venta.objects.filter(Q(fecha_emision__gte=fecha_inicio) ,  Q(estado = True))
-
-
-
-			print "test try"
+			ventas_date_range = Venta.objects.filter(Q(fecha_emision__gte=fecha_inicio) ,Q(fecha_emision__lte = fecha_fin),  Q(estado = True))
+			
 			print ventas_date_range.count()
 			
 		except Exception, e:
@@ -542,9 +541,11 @@ def getVentasbyDateRange(request):
 		
 		print "test 123"
 
-		
+		venta_json_format = [Utilidades().venta_to_json(venta) for venta in ventas_date_range]
+		print venta_json_format
 
-		return HttpResponse("hola");
+
+		return HttpResponse( json.dumps(venta_json_format) , content_type='application/json')
 
 
 
