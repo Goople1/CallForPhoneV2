@@ -347,7 +347,7 @@
        {% if modificar %}
           {% for detalle in detalle_venta %}
 
-          console.log("{{detalle.detalle_Sucursal_almacen_id.producto_id.id}}")
+          //console.log("{{detalle.detalle_Sucursal_almacen_id.producto_id.id}}")
             pro["{{detalle.detalle_Sucursal_almacen_id.producto_id.id}}"].estado = 0
             aux_pro["{{detalle.detalle_Sucursal_almacen_id.producto_id.id}}"] =true;
 
@@ -359,8 +359,8 @@
 
 
 
-       console.log("producto",pro);
-       console.log("productoAux",aux_pro);
+       //console.log("producto",pro);
+       //console.log("productoAux",aux_pro);
         var to_cmb  = pro;
          comAux="";
 
@@ -368,7 +368,7 @@
 
     var cmbProducto = $(this).parent().parent().parent().find('td:eq(1)').children();
 
-    	console.log("ROW ???? " , $(this).parent().parent().parent())
+    	//console.log("ROW ???? " , $(this).parent().parent().parent())
    
       $(this).parent().parent().parent().fadeTo(400, 0, function () { 
       $(this).remove();
@@ -400,7 +400,7 @@
 
 
     var ppp = $(this);
-    console.log("dllFocus:",ppp.val());
+    //console.log("dllFocus:",ppp.val());
     var au_p = aux_pro[ppp.val()];
     if(typeof au_p !== "undefined" && au_p==true )
     {
@@ -422,8 +422,8 @@
     //console.log("new focuss-"+ddl.val());
 }).on('change','.cmb_producto', function () {
     var nnn = $(this);
-    console.log("dllChange:",nnn.val())
-    console.log(this);
+    //console.log("dllChange:",nnn.val())
+    //console.log(this);
 
     var previous = nnn.data('previous');
     var actual=nnn.val();
@@ -436,7 +436,7 @@
     }
     if(previous!="0")
     {
-      console.log("dllChangePrevv:",previous)
+      //console.log("dllChangePrevv:",previous)
       cambiarEstadoOff(previous);
     }
     
@@ -449,7 +449,7 @@
 
     function cambiarEstadoOff(llave)
     {
-      console.log("on")
+      //console.log("on")
       if(llave.toString()!="0")
       {
         to_cmb[llave].estado="1";
@@ -458,7 +458,7 @@
     }
     function cambiarEstadoON(llave)
     {
-      console.log("off");
+      //console.log("off");
       if(llave.toString() !="0")
       {
         to_cmb[llave].estado="0";
@@ -474,13 +474,13 @@
     //console.log("combix",combo)
     if(parseInt(combo) == -1 )
     {
-      console.log("combo nuevo");
+      //console.log("combo nuevo");
 
       combo = $("<select></select>").attr("class", "cmb_producto").attr("id","cmb"+iden);  
     }
     else
     {
-      console.log("crear combo vacio")
+     // console.log("crear combo vacio")
        $("#"+iden).empty();
     }
   
@@ -595,7 +595,7 @@ function getPrecio(producto , tipo){
           var precio = row.find('td:eq(5)').children().val();
 
 
-          console.log("tipoPrecio  , Cantidad  ,  precio"  , tipoPrecio,cantidad , precio);
+       //   console.log("tipoPrecio  , Cantidad  ,  precio"  , tipoPrecio,cantidad , precio);
           row.find('td:eq(6)').children().val(calcular_importe(cantidad,precio));
 
 
@@ -622,7 +622,7 @@ function getPrecio(producto , tipo){
           var tipoPrecio = $(this).val();
 
           var row = $(this).parent().parent();
-          console.log(row);
+         // console.log(row);
 
           var valueComboProducto = row.find('td:eq(1)').children().val();
 
@@ -684,7 +684,7 @@ function getPrecio(producto , tipo){
             finally
             {
                var precio = inputPrecioUnitario.val();
-              console.log("cantidad-precio"+cantidad+"-"+precio);
+           //   console.log("cantidad-precio"+cantidad+"-"+precio);
               inputImporte.val(calcular_importe(cantidad,precio));
               $("#total").val(calcular_total()); 
             }
@@ -860,10 +860,10 @@ $('body').delegate('.cantidadPro','blur', function(){
    $("#add_row").click(function(){
 
            cantidadFilas = $("#tab_logic tbody tr").length;
-           console.log("cantidad" , cantidadFilas)
+           //console.log("cantidad" , cantidadFilas)
            var list = [];
 
-         console.log("Valor   i : " ,   i )
+         //console.log("Valor   i : " ,   i )
 
           
 

@@ -81,8 +81,7 @@ def filtrocriterio(request):
 			except Exception , e:
 				 print e
 				 return  HttpResponse("Error de Servidor ")
-			print productos.count()
-
+			
 			return HttpResponse(json.dumps(data) ,content_type='application/json')
 
 

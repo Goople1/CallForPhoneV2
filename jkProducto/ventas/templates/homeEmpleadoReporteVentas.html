@@ -99,10 +99,9 @@
 
 $(".ventaDetalle").on("click" , function(){
 
- 	console.log("me llamaron ");
-
+ 
  	var codigo = $(this).attr( "data-venta" );
- 		console.log(codigo);
+ 		
 	  $.ajax({
 
               data : {'codigo' : codigo },
@@ -111,7 +110,7 @@ $(".ventaDetalle").on("click" , function(){
               })
 	  		  .done(function(data){
 
-               console.log(data.length);
+               
               	var table =  createTable();
               	var result = []
 

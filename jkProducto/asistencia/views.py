@@ -34,7 +34,7 @@ def historial_asistencia(request):
                 #pero tb redireccionar a la misma plantilla pero con if...si es trabajador o admin
                 asistenciaTodas = AsistenciaTrabajador.objects.all()
                 datos = request.session["datos"]
-                print "3"
+                
                 return render_to_response( template , {"asistencias":asistenciaTodas ,"datos":datos}, context_instance = RequestContext(request))             
             elif request.user.is_active:
                 return HttpResponseRedirect("/ventas/")
@@ -49,7 +49,7 @@ def asistencia(request):
         try:            
             traba = SucursalTrabajador.objects.get(trabajador=request.user)
             tipo = request.POST.get('tipo',"")
-            print "post"
+           
             #Asistencia Manana
             if tipo.strip().lower() == "on":
                 asistir = AsistenciaTrabajador.objects.filter(Q(hora_ingreso__year=fecha.year) , Q(hora_ingreso__month=fecha.month), Q(hora_ingreso__day=fecha.day) )
@@ -89,7 +89,7 @@ def asistencia(request):
             actualizar = "Ha ocurrido un error"
         return HttpResponse(actualizar)
     else:
-        print "get"
+        
         template = "asistencia.html"
         datos = request.session["datos"]
 

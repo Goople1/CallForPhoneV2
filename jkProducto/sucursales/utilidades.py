@@ -1,5 +1,9 @@
 # from django.db.models import ForeignKey 
-
+from django.utils import timezone
+import locale
+#import datetime
+locale.setlocale(locale.LC_TIME,'')
+#'es_CR.UTF-8'
 class Utilidades():
 	def validarIngresoNum(self,numero):
 
@@ -35,14 +39,15 @@ class Utilidades():
 
 
 	def detalle_sucursal_almacen_to_json (self,ObjDetaSucAlm):
-
 		to_json = {	"id" : ObjDetaSucAlm.id,"stock" : ObjDetaSucAlm.stock, "producto": {"id" : ObjDetaSucAlm.producto_id.id,"codigo":ObjDetaSucAlm.producto_id.codigo,"color" :ObjDetaSucAlm.producto_id.get_color_display(),"precio_por_mayor":ObjDetaSucAlm.producto_id.precio_x_mayor,"precio_por_menor":ObjDetaSucAlm.producto_id.precio_x_menor,"imagen":ObjDetaSucAlm.producto_id.imagen.url,	"marca":{"nombre":ObjDetaSucAlm.producto_id.marca.nombre},  "tipo_producto":{"nombre":ObjDetaSucAlm.producto_id.tipo_producto.nombre}   }, 	"sucursal":{"codigo_puesto":ObjDetaSucAlm.sucursal_id.codigo_puesto, "nombre":ObjDetaSucAlm.sucursal_id.nombre,	"departamento":ObjDetaSucAlm.sucursal_id.get_departamento_display(),"direccion":ObjDetaSucAlm.sucursal_id.direccion, "telefono":ObjDetaSucAlm.sucursal_id.telefono, "celular":ObjDetaSucAlm.sucursal_id.celular }}
 		return to_json
 
 
 
 	def venta_to_json(self,ObjVenta):
-		to_json = {"id": ObjVenta.id , "empleado" : str(ObjVenta.empleado.trabajador.get_full_name()) , "sucursal": str(ObjVenta.sucursal.nombre), "fecha_emision" : str(ObjVenta.fecha_emision) , "total": ObjVenta.total	}
+		print "venta"
+		#print strftime("%a, %d %b %Y %H:%M:%S")
+		to_json = {"id": ObjVenta.id , "empleado" : str(ObjVenta.empleado.trabajador.get_full_name()) , "sucursal": str(ObjVenta.sucursal.nombre), "fecha_emision" : str(timezone.localtime(ObjVenta.fecha_emision).strftime("%a, %d %b %Y %I:%M %p")).capitalize() , "total": ObjVenta.total	}
 		return to_json
 
 

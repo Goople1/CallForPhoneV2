@@ -43,7 +43,16 @@
             <label class="control-label">Acci&oacute;n:</label>
             <div class="form-group">
                   <button id="buscar" class="btn btn-primary">Buscar</button>
-                  <button id="buscarTotal" class="btn btn-danger">Ganancia</button>
+            
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                  <label for="totalVentasFechas" class="control-label">Total:</label>
+                  
+                      <input type="text" class="form-control" id="totalVentasFechas" placeholder="Total de Ventas" readOnly="readOnly">
             </div>
         </div>
     </div>
@@ -229,12 +238,13 @@
             //var info = $.parseJSON(data);
 
 //            alert("test1.5");
-
-            console.log(data[0].empleado)
+            var total = data.slice((data.length-1),(data.length))
+            data =  data.slice(0,data.length-1)
+            console.log(total)
 
             //console.log(info);
 
-
+            $('#totalVentasFechas').val(total[0].total);
             var tabla_body = $("#result");
 
 

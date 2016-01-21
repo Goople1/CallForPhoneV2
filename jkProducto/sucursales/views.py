@@ -107,6 +107,7 @@ def Historial_ventas_Sucursal_Admin(request,id):
 
 		try:
 			ventas  = Venta.objects.filter(sucursal = sucursal_id,estado=True).order_by('-fecha_emision')
+			
 		except Exception,e :
 			print e
 
@@ -123,7 +124,7 @@ def historialSucursal(request):
 	if is_admin(request.user.id):
 		historialSucursal = [] 
 		try:
-			print "kalena"
+			
 			historialSucursal  = HistorialSucursal.objects.all().order_by('-fecha')
 		except Exception,e :
 			print e
@@ -510,46 +511,90 @@ def ver_detalle(request):
 def getVentasbyDateRange(request):
 
 	if request.method == 'GET':
-		fecha_inicio = map(int ,request.GET.get("fechaInicio").split("/"))
-		print fecha_inicio
-		fecha_inicio = timezone.make_aware(datetime.datetime(day = int(fecha_inicio[0]) , month = int(fecha_inicio[1]) , year = int(fecha_inicio[2])))
+		sum_ventas = {}
+		fecha_inicio = request.GET.get("fechaInicio","")
+		fecha_fin = request.GET.get("fechaFinal","")
+		if fecha_inicio.strip() !="":
+			fecha_inicio = map(int ,request.GET.get("fechaInicio").split("/"))
+		#	print fecha_inicio
+			fecha_inicio = timezone.make_aware(datetime.datetime(day = int(fecha_inicio[0]) , month = int(fecha_inicio[1]) , year = int(fecha_inicio[2])))
 		
-		fecha_fin = request.GET.get("fechaFinal").split("/")
-		fecha_fin = timezone.make_aware(datetime.datetime(day = int(fecha_fin[0]) , month = int(fecha_fin[1]) , year = int(fecha_fin[2]) , hour =23  , minute  = 59 , second = 59 ))
+		if fecha_fin.strip() != "":
+			fecha_fin = request.GET.get("fechaFinal").split("/")
+			fecha_fin = timezone.make_aware(datetime.datetime(day = int(fecha_fin[0]) , month = int(fecha_fin[1]) , year = int(fecha_fin[2]) , hour =23  , minute  = 59 , second = 50 ))
 
-		print fecha_inicio , " --- " , fecha_fin
+		#print fecha_inicio , " --- " , fecha_fin
+		rpt = criteriobusqueda(fecha_inicio,fecha_fin)
 		 # buscar todas la ventas en ese rango de fechas : 
 		#ventas_date_range = Venta.objects.filter(fecha_emision__range=(fecha_inicio, fecha_fin))
 		try:
 			#ventas_date_range = Venta.objects.filter(Q(fecha_emision__gte=(datetime.date(day = fecha_inicio[0] , month = fecha_inicio[1] , year = fecha_inicio[2]))), Q(estado = True))
 
-			ventas_date_range = Venta.objects.filter(Q(fecha_emision__gte=fecha_inicio) ,Q(fecha_emision__lte = fecha_fin),  Q(estado = True))
-			
-			print ventas_date_range.count()
-
-
+			#ventas_date_range = Venta.objects.filter(Q(fecha_emision__gte=fecha_inicio) ,Q(fecha_emision__lte = fecha_fin),  Q(estado = True))
+			ventas_date_range = Venta.objects.filter(**rpt)
+			total = Venta.objects.all()
+		#	print total[0].fecha_emision
+		#	print ventas_date_range[0].fecha_emision
 			# total_ventas = Venta.objects.annotate(total_venta = Sum('total'))
 			# print "total" ,  total_ventas
-			#sum_ventas  = ventas_date_range.aggregate(totalus  =  Sum(F('total')))
-			#print sum_ventas
-
-			
+			sum_ventas  = ventas_date_range.aggregate(total  =  Sum(F('total')))
 		except Exception, e:
 			
 			print e
 	
-		print "test 123"
+		#print "test 123"
 		venta_json_format = [Utilidades().venta_to_json(venta) for venta in ventas_date_range]
-		print venta_json_format
-
+		#print venta_json_format
+		#print venta_json_format.append(sum_ventas)
+		#venta_json_format.update(sum_ventas)
+		#print venta_json_format
 		return HttpResponse( json.dumps(venta_json_format) , content_type='application/json')
 
+
+def criteriobusqueda(fecIni,fecFin):
+
+	criterio = {}
+	regla = {'estado': True }
+	criterio.update(regla)
+	#any() retorna   True si alguna condicion es True 
+	
+	valor = [fecIni,fecFin]
+	if  not any(valor) :
+		# try:
+		# 	todo = DetalleSucursalAlmacen.objects.all()
+		# except Exception,e:
+		# 	print e 
+		# 	return HttpResponse("Servidor OFf")
+		return criterio
+	else: 
+
+		campos = ["fecIni","fecFin"]
+		my_dict = dict(zip(campos,valor))
+		my_dict = clean_dict_for_value_0(my_dict)
+
+		if "fecIni" in my_dict :
+			regla = {"fecha_emision__gte":my_dict.get("fecIni")}
+			criterio.update(regla)
+
+		if "fecFin" in my_dict:
+			regla = {"fecha_emision__lte":my_dict.get("fecFin")}
+			criterio.update(regla)
+
+		return criterio
+
+#funcion para limpiar  un dictionario  con value difrente de 0
+#Teniendo en cuenta que los valores que se pasan son 0 o positivos
+def clean_dict_for_value_0 (data):
+
+	d = {k:v for k, v in list(data.items()) if v }
+
+	return d
 
 
 @login_required(login_url='/cuenta/')
 def getGananciabyDateRange(request):
 
-	print "LA GANACIA ES.............."
+	#print "LA GANACIA ES.............."
 	if request.method == 'GET':
 
 		fecha_inicio = map(int ,request.GET.get("fechaInicio").split("/"))
@@ -562,7 +607,7 @@ def getGananciabyDateRange(request):
 			ventas = Venta.objects.filter(Q(fecha_emision__gte=fecha_inicio) ,Q(fecha_emision__lte = fecha_fin),  Q(estado = True))
 			sum_ventas  = ventas.aggregate(suma_totales_venta  =  Sum(F('total')))
 
-			print sum_ventas
+	#		print sum_ventas
 
 		except Exception, e:
 			print e
