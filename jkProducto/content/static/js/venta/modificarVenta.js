@@ -58,7 +58,7 @@ var jsonObj = [];
     url: '/ventas/cargarProductos/',
     type: 'POST',
     //contentType: 'application/json; charset=utf-8',
-    data: {"json":JSON.stringify(jsonObj) ,"venta_id": venta_id},
+    data: {"json_detalle_venta":JSON.stringify(jsonObj) ,"venta_id": venta_id},
     dataType: 'text',
     success: function(result) {
 

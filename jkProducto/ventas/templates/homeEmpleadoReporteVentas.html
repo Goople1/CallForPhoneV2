@@ -93,8 +93,9 @@
 {% endblock content %}
 {% block javascript %}
 {%load staticfiles%}
-    <script src="{% static "static/js/csrf.js"%}"></script>
-
+ <script src="{% static "static/js/csrf.js"%}"></script>
+<script src="{% static "static/js/venta/reporteVenta.js"%}"></script>
+<!--
 <script type="text/javascript">
 
 $(".ventaDetalle").on("click" , function(){
@@ -164,6 +165,6 @@ function createTable(){
 
 </script>
 
-	
+	-->
 {% endblock javascript %}
 	

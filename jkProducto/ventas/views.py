@@ -106,6 +106,7 @@ def venta (request):
 def addVenta(request):
 
     if request.method == "POST":
+
         try:
             with transaction.atomic():
                 trabajador = SucursalTrabajador.objects.get(trabajador = request.user.id)

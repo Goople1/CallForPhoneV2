@@ -12,6 +12,7 @@ $("#btn-vender").on("click" , function(){
 
 
 		 /*
+
 		 table |  length
 		 -----------------------------------
 			0	| 1 Numero 			|no
@@ -22,6 +23,7 @@ $("#btn-vender").on("click" , function(){
 			5	| 6 Precio Unitario |si
 			6	| 7 Importe			|si(lo puedo calcular )
 			7	| 8 Delete			| no 
+
 		 */
 
 		// por cada fila que existe tengo que coger todos los datos
@@ -62,11 +64,11 @@ console.log(jsonObj)
 	    url: '/ventas/addVenta/',
 	    type: 'POST',
 	    //contentType: 'application/json; charset=utf-8',
-	    data: {"json":JSON.stringify(jsonObj) ,"total":total},
+	    data: {"json_detalle_venta":JSON.stringify(jsonObj) ,"total":total},
 	    dataType: 'text',})
 		.done(function(data){
 
-			alert("Hola");
+
 			var resp = $.parseJSON(data)
 
 			$('.bs-example-modal-sm .modal-body').text(resp.mensaje);
@@ -82,7 +84,7 @@ console.log(jsonObj)
 
 			})
 		.fail(function(data){
-			alert("a ocurrido un Error", data);
+			alert("UPS! , a ocurrido un Error", data);
 		});
 
 	    /*success: function(result) {

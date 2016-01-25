@@ -156,15 +156,7 @@
     
 {% endblock content %}
 {% block javascript %}
-  <script type="text/javascript">
-  $(function() {
-      
-      $( ".leftpanel .leftpanelinner" ).on( "click", ".nav-parent", function() {
-          var menuSeleccionado=$(this).prop('id');
-          $(".menuGeneral").addClass('hidden');
-          $("."+menuSeleccionado).removeClass('hidden');
+{% load staticfiles %}
+<script src="{% static "static/js/sucursal/mantenimientoSucursal.js"%}"></script>
 
-      });
-  });
-  </script>
 {% endblock javascript %}
