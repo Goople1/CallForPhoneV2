@@ -7,7 +7,8 @@ from django.conf.urls.static import static
 from django.apps import apps
 
 from sucursales.views import invitePage
-from ventas import views 
+from internetWeb import views as internet
+from ventas import views  
 
 admin.site.login = login_required(admin.site.login)
 admin.autodiscover()
@@ -56,10 +57,13 @@ if not apps.is_installed('internetWeb'):
     )
 
 else:
-    urlpatterns+=patterns('',
+    urlpatterns+=patterns('internetWeb.views',
 
-        
+        url(r'^empresa/$',internet.empresa , name='empresa'),
+        url(r'^servicio/$',internet.servicio , name='servicio'),
+        url(r'^contacto/$',internet.contacto , name='contacto'),
         url(r'^$', include('internetWeb.urls')),
+        
 
     )
 

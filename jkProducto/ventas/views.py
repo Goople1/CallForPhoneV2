@@ -351,9 +351,7 @@ def iniciarSesion(request):
             iniciar_sesion = FormInciarSesion(request.POST)
             return render_to_response(template,{'form_iniciar_sesion':iniciar_sesion},context_instance=RequestContext(request))
     else:
-        template = "asistencia.html"
-        return render_to_response(template,{},context_instance=RequestContext(request))
-        #return HttpResponseRedirect("/ventas/")
+        return HttpResponseRedirect('/ventas')
         
 
     

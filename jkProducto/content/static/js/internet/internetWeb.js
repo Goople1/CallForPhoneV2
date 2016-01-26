@@ -69,20 +69,7 @@
   });
 
 
-
-
-
-
-
-
-
 function to_show2 (data){
-
-
-  
-
-
-
      var div_item = $("<div/>" , {"class": "col-lg-4 col-sm-6 text-center item"});
          var img = $("<img/>"  , {"class":"img-circle img-responsive img-center" , "src" :  data.producto.imagen ,"height": "200px" , "width":"200px"});
          img.appendTo(div_item);
@@ -96,18 +83,8 @@ function to_show2 (data){
           "</h3>");
 
          h3.appendTo(div_item);
-
-
-
     return div_item;
-
-
-
-
 }
-
-
-
 
 function to_show(data){
 
@@ -143,9 +120,5 @@ function to_show(data){
 
 
       div_content.appendTo(article);
-
-
-
-
     return article;
 }

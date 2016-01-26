@@ -46,7 +46,12 @@ aside,details { margin:0; padding:0; }
 	line-height: 0;
 	height: 0;
 }
- 
+.errorLogin
+{
+  color:#FFFFFF;
+  margin-left:5%;
+}
+
 .clearfix {
 	display: inline-block;
 }

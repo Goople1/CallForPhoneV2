@@ -5,12 +5,23 @@ from  sucursales.models import Sucursal , DetalleSucursalAlmacen
 from sucursales.utilidades import Utilidades
 
 
+def empresa(request):
+	template = 'empresa.html'
+	return render_to_response(template,context_instance = RequestContext(request))
+
+def servicio(request):
+	template = 'servicio.html'
+	return render_to_response(template,context_instance = RequestContext(request))
+
+def contacto(request):
+	template = 'contacto.html'
+	return render_to_response(template,context_instance = RequestContext(request))
+
+
 def filtroproductos(request):
-
-
 	#obtener  todas las  sucursales
 	try : 
-		sucursales = Sucursal.objects.filter(id_estadoSucursal = 1).order_by("nombre")
+		sucursales = Sucursal.objects.filter(nombre_estado='Dis').order_by("nombre")
 	except Exception ,e : 
 		sucursales = None		
 

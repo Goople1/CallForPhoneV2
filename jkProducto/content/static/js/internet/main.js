@@ -1,13 +1,9 @@
 $('document').ready(function(){
-
-	
-
 	var cmb_sucursal = $("#cmb_sucursal").val();
 	var cmb_producto = $("#cmb_marca").val();
 	var cmb_tipo = $("#cmb_tipo").val();
 
 	console.log( cmb_sucursal,cmb_producto,cmb_tipo);
-
 
 	$.ajax({
 
@@ -89,12 +85,6 @@ $('document').ready(function(){
 
 
 function to_show2 (data){
-
-
-  
-
-
-
      var div_item = $("<div/>" , {"class": "col-lg-4 col-sm-6 text-center item"});
          var img = $("<img/>"  , {"class":"img-circle img-responsive img-center" , "src" :  data.producto.imagen});
          img.appendTo(div_item);
@@ -105,13 +95,7 @@ function to_show2 (data){
           "</h3>");
 
          h3.appendTo(div_item);
-
-
-
     return div_item;
-
-
-
 
 }
 
