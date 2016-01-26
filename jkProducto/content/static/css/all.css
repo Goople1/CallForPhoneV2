@@ -1,0 +1,629 @@
+﻿
+/* authentication/styles/base.css */
+/*============================================================
+ Resets
+============================================================*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin:0;
+	padding:0;
+	border:0;
+	outline:0;
+	font-size:100%;
+	vertical-align:baseline;
+	background:transparent;
+	}
+ol, ul { list-style:none; }
+
+/* Form field focus style */
+:focus { outline:0; }
+
+/* Form outline / Firefox */
+input[type="submit"]::-moz-focus-inner, button::-moz-focus-inner {   
+	border : 0px;
+}
+	
+/* = HTML 5
+----------------------------------------------- */
+article,main,footer,header,section { margin:0; padding:0; display:block; }
+aside,details { margin:0; padding:0; }
+
+/*============================================================
+ Clearfix
+============================================================*/
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	display: inline-block;
+}
+
+/*============================================================
+ Generics
+============================================================*/
+html { height:100%;	}
+body {
+	height:100%;
+	line-height:1;
+	font: 13px/18px "ProximaNova", "Helvetica Neue", Arial, sans-serif;
+	color:#666;
+	}
+
+b, strong { font-weight:bold; line-height:1; }
+i, em { font-style:italic; }
+
+a:link { color:#69C8FF; text-decoration:none; }
+a:visited { color:#69C8FF; text-decoration:none; }
+a:hover { color:#A3DCFF; text-decoration:underline;}
+a img { border:0; }
+
+h1,h2,h3,h4,h5,h6,p {font-weight:normal;}
+h1 {font-size:24px; letter-spacing:-0.04em;}
+h2 {font-size:21px; letter-spacing:-0.02em;}
+h3 {font-size:18px; letter-spacing:-0.01em;}
+h4 {font-size:16px;}
+p { }
+
+button { cursor:pointer; }
+
+.clear {
+	clear:both;
+	display:block;
+	height:0;
+	overflow:hidden;
+	font-size:0;
+	}
+.clearfix:after {content: ".";
+	display:block;
+	height:0;
+	clear:both;
+	visibility:hidden;}
+.clearfix {display: inline-block;}
+/* Hides from IE-mac \*/
+* html .clearfix { height: 1%;}
+.clearfix {display: block;}
+/* End hide from IE-mac */
+
+/* Layout */
+/* ------------------------------------------------------- */
+#wrap { height:100%; }
+body > #wrap { height:auto; min-height:100%; }
+
+#content {
+	padding-bottom:160px; /* footer height */
+	overflow:hidden; /* float clear */
+	}
+#content #inner {
+	position:relative;
+	width:990px;
+	margin:0 auto;
+	}
+	
+
+/* authentication/styles/fonts.css */
+/*============================================================
+ Fonts
+============================================================*/
+@font-face {
+  font-family: 'Avenir Next Pro';
+  src: url('http://cmsites.a.ssl.fastly.net/kits/76/fonts/avenir/2B2E0A_1_0.eot');
+  src: url('http://cmsites.a.ssl.fastly.net/kits/76/fonts/avenir/2B2E0A_1_0.eot?#iefix') format('embedded-opentype'),url('http://cmsites.a.ssl.fastly.net/kits/76/fonts/avenir/2B2E0A_1_0.woff') format('woff'),url('http://cmsites.a.ssl.fastly.net/kits/76/fonts/avenir/2B2E0A_1_0.ttf') format('truetype');
+  font-weight: 400; font-style: normal;
+}
+@font-face {
+  font-family: 'Avenir Next Pro';
+  src: url('http://cmsites.a.ssl.fastly.net/kits/76/fonts/avenir/2B2E0A_3_0.eot');
+  src: url('http://cmsites.a.ssl.fastly.net/kits/76/fonts/avenir/2B2E0A_3_0.eot?#iefix') format('embedded-opentype'),url('http://cmsites.a.ssl.fastly.net/kits/76/fonts/avenir/2B2E0A_3_0.woff') format('woff'),url('http://cmsites.a.ssl.fastly.net/kits/76/fonts/avenir/2B2E0A_3_0.ttf') format('truetype');
+  font-weight: 400; font-style: italic;
+}
+@font-face {
+  font-family: 'Avenir Next Pro';
+  src: url('http://cmsites.a.ssl.fastly.net/kits/76/fonts/avenir/2B2E0A_0_0.eot');
+  src: url('http://cmsites.a.ssl.fastly.net/kits/76/fonts/avenir/2B2E0A_0_0.eot?#iefix') format('embedded-opentype'),url('http://cmsites.a.ssl.fastly.net/kits/76/fonts/avenir/2B2E0A_0_0.woff') format('woff'),url('http://cmsites.a.ssl.fastly.net/kits/76/fonts/avenir/2B2E0A_0_0.ttf') format('truetype');
+  font-weight: 500; font-style: normal;
+}
+@font-face {
+  font-family: 'Avenir Next Pro';
+  src: url('///cmsites.a.ssl.fastly.net/kits/76/fonts/avenir/2B2E0A_2_0.eot');
+  src: url('http://cmsites.a.ssl.fastly.net/kits/76/fonts/avenir/2B2E0A_2_0.eot?#iefix') format('embedded-opentype'),url('http://cmsites.a.ssl.fastly.net/kits/76/fonts/avenir/2B2E0A_2_0.woff') format('woff'),url('http://cmsites.a.ssl.fastly.net/kits/76/fonts/avenir/2B2E0A_2_0.ttf') format('truetype');
+  font-weight: 700; font-style: normal;
+}
+
+@font-face {
+  font-family: 'ProximaNova';
+  src: url('http://cmsites.a.ssl.fastly.net/kits/16/fonts/ProximaNova-Reg.woff') format('woff');
+  font-weight: 400; font-style: normal;
+}
+@font-face {
+  font-family: 'ProximaNova';
+  src: url('http://cmsites.a.ssl.fastly.net/kits/16/fonts/ProximaNova-Sbold.woff') format('woff');
+  font-weight: 500; font-style: normal;
+}
+@font-face {
+  font-family: 'ProximaNova';
+  src: url('http://cmsites.a.ssl.fastly.net/kits/16/fonts/ProximaNova-Bold.woff') format('woff');
+  font-weight: 700; font-style: normal;
+}
+@font-face {
+  font-family: 'talent';
+  src: url('http://cmsites.a.ssl.fastly.net/kits/1.19/icons/fonts/talent.woff') format('woff');
+  font-weight: normal; font-style: normal;
+}
+@font-face {
+  font-family: 'carbonmade';
+  src: url('http://cmsites.a.ssl.fastly.net/kits/84/fonts/carbonmade/fonts/carbonmade.woff?-emgn3b') format('woff');
+  font-weight: normal; font-style: normal;
+}
+
+
+
+/* authentication/styles/signin.scss */
+body.signin,
+body.passwordresets {
+  background: #5b5b77;
+  background: -moz-linear-gradient(top, #5b5b77 50%, #29283b 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(50%, #5b5b77), color-stop(100%, #29283b));
+  background: -webkit-linear-gradient(top, #5b5b77 50%, #29283b 100%);
+  background: -o-linear-gradient(top, #5b5b77 50%, #29283b 100%);
+  background: -ms-linear-gradient(top, #5b5b77 50%, #29283b 100%);
+  background: linear-gradient(to bottom, #5b5b77 50%, #29283b 100%);
+  font-family: 'ProximaNova';
+  -webkit-font-smoothing: antialiased;
+}
+body.signin #content #inner { width: 100%; }
+body.signin #content {
+  position: absolute;
+  top: 50%;
+  margin-top: -200px;
+  left: 50%;
+  -webkit-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+  padding: 0;
+  max-width: 500px;
+  width: auto;
+  overflow: visible;
+}
+body.signin .close:before { content: ''; }
+body.signin .close:hover { opacity: 1; }
+body.signin .close {
+  color: #999;
+  font-size: 16px;
+  line-height: 40px;
+  font-weight: 500;
+  cursor: pointer;
+  opacity: 0.8;
+}
+body.passwordresets #content #inner { width: 100%; }
+body.passwordresets #content {
+  position: absolute;
+  top: 50%;
+  margin-top: -200px;
+  left: 50%;
+  -webkit-transform: translate(-50%, 0);
+  transform: translate(-50%, 0);
+  padding: 0;
+  max-width: 500px;
+  width: auto;
+}
+.topHead {
+  height: 40px;
+  padding: 17px 30px;
+  text-align: center;
+}
+.topHead .signUp:hover {
+  text-decoration: none;
+  opacity: 1;
+}
+.topHead .signUp:after {
+  content: '→';
+  font-size: 19px;
+  position: absolute;
+  top: 2px;
+  right: 0;
+}
+.topHead .signUp {
+  display: none;
+  position: relative;
+  height: 40px;
+  line-height: 40px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #28a5db;
+  padding: 0 25px 0 0;
+  float: right;
+  opacity: 0.8;
+}
+.topHead .logo {
+  display: block;
+  width: 110px;
+  height: 40px;
+  float: left;
+  background-image: url('https://cmsites.a.ssl.fastly.net/marketing/129/network/img/logotype-grey.svg');
+  background-size: 110px;
+  background-repeat: no-repeat;
+  background-position: right center;
+  color: transparent;
+}
+#signinLogo {
+  position: relative;
+  display: block;
+  width: 50px;
+  height: 50px;
+  margin: -50px auto 16px;
+  background-image: url('https://cmsites.a.ssl.fastly.net/marketing/129/images/header/uniface-knockout.svg');
+  background-repeat: no-repeat;
+  background-size: 48px;
+  background-position: center;
+  background-color: #433b5f;
+  border-radius: 100%;
+  z-index: 10;
+}
+#headline {
+  position: relative;
+  font-size: 28px;
+  line-height: 30px;
+  color: #D7D7EC;
+  text-align: center;
+  margin: 0 0 24px;
+  letter-spacing: 0;
+}
+#signinBlock {
+  margin: 0 auto;
+  max-width: 400px;
+  padding: 20px 24px 24px;
+  background-color: #fff;
+  border-radius: 8px;
+}
+#signinBlock h2 {
+  font-size: 28px;
+  line-height: 30px;
+  color: #aa84d1;
+  text-align: center;
+  margin: 0 0 15px;
+  letter-spacing: 0;
+}
+#signinBlock .formContainer .signinRow label {
+  padding-bottom: 6px;
+  font-size: 18px;
+  color: #888;
+}
+#signinBlock .formContainer .signinRow {
+  display: block;
+  position: relative;
+  margin: 0 0 15px;
+}
+#signinBlock input.fillin {
+  padding: 15px;
+  height: 30px;
+  line-height: 30px;
+  width: 370px;
+  border: none;
+  border-bottom: 2px solid #f2f3f3;
+  font-size: 22px;
+  color: rgba(128, 130, 133, 1);
+  font-weight: 400;
+  background-color: #fff;
+  font-family: 'ProximaNova';
+  -webkit-font-smoothing: antialiased;
+  box-shadow: none;
+  border-radius: 0;
+}
+#signinBlock input.fillin:focus { border-bottom: 2px solid #95d2ec; }
+#signinBlock .error input.fillin { border-bottom: 2px solid #ed656c; }
+#signinBlock ::-webkit-input-placeholder {
+  color: rgba(128, 130, 133, 0.7);
+  font-weight: 400;
+}
+#signinBlock :-ms-input-placeholder {
+  color: rgba(128, 130, 133, 0.7);
+  font-weight: 400;
+}
+#signinBlock ::-moz-placeholder {
+  color: rgba(128, 130, 133, 0.7);
+  font-weight: 400;
+}
+#signinBlock :-moz-placeholder {
+  color: rgba(128, 130, 133, 0.7);
+  font-weight: 400;
+}
+#signinBlock input.fillin:focus::-webkit-input-placeholder { color: rgba(0, 0, 0, 0.15); }
+#signinBlock input.fillin:focus:-ms-input-placeholder { color: rgba(0, 0, 0, 0.15); }
+#signinBlock input.fillin:focus::-moz-placeholder { color: rgba(0, 0, 0, 0.15); }
+#signinBlock input.fillin:focus:-moz-placeholder { color: rgba(0, 0, 0, 0.15); }
+#signinBlock .passRow.field input.fillin {
+  padding-right: 65px;
+  width: 320px;
+}
+#signinBlock .passRow.field .errorBlip { right: 68px; }
+#signinBlock .resetPassLink {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  padding: 0 15px 0 5px;
+  font-size: 14px;
+  line-height: 60px;
+  color: #28a5db;
+  opacity: 0.7;
+  z-index: 20;
+}
+#signinBlock .resetPassLink:hover {
+  text-decoration: none;
+  opacity: 1;
+}
+#signinBlock .field .message:before {
+  display: block;
+  position: absolute;
+  left: -6px;
+  right: auto;
+  top: 14px;
+  content: "";
+  width: 0px;
+  height: 0px;
+  border-style: solid;
+  border-width: 6px 6px 6px 0;
+  border-color: transparent #f8ca5c transparent transparent;
+}
+#signinBlock .field .message {
+  opacity: 0;
+  visibility: hidden;
+  display: block;
+  position: absolute;
+  top: inherit;
+  right: auto;
+  bottom: 12px;
+  left: 100%;
+  width: auto;
+  height: auto;
+  max-width: 310px;
+  padding: 10px 15px;
+  margin: 0px;
+  font-size: 14px;
+  line-height: 20px;
+  height: 20px;
+  font-weight: 500;
+  background: #f8ca5c;
+  color: #7d532b;
+  border-radius: 3px;
+  white-space: nowrap;
+  z-index: 10;
+  -webkit-transition: margin-left .3s cubic-bezier(0, 0.005, 0.265, 1.8), opacity .1s ease;
+  transition: margin-left .3s cubic-bezier(0, 0.005, 0.265, 1.8), opacity .1s ease;
+}
+#signinBlock .field .errorBlip {
+  display: block;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  bottom: 20px;
+  right: 0.7em;
+  text-align: center;
+  background: center no-repeat url('https://cmsites.a.ssl.fastly.net/marketing/129/images/form/18-sad.svg');
+  background-size: 18px;
+  border-radius: 100%;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
+  z-index: 100;
+  pointer-events: none;
+}
+#signinBlock .field.invalid .message {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  margin-left: 6px;
+}
+#signinBlock .field.invalid input.fillin { border-bottom: 2px solid #ef6488; }
+#signinBlock .field.invalid .errorBlip {
+  visibility: visible;
+  opacity: 1;
+}
+#signinBlock .error .message {
+  display: none;
+  padding: 0 0 20px;
+  text-align: center;
+  font-size: 18px;
+  line-height: 20px;
+  color: #ef6469;
+}
+#signinBlock form.error .error .message { display: block; }
+#signinBlock .buttonWrap {
+  padding: 15px 0 3px;
+  text-align: center;
+}
+#signinBlock input.button {
+  -webkit-appearance: none;
+  display: inline-block;
+  height: 70px;
+  line-height: 70px;
+  width: 100%;
+  padding: 0 25px;
+  font-family: "ProximaNova";
+  color: white;
+  font-weight: 500;
+  font-size: 26px;
+  text-decoration: none;
+  border: none;
+  border-radius: 35px;
+  -webkit-font-smoothing: antialiased;
+  cursor: pointer;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  /*background-color: #43c1be;*/
+  background-color:#a94442;
+  -webkit-transition: background 0.15s ease-in-out, width .2s ease-in-out;
+  transition: background 0.15s ease-in-out, width .2s ease-in-out;
+}
+#signinBlock input.button:active {
+  -webkit-transform: scale(0.95);
+  transform: scale(0.95);
+}
+#signinBlock input.button:hover { background: #762f2e;  } /* #36d8d6; */
+#signinBlock input.button:disabled {
+  background: #dcdce9;
+  pointer-events: none;
+}
+#signinBlock form.sending input.button {
+  width: 0px;
+  padding: 0 35px;
+  color: transparent;
+  overflow: hidden;
+  background: #43c1be center no-repeat url('https://cmsites.a.ssl.fastly.net/marketing/129/authentication/images/bounce45C1BE-1x.gif');
+  -webkit-transition: width .2s ease-in-out;
+  transition: width .2s ease-in-out;
+  font-size: 0;
+  cursor: default;
+}
+.reset #signinBlock form input.button { margin-top: 15px; }
+.reset #signinBlock p.description {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 18px;
+  line-height: 24px;
+  text-align: center;
+  margin: 0 0 20px;
+}
+#content:after {
+  display: block;
+  content: ".";
+  clear: both;
+  font-size: 0;
+  line-height: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* authentication/styles/media.scss */
+@media only screen and (max-width: 850px) {
+  #signinBlock .field .message:before { display: none; }
+  #signinBlock .field .message {
+    position: relative;
+    top: auto;
+    right: auto;
+    left: auto;
+    bottom: auto;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    height: auto;
+    color: #ef6488;
+    background: none;
+    text-align: right;
+    line-height: 30px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  #signinBlock .field.invalid .message {
+    position: relative;
+    top: auto;
+    right: auto;
+    left: auto;
+    bottom: auto;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    color: #ef6488;
+    background: none;
+    text-align: right;
+    line-height: 30px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  #signinBlock .field.invalid input.fillin { border-bottom: 1px solid #ef6488; }
+}
+@media only screen and (max-width: 480px) {
+  body.signin,
+body.passwordresets { background: #5b5b77; }
+  body.signin #content,
+body.passwordresets #content {
+    position: relative;
+    margin: 0 10px;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+  #signinLogo { margin: 0 auto 15px; }
+  #signinBlock {
+    padding: 2em 0 0;
+    border-radius: 0;
+  }
+  #signinBlock .passRow.field input.fillin { width: 100%; }
+  #signinBlock .resetPassLink {
+    top: auto;
+    bottom: 0;
+    line-height: 20px;
+    padding: 11px;
+  }
+  #signinBlock p.description { padding: 0 1em; }
+  #signinBlock .formContainer .signinRow { margin: 0 1em 0.5em; }
+  #signinBlock .field .errorBlip { bottom: 12px; }
+  #signinBlock input.fillin:focus {
+    background: #fff;
+    border: solid 1px #8abbfc;
+  }
+  #signinBlock input.fillin {
+    width: 100%;
+    padding: 11px;
+    height: auto;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 18px;
+    line-height: 20px;
+    box-shadow: none;
+    background: #f9fafb;
+    border: 1px solid #e0e6ea;
+    outline: none;
+    color: #333;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  #signinBlock input.button:hover {
+    -webkit-transition: none;
+    transition: none;
+  }
+  #signinBlock input.button:active {
+    -webkit-transition: none;
+    transition: none;
+    -webkit-transform: none;
+    transform: none;
+  }
+  #signinBlock input.button {
+    border-radius: 0;
+    height: 60px;
+    line-height: 60px;
+    width: 100%;
+    font-family: ProximaNova;
+    font-size: 20px;
+  }
+  #signinBlock .buttonWrap {
+    padding: 0;
+    margin: 3em 0 0;
+  }
+  #signinBlock form.sending input.button:active {
+    -webkit-transition: none;
+    transition: none;
+    -webkit-transform: none;
+    transform: none;
+  }
+  #signinBlock form.sending input.button {
+    width: 100%;
+    -webkit-transition: none;
+    transition: none;
+  }
+}
