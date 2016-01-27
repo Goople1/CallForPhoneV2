@@ -17,7 +17,7 @@ urlpatterns = patterns('',
 
 
 	url(r'^cargarProductos/$',views.cargar_productos, name='cargar_productos'),
-	#url(r'^asistencia/$',views.asistencia , name='asistencia'),
+	url(r'^asistencia/$',views.asistencia , name='asistencia'),
 	#url(r'^reporte/$',views.home_empleado_menu_reporte , name='menuReporte'),
 	url(r'^home/$',views.home_empleado_menu_reporte , name='home'),
 

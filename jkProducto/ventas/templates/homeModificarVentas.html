@@ -101,9 +101,13 @@
 			 </div>
 	</div>
 
-
-
-
-
-	
 {% endblock content %}
+
+{% block javascript %}
+    {% load staticfiles %}
+    <script src="{% static "static/js/general/jquery.datatables.min.js"%}"></script>
+
+    <script type="text/javascript" src="{% static "static/js/general/tableEs.js"%}" charset="utf-8"> </script>
+  
+
+{% endblock javascript %}

@@ -29,9 +29,6 @@
                     <table class="table dataTable no-footer table-hidaction table-hover" id="table1" role="grid" aria-describedby="table1_info">
                       <thead>
                              <tr role="row">
-                               
-
-
                                 <th class="sorting" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Empleado: activate to sort column ascending" style="width: 233px;">Empleado</th>
 
                                 <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Monto Venta: activate to sort column ascending" style="width: 153px;">Ingreso</th>
@@ -92,5 +89,8 @@
 {% block javascript %}
     {% load staticfiles %}
     <script src="{% static "static/js/general/jquery.datatables.min.js"%}"></script>
+
+    <script type="text/javascript" src="{% static "static/js/general/tableEs.js"%}" charset="utf-8"> </script>
+  
 
 {% endblock javascript %}

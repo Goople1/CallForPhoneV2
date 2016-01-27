@@ -98,12 +98,7 @@
                         </div>
                  </div><!-- panel -->
 </div>
-    
-
-
-
-
-                  
+           
     </div><!-- row -->
 
     
@@ -112,22 +107,44 @@
 {% block javascript %}
     {% load staticfiles %}
     <script src="{% static "static/js/general/jquery.datatables.min.js"%}"></script>
-   
+   <script type="text/javascript" src="{% static "static/js/general/tableEs.js"%}" charset="utf-8"> </script>
     
 
-    <script type="text/javascript">
-  jQuery(document).ready(function() {
+<!-- //     <script type="text/javascript" charse>
+//   jQuery(document).ready(function() {
     
-    "use strict";
+//     "use strict";
     
-    jQuery('#table1').dataTable();
-    // // Show aciton upon row hover
-    // jQuery('.table-hidaction tbody tr').hover(function(){
-    //   jQuery(this).find('.table-action-hide a').animate({opacity: 1});
-    // },function(){
-    //   jQuery(this).find('.table-action-hide a').animate({opacity: 0});
-    // });
-  });
-</script>
+//    jQuery('#table1').dataTable({
+//         "language": {
+//         "sProcessing":    "Procesando...",
+//         "sLengthMenu":    "Mostrar _MENU_ registros",
+//         "sZeroRecords":   "No se encontraron resultados",
+//         "sEmptyTable":    "Ningún dato disponible en esta tabla",
+//         "sInfo":          "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+//         "sInfoEmpty":     "Mostrando registros del 0 al 0 de un total de 0 registros",
+//         "sInfoFiltered":  "(filtrado de un total de _MAX_ registros)",
+//         "sInfoPostFix":   "",
+//         "sSearch":        "Buscar:",
+//         "sUrl":           "",
+//         "sInfoThousands":  ",",
+//         "sLoadingRecords": "Cargando...",
+//         "oPaginate": {
+//             "sFirst":    "Primero",
+//             "sLast":    "Último",
+//             "sNext":    "Siguiente",
+//             "sPrevious": "Anterior"
+//                     }
+//           }
+//       });
+//     // // Show aciton upon row hover
+//     // jQuery('.table-hidaction tbody tr').hover(function(){
+//     //   jQuery(this).find('.table-action-hide a').animate({opacity: 1});
+//     // },function(){
+//     //   jQuery(this).find('.table-action-hide a').animate({opacity: 0});
+//     // });
+//   });
+// </script>
   
-{% endblock javascript %}
+ -->
+ {% endblock javascript %}
