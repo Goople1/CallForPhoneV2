@@ -50,22 +50,7 @@
                                 <td class ="center">{{asistencia.hora_salida| date:" D d M Y" }}  {{asistencia.hora_salida|date:"P"}}</td>
                                 
                             </tr>
-
-                        {% empty %}
-
-                            <tr class="gradeA odd" role="row">  
-
-
-                                <td class ="center" > No hay Asistencias Registradas</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                
-                                 
-                            </tr>
-
-                            
+       
                         {% endfor %}
 
                      </tbody>
