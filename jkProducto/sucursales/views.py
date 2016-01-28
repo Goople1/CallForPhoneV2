@@ -509,7 +509,6 @@ def ver_detalle(request):
 
 @login_required(login_url='/cuenta/')
 def getVentasbyDateRange(request):
-
 	if request.method == 'GET':
 		sum_ventas = {}
 		fecha_inicio = request.GET.get("fechaInicio","")
@@ -538,14 +537,14 @@ def getVentasbyDateRange(request):
 			# total_ventas = Venta.objects.annotate(total_venta = Sum('total'))
 			# print "total" ,  total_ventas
 			sum_ventas  = ventas_date_range.aggregate(total  =  Sum(F('total')))
-		except Exception, e:
-			
+
+			print sum_ventas
+		except Exception, e:			
 			print e
-	
 		#print "test 123"
 		venta_json_format = [Utilidades().venta_to_json(venta) for venta in ventas_date_range]
 		#print venta_json_format
-		#print venta_json_format.append(sum_ventas)
+		venta_json_format.append(sum_ventas)
 		#venta_json_format.update(sum_ventas)
 		#print venta_json_format
 		return HttpResponse( json.dumps(venta_json_format) , content_type='application/json')
