@@ -66,6 +66,7 @@
                     "<td>"+data[i].empleado+"</td>"+
                     "<td>"+data[i].total+"</td>"+
                     "<td>"+data[i].fecha_emision+"</td>"+
+                    "<td>"+data[i].tipo+"</td>"+
                     
                     "<td> <a  class ='ventaDetalle' href ='#' data-venta = " + data[i].id +" "+ "data-target ='.bs-example-modal-lg' data-toggle='modal'>ver</a><td>"+ 
                     "</tr>");

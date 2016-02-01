@@ -3,6 +3,14 @@
     {% load staticfiles %}
      <link href="{% static "static/css/jquery.datatables.css"%}" rel="stylesheet">
     <link href="{% static "static/css/bootstrap-datetimepicker.min.css"%}" rel="stylesheet">
+
+    <style type="text/css">
+
+    .Eliminada{
+        color : red;
+    }
+
+    </style>
 {% endblock css %}
 
 {% block content %}
@@ -71,6 +79,8 @@
 
                             <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Fecha: activate to sort column ascending" style="width: 110px;">Fecha </th>
 
+                             <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Fecha: activate to sort column ascending" style="width: 110px;">TIPO</th>
+
                             <th class="sorting" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Codigo: activate to sort column ascending" style="width: 253px;"> Ver</th>
 
                         </tr>
@@ -81,12 +91,14 @@
 
                     {% for  venta in  ventas %}
 
-                        <tr class="gradeA odd" role="row">
+                        <tr class="gradeA odd {{venta.get_nombre_ventas_descripcion_display}}" role="row">
 
                             <td class ="gradeA {% cycle 'odd' 'even' %}"> {{forloop.counter}}</td>
                             <td>{{venta.empleado.trabajador.get_full_name}}</td>
                             <td class = "center">{{venta.total}}</td>
                             <td class ="center">{{venta.fecha_emision| date:" D d M Y" }}  {{venta.fecha_emision|date:"P"}}</td>
+                            <td class ="center">{{venta.get_nombre_ventas_descripcion_display}}  </td>
+
                             <td>
                                <a  class ="ventaDetalle" href ="#" data-venta ="{{venta.id}}" data-target=".bs-example-modal-lg" data-toggle="modal">ver</a>
                             </td>

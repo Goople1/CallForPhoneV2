@@ -47,7 +47,7 @@ class Utilidades():
 	def venta_to_json(self,ObjVenta):
 		print "venta"
 		#print strftime("%a, %d %b %Y %H:%M:%S")
-		to_json = {"id": ObjVenta.id , "empleado" : str(ObjVenta.empleado.trabajador.get_full_name()) , "sucursal": str(ObjVenta.sucursal.nombre), "fecha_emision" : str(timezone.localtime(ObjVenta.fecha_emision).strftime("%a, %d %b %Y %I:%M %p")).capitalize() , "total": ObjVenta.total	}
+		to_json = {"id": ObjVenta.id , "empleado" : str(ObjVenta.empleado.trabajador.get_full_name()) , "sucursal": str(ObjVenta.sucursal.nombre), "fecha_emision" : str(timezone.localtime(ObjVenta.fecha_emision).strftime("%a, %d %b %Y %I:%M %p")).capitalize() , "total": ObjVenta.total , "tipo":ObjVenta.get_nombre_ventas_descripcion_display()	}
 		return to_json
 
 

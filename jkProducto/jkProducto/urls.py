@@ -4,11 +4,13 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.conf.urls.static import static 
 
+
+
 from django.apps import apps
 
 from sucursales.views import invitePage
+from ventas import views 
 from internetWeb import views as internet
-from ventas import views  
 
 admin.site.login = login_required(admin.site.login)
 admin.autodiscover()
@@ -21,12 +23,12 @@ urlpatterns = patterns('',
     #url(r'^$', 'productos.views.home', name='home'),
     #url(r'^login/$', 'productos.views.iniciarSesion', name='login'),
     #url(r'^$',algo.iniciarSesion , name='iniciarSesion'),
-    url(r'^(?i)login/', views.iniciarSesion , name='iniciarSesion'),
-    url(r'^(?i)logout/', views.cerrarSesion , name='cerrarSesion'),
+    url(r'^login/', views.iniciarSesion , name='iniciarSesion'),
+    url(r'^logout/', views.cerrarSesion , name='cerrarSesion'),
 
-    url(r'^(?i)ventas/', include('ventas.urls')),
+    url(r'^ventas/', include('ventas.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^(?i)mantenimientoSucursal/', include('sucursales.urls')),
+    url(r'^mantenimientoSucursal/', include('sucursales.urls')),
  
 
 
@@ -36,14 +38,14 @@ urlpatterns = patterns('',
 if not apps.is_installed('asistencia'):
 
     urlpatterns+=patterns('',        
-    url(r'^(?i)asistencia/$', invitePage.as_view() , name = "invite"),
-    url(r'^(?i)asistencia/[\w-]+/$', invitePage.as_view() , name = "reporteAsistencia"),
+    url(r'^asistencia/$', invitePage.as_view() , name = "invite"),
+    url(r'^asistencia/[\w-]+/$', invitePage.as_view() , name = "reporteAsistencia"),
     )
 
 else:
     urlpatterns+=patterns('',
 
-    url(r'^(?i)asistencia/', include('asistencia.urls', namespace='asistencia')),
+    url(r'^asistencia/', include('asistencia.urls', namespace='asistencia')),
     )
 
 
@@ -57,13 +59,12 @@ if not apps.is_installed('internetWeb'):
     )
 
 else:
-    urlpatterns+=patterns('internetWeb.views',
+    urlpatterns+=patterns('',
 
-        url(r'^(?i)empresa/$',internet.empresa , name='empresa'),
-        url(r'^(?i)servicio/$',internet.servicio , name='servicio'),
-        url(r'^(?i)contacto/$',internet.contacto , name='contacto'),
-        url(r'^$', include('internetWeb.urls')),
-        
+    url(r'^(?i)empresa/$',internet.empresa , name='empresa'),
+    url(r'^(?i)servicio/$',internet.servicio , name='servicio'),
+    url(r'^(?i)contacto/$',internet.contacto , name='contacto'),
+    url(r'^$', include('internetWeb.urls')),
 
     )
 
@@ -83,7 +84,7 @@ urlpatterns += patterns('sucursales.views',
     # url(r'^mantenimientoSucursal/historialVentas/$', 'historialVentas',name='historialVentas'), 
     # url(r'^mantenimientoSucursal/historialVentas/(?P<id>[\w-]+)/$', 'Historial_ventas_Sucursal_Admin',name='histoSucursalVentasAdm'), 
     #url(r'^mantenimientoSucursal/detalle/ver/$', 'prueba',name='algo1'), 
-    url(r'^(?i)export/(?P<suc_id>[0-9]+)$', 'export',name='export'), 
+    url(r'^export/(?P<suc_id>[0-9]+)$', 'export',name='export'), 
 
 
 
@@ -95,8 +96,8 @@ urlpatterns += patterns('sucursales.views',
 
 urlpatterns += patterns('productos.views',
 
-    url(r'^(?i)producto/filtroproducto/$', 'filtroproductos',name='filtroproductos'),
-    url(r'^(?i)producto/filtrocriterio/$', 'filtrocriterio',name='filtrocriterio'),
+    url(r'^producto/filtroproducto/$', 'filtroproductos',name='filtroproductos'),
+    url(r'^producto/filtrocriterio/$', 'filtrocriterio',name='filtrocriterio'),
     
 
 
