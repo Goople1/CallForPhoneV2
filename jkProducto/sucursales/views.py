@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.base import TemplateView
 from django.utils import timezone
 from django.db.models import Q,Sum, F
-
+from django.core.paginator import Paginator
 
 import json
 import djqscsv
@@ -37,11 +37,11 @@ def mantenimientoSucursal(request):
 	#template = 'AddProductosSucursal.html'
 	#template = 'ListarSucursales.html' #fake
 	#template = 'registrarProductoOriginal.html'
+
 	if  is_admin(request.user.id):
 		template = 'mantenimientoSucursal.html'
 		datos = request.session["datos"]
 		return render_to_response(template,{"datos":datos},context_instance = RequestContext(request))
-
 	else :
 		return HttpResponseRedirect("/ventas/")
 
@@ -51,10 +51,11 @@ def addSucursal(request):
 		template='ListarSucursales.html'
 		template = "IndiceOriginal.html"
 		operation = 'addSucursalA'
+		estado ="Registrar"
 		sucursal = Sucursal.objects.all()
 		datos = request.session["datos"]
 
-		return render_to_response(template,{'sucursales':sucursal,'operation':operation , "datos":datos},context_instance=RequestContext(request))
+		return render_to_response(template,{'sucursales':sucursal,'estado':estado,'operation':operation , "datos":datos},context_instance=RequestContext(request))
 
 	else :
 		return HttpResponseRedirect("/ventas/")
@@ -65,10 +66,11 @@ def editSucursal(request):
 		template='ListarSucursales.html'
 		template = "IndiceOriginal.html"
 		operation = 'editSucursalE'
+		estado = "Modificar"
 		sucursal = Sucursal.objects.all()
 		datos = request.session["datos"]
 
-		return render_to_response(template,{'sucursales':sucursal,'operation':operation,"datos":datos},context_instance=RequestContext(request))
+		return render_to_response(template,{'sucursales':sucursal, 'estado':estado,'operation':operation,"datos":datos},context_instance=RequestContext(request))
 
 	else:
 		return HttpResponseRedirect("/ventas/")
@@ -79,10 +81,11 @@ def listSucursal(request):
 		template='ListarSucursales.html'
 		template = "IndiceOriginal.html"
 		operation = 'listSucursalL'
+		estado = "Listar"
 		sucursal = Sucursal.objects.all()
 		datos = request.session["datos"]
 
-		return render_to_response(template,{'sucursales':sucursal,'operation':operation , "datos" : datos},context_instance=RequestContext(request))
+		return render_to_response(template,{'sucursales':sucursal, 'estado':estado,'operation':operation , "datos" : datos},context_instance=RequestContext(request))
 	else:
 		return HttpResponseRedirect("/ventas/")
 
@@ -93,8 +96,8 @@ def historialVentas(request):
 		operation = 'histoSucursalVentasAdm'
 		sucursal = Sucursal.objects.all()
 		datos = request.session["datos"]
-
-		return render_to_response(template,{'sucursales':sucursal,'operation':operation , "datos":datos},context_instance=RequestContext(request))
+		estado = "Historial"
+		return render_to_response(template,{'sucursales':sucursal,'estado':estado,'operation':operation , "datos":datos},context_instance=RequestContext(request))
 	else:
 		return HttpResponseRedirect("/ventas/")
 
@@ -227,6 +230,16 @@ def listSucursalL(request,id):
 
 			try:
 				detalle_sucursal_almacen_productos = DetalleSucursalAlmacen.objects.filter(sucursal_id = sucursal)
+				"""
+				p = Paginator(detalle_sucursal_almacen_productos, 1)
+				print "test"
+				print p.count
+				print p.num_pages
+				print p.page_range
+				page1 = p.page(1)
+				print page1
+				print page1.object_list
+				"""
 			except Exception, e:
 				return HttpResponse("Problemas del Server")
 
@@ -235,15 +248,17 @@ def listSucursalL(request,id):
 			print e  
 			mensaje ="<html>	<head>		<title></title>		</head>		<body>			<h1> PAGE NOT FOUND!</h1>		</body>		</html>"
 			return HttpResponse(mensaje)
-
-
 		#template = "listaProductosSucursalAlmacen.html"
 		template = "ListarProductosOriginal.html"
 		datos = request.session["datos"]
-		
-		return render_to_response (template, locals() , context_instance = RequestContext(request))
+		return render_to_response (template,locals() ,context_instance = RequestContext(request))
 	else: 
 		return HttpResponseRedirect("/ventas/")
+
+@login_required(login_url='/cuenta/')
+def listPages(request):
+	page = request.GET.get('page')
+	pass
 	
 #Asignacion de Pedidos a Sucursales
 def registrarPedidoSucursal(request):
@@ -458,7 +473,6 @@ def is_admin(user_id):
 		return False
 
 def export(request , suc_id):
-
 	sucursal_id = Utilidades().validarIngresoNum(suc_id)
 
 	detalle_productos_sucursal	=	DetalleSucursalAlmacen.objects.filter(sucursal_id = sucursal_id)

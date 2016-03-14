@@ -41,7 +41,7 @@
                         <li><a href="#">5</a></li>
                         <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
                     </ul>
-                    <h4 class="panel-title">Buscar resultados para " {{sucursal.nombre}} "</h4>
+                    <h4 class="panel-title">Buscar resultados para "{{sucursal.nombre}}"</h4>
                     <!--<p>About 1,370 results (0.13 seconds)</p>-->
                 </div><!-- panel-heading -->
                 <div class="panel-body">
@@ -84,10 +84,8 @@
 
 {% block javascript %}
 {% load staticfiles %}
-<script src="{% static "static/js/general/jquery.cookies.js"%}"></script>
 <script src="{% static "static/js/general/jquery-ui-1.10.3.min.js"%}"></script>
 <script src="{% static "static/js/general/select2.min.js"%}"></script>
-<script src="{% static "static/js/general/custom.js"%}"></script>
 <script src="{% static "static/js/sucursal/listarProductoSucursal.js"%}"></script>
 
 {% endblock javascript %}

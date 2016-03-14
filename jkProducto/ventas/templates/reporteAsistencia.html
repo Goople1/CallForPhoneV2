@@ -1,13 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-	 <div class="contentpanel">
-                    <!-- content goes here... -->
-                    
 	    <div class="row">
+	    	 <div class="col-sm-12">
+	    	 <div class="panel panel-primary">
+             	<div class="panel-heading">
+	                <div class="panel-btns">
+	                        <!-- <a href="" class="panel-close">×</a> -->
+	                 	<a href="" class="minimize">−</a>
+	                </div>
+		                <h3 class="panel-title">Reporte de Asistencia</h3>
+		                              
+                 </div>
+                  <div class="panel-body">
 
-		        <div class="table-responsive">
+                  	 <div class="table-responsive">
 		                <div id="table1_wrapper" class="dataTables_wrapper no-footer">
 		                <table class="table dataTable no-footer table-hidaction table-hover" id="table1" role="grid" aria-describedby="table1_info">
 		                  <thead>
@@ -62,10 +69,16 @@
 		<!-- tabla 2-->
 
 
-					
+	    		</div>
+	   		</div>
+	   </div>
+		
 	    </div><!-- row -->
                    
 
 
-    </div> <!-- Content Panel -->
 {% endblock content %}
+{% block javascript %}
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static "static/js/general/tableEs.js"%}" charset="utf-8"> </script>
+{% endblock javascript %}
