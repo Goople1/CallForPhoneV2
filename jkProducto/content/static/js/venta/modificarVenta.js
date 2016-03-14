@@ -48,7 +48,8 @@ var jsonObj = [];
 			}
 
 	});
-	console.log("jsonObj: ",jsonObj);
+
+
 
  	//	total = $("#total").val()
 

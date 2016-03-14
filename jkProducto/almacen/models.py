@@ -42,6 +42,7 @@ class DetalleAlmacen(models.Model):
 		unique_together = ('producto_id',)
 		verbose_name='Almacen Principal'
 		verbose_name_plural = verbose_name
+        ordering = ['producto_id__tipo_producto__nombre', 'producto_id__marca__nombre' , 'producto_id__codigo']
 
 	def save(self):
 		agregar = Utilidades().validarIngresoNum(self.adicional_stock)

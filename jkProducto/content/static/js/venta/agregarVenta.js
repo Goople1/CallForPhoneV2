@@ -84,7 +84,7 @@ console.log(jsonObj)
 
 			})
 		.fail(function(data){
-			alert("UPS! , a ocurrido un Error", data);
+			alert(" A ocurrido un Error", data);
 		});
 
 	    /*success: function(result) {

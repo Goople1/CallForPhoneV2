@@ -17,7 +17,7 @@ class MarcaAdmin(admin.ModelAdmin):
 class ProductoAdmin(admin.ModelAdmin):
 	list_display = ('codigo','color','precio_x_mayor','precio_x_menor','marca','tipo_producto')
 	list_filter = ('codigo','marca','tipo_producto__nombre')
-	search_fields = ('codigo','marca','tipo_producto__nombre')
+	search_fields = ['codigo','nombre_comercial','marca__nombre','tipo_producto__nombre']
 	list_editable = ('marca','tipo_producto','precio_x_mayor','precio_x_menor',)
 	
 

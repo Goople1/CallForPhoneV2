@@ -10,6 +10,9 @@ class Venta(models.Model):
 	fecha_emision = models.DateTimeField(auto_now=True, editable=False)
 	# igv = models.FloatField()
 	# subtotal = models.FloatField()
+	ventas_descripcion = (('NUE', 'Nueva'),('MOD', 'modificada'),('ELI', 'Eliminada'),)
+	referencia = models.TextField(null=True,unique=True)
+	nombre_ventas_descripcion = models.CharField(max_length=20, choices=ventas_descripcion)
 	estado = models.BooleanField(default=True)
 	total  = models.FloatField( blank=True , default=0.0)
 

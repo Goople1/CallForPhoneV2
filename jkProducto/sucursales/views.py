@@ -109,7 +109,7 @@ def Historial_ventas_Sucursal_Admin(request,id):
 		sucursal_id = Utilidades().validarIngresoNum(id)
 
 		try:
-			ventas  = Venta.objects.filter(sucursal = sucursal_id,estado=True).order_by('-fecha_emision')
+			ventas  = Venta.objects.filter(sucursal = sucursal_id).order_by('-fecha_emision')
 			
 		except Exception,e :
 			print e
@@ -627,41 +627,6 @@ def getGananciabyDateRange(request):
 
 		return HttpResponse( json.dumps(sum_ventas) , content_type='application/json')
 		
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		
-
-
-
-
-
 
 
 class invitePage (TemplateView):
