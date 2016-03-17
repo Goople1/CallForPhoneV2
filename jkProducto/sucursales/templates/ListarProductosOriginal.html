@@ -33,13 +33,26 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <ul class="pagination nomargin pull-right">
-                        <li class="disabled"><a href="#"><i class="fa fa-angle-left"></i></a></li>
-                        <li><a href="#">1</a></li>
-                        <li class="active"><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+
+                        
+                          {% if producto_x_page.has_previous %}
+                            <li class=""><a href="?page={{ producto_x_page.previous_page_number }}"><i class="fa fa-angle-left"></i></a></li>
+                            <!--<a href="?page={{ producto_x_page.previous_page_number }}">previous</a> -->
+                          {% endif %}
+
+                          <li class = "active"><a href="#"> {{ producto_x_page.number}}</a></li>
+
+                          {% if producto_x_page.has_next %}
+                            <!-- <a href="?page={{ producto_x_page.next_page_number }}">next</a>-->
+                            <li><a href="?page={{ producto_x_page.next_page_number }}"><i class="fa fa-angle-right"></i></a></li>
+                          {% endif %}
+                        
+
+
+
+                        
+
+
                     </ul>
                     <h4 class="panel-title">Buscar resultados para " {{sucursal.nombre}} "</h4>
                     <!--<p>About 1,370 results (0.13 seconds)</p>-->
@@ -48,7 +61,7 @@
                     
                     <div class="results-list">
 
-                      {% for  producto  in  detalle_sucursal_almacen_productos %}
+                      {% for  producto  in  producto_x_page %}
                         
                         <div class="media">
                             <a href="#" class="pull-left">

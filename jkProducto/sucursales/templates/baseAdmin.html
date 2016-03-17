@@ -100,7 +100,19 @@
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                                         <img src="{% static "static/images/photos/loggeduser.png"%}" alt="" />
-                                        {{datos.nombre}}
+
+                                        {% if user.get_full_name != '' %}
+
+                                            {{user.get_full_name}} 
+
+                                        {% else %}
+
+                                            {{user.get_username}} 
+                                            
+                                        {% endif %}
+                                        
+
+
                                         <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-usermenu pull-right">

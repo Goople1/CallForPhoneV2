@@ -13,8 +13,7 @@ class DetalleAlmacenAdmin(admin.ModelAdmin):
     list_editable =('adicional_stock',)
     actions = [export_as_csv]
 
-    class Meta :
-        ordering = ['producto_id__tipo_producto__nombre', 'producto_id__marca__nombre' , 'producto_id__codigo']
+    
 
 
     def precio_Mayor(self, obj):
@@ -26,7 +25,7 @@ class DetalleAlmacenAdmin(admin.ModelAdmin):
     def info(self, obj):
         return " %s  %s  %s  %s" %(obj.producto_id.tipo_producto.nombre ,  obj.producto_id.marca.nombre, obj.producto_id.codigo, obj.producto_id.get_color_display())
 
-
+    
 
 
 

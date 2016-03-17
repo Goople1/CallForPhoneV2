@@ -637,17 +637,28 @@ def sessionData(request):
     else:
         try:
             trabajador = SucursalTrabajador.objects.get(trabajador = request.user)  
+
+            name_to_show = trabajador.trabajador.get_full_name()
+            if name_to_show == '':
+                name_to_show = trabajador.trabajador.username
+
+
             if trabajador.cargo.lower() == "empl":
-                request.session["datos"] = {"empresa": trabajador.sucursal.nombre,"nombre":trabajador.trabajador.get_full_name() , "cargo" : trabajador.cargo}
+                request.session["datos"] = {"empresa": trabajador.sucursal.nombre,"nombre":name_to_show, "cargo" : trabajador.cargo}
             else :
                 if trabajador.cargo.lower() == "admi":
-                    request.session["datos"] = {"empresa": trabajador.sucursal.id_almacen.nombre_empresa,"nombre":trabajador.trabajador.get_full_name(),"cargo" : trabajador.cargo}
+                    request.session["datos"] = {"empresa": trabajador.sucursal.id_almacen.nombre_empresa,"nombre":name_to_show,"cargo" : trabajador.cargo}
         except Exception ,e : 
 
             try:
                 if not request.user.is_anonymous() :
                     if request.user.is_staff:
-                        request.session['datos'] = {"empresa": "Administrador","nombre":request.user.get_full_name(),"cargo":"admi"}
+                        name_to_show = request.user.get_full_name()
+                        print "name to show " , name_to_show
+                        if name_to_show == '':
+
+                            name_to_show=request.user.username
+                        request.session['datos'] = {"empresa": "Administrador","nombre":name_to_show,"cargo":"admi"}
 
                 else : 
                     return HttpResponseRedirect("/login")

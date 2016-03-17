@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response , HttpResponse
 from django.template.context import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import Paginator
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -216,17 +217,58 @@ def editSucursalE(request,id):
 
 
 @login_required(login_url='/cuenta/')
-def listSucursalL(request,id):
+def listSucursalL(request,id , page = 1):
 
+
+	#verificar si el user que ha ingresado es admin , de lo contrario , seria un vendedor :D
 	if is_admin(request.user.id):
 
+		#verificar que el  parametro que se obtiene por  la URL , sea un numero 
 		sucursal_id = Utilidades().validarIngresoNum(id)
 		try:
+
+			#obtener  la sucursal media el id que se brinda
 			sucursal = Sucursal.objects.get(pk=sucursal_id)
 
-
 			try:
+
+				#Aca se obtiene TODOS los productos que han sido ASIGNADOS a la SUCURSAL , tener en cuenta que los productos Existentes son Sacados del ALMACEN 
+				#A RODAR
+
+				#1.-  obtener la cantidad de productos en la Sucursal ....
 				detalle_sucursal_almacen_productos = DetalleSucursalAlmacen.objects.filter(sucursal_id = sucursal)
+				#2.-  designar la cantidad productos tiene que haber por pagina ... por el momento para esta fase de desarrollo probare con 4 por pagina , lo conversado con MSJ es 10 aprox hasta 15 max
+				page = request.GET.get('page' , 1)
+
+				print "PAGAE:" , page
+
+				pagination = Paginator(detalle_sucursal_almacen_productos, 4)
+
+
+				#3.-  SABER en que numero de Pagina se esta actualmente 
+
+				try:
+					producto_x_page = pagination.page(page)
+    			
+				except PageNotAnInteger:
+					producto_x_page = paginator.page(1)
+
+    			except EmptyPage:
+        			producto_x_page = paginator.page(pagination.num_pages)
+
+
+				#4.-  SABER si tiene Pagina anterior 
+				#5.-  SABER si TIENE pagina Siguiente
+				#6.-  Si es la ultima pagina 
+			
+				
+
+
+
+
+
+
+				
 			except Exception, e:
 				return HttpResponse("Problemas del Server")
 
@@ -241,7 +283,7 @@ def listSucursalL(request,id):
 		template = "ListarProductosOriginal.html"
 		datos = request.session["datos"]
 		
-		return render_to_response (template, locals() , context_instance = RequestContext(request))
+		return render_to_response (template, {'producto_x_page':producto_x_page , 'sucursal':sucursal , 'datos':datos} , context_instance = RequestContext(request))
 	else: 
 		return HttpResponseRedirect("/ventas/")
 	
