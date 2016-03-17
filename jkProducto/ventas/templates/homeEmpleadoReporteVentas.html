@@ -3,59 +3,72 @@
 
 {% block content %}
 
-		<div class="contentpanel">
-                    <!-- content goes here... -->
-	    	<div class="row">
-	    		<div class="col-sm-12">
-	    			<div class="panel panel-primary">
-	    			 	<div class="panel-heading">
-                        	<div class="panel-btns">
-                           <!-- <a href="" class="panel-close">×</a>-->
-                          		<a href="" class="minimize">−</a>
-                         	</div><!-- panel-btns -->
-                        	<h3 class="panel-title">Historial de ventas</h3>
-                    	</div>
-                		<div class="panel-body">
-				        	<div clas="table-responsive">
-				                <div id="table1_wrapper" class="dataTables_wrapper no-footer">
-					                <table class="table dataTable no-footer table-hidaction table-hover" id="table1" role="grid" aria-describedby="table1_info">
-					                  <thead>
-					                         <tr role="row">
-					                            <th class="sorting_asc" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="activate to sort column ascending" style="width: 182px;">#</th>
 
-					                            <th class="sorting" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Empleado: activate to sort column ascending" style="width: 233px;">Realizado por</th>
+                    
+<div class="row">
+<div class="col-sm-12">
+	<div class="panel panel-primary">
+             	<div class="panel-heading">
+	                <div class="panel-btns">
+	                        <!-- <a href="" class="panel-close">×</a> -->
+	                 	<a href="" class="minimize">−</a>
+	                </div>
+		                <h3 class="panel-title">Reporte de Ventas</h3>                
+                 </div>
+        <div class="panel-body">
 
-					                            <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Monto Venta: activate to sort column ascending" style="width: 153px;">Monto Venta</th>
+        	<div class="table-responsive">
+		                <div id="table1_wrapper" class="dataTables_wrapper no-footer">
+		                <table class="table dataTable no-footer table-hidaction table-hover" id="table1" role="grid" aria-describedby="table1_info">
+		                  <thead>
+		                         <tr role="row">
+		                            <th class="sorting_asc" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-sort="ascending" aria-label="activate to sort column ascending" style="width: 182px;">#</th>
 
-					                            <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Fecha: activate to sort column ascending" style="width: 110px;">Fecha </th>
-					                            <th class="sorting" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Codigo: activate to sort column ascending" style="width: 253px;"> Ver</th>
 
-					                        </tr>
-					                  </thead>
-					                  <tbody>
+		                            <th class="sorting" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Empleado: activate to sort column ascending" style="width: 233px;">Realizado por</th>
 
-					                    {% for  venta in  ventas %}
+		                            <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Monto Venta: activate to sort column ascending" style="width: 153px;">Monto Venta</th>
 
-					                        <tr class="gradeA odd" role="row">
+		                            <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Fecha: activate to sort column ascending" style="width: 110px;">Fecha </th>
+		                            <th class="sorting" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Codigo: activate to sort column ascending" style="width: 253px;"> Ver</th>
 
-					                            <td class ="gradeA {% cycle 'odd' 'even' %}"> {{forloop.counter}}</td>
-					                            <td>{{venta.empleado.trabajador.get_full_name}}</td>
-					                            <td class = "center">{{venta.total}}</td>
-					                            <td class ="center">{{venta.fecha_emision| date:" D d M Y" }}  {{venta.fecha_emision|date:"P"}}</td>
-					                            <td class = "center">
+		                        </tr>
+		                  </thead>
 
-					                            	<a  class ="ventaDetalle" href ="#" data-venta ="{{venta.id}}" data-target=".bs-example-modal-lg" data-toggle="modal">ver</a>
-					                            </td>
-					                        </tr>
-					                    {% endfor %}
-					                 </tbody>
-					               </table>
-	                 			</div>		
-	    					</div>
-	    				</div>
-	   				</div>
-		 		</div>
-			</div>
+
+		                  <tbody>
+
+		                    {% for  venta in  ventas %}
+
+		                        <tr class="gradeA odd" role="row">
+
+		                            <td class ="gradeA {% cycle 'odd' 'even' %}"> {{forloop.counter}}</td>
+		                            <td>{{venta.empleado.trabajador.get_full_name}}</td>
+		                            <td class = "center">{{venta.total}}</td>
+		                            <td class ="center">{{venta.fecha_emision| date:" D d M Y" }}  {{venta.fecha_emision|date:"P"}}</td>
+		                            <td class = "center">
+
+		                            	<a  class ="ventaDetalle" href ="#" data-venta ="{{venta.id}}" data-target=".bs-example-modal-lg" data-toggle="modal">ver</a>
+		                            </td>
+		                        </tr>
+
+		                  
+		                        
+		                    {% endfor %}
+
+		                 </tbody>
+		               </table>
+		           </div>
+		    </div>
+
+		<!-- tabla 2-->
+        	
+        </div>
+    </div>
+</div>
+
+					
+	    </div><!-- row -->
 
 
  
@@ -76,13 +89,12 @@
                    
 
 
-   	 </div> <!-- Content Panel -->
 {% endblock content %}
 {% block javascript %}
 {%load staticfiles%}
- 	<script src="{% static "static/js/csrf.js"%}"></script>
-	<script src="{% static "static/js/general/jquery.datatables.min.js"%}"></script>
     <script type="text/javascript" src="{% static "static/js/general/tableEs.js"%}" charset="utf-8"> </script>
-	<script src="{% static "static/js/venta/reporteVenta.js"%}"></script>
+ <script src="{% static "static/js/csrf.js"%}"></script>
+<script src="{% static "static/js/venta/reporteVenta.js"%}"></script>
+
+   	 </div> <!-- Content Panel -->
 {% endblock javascript %}
-	

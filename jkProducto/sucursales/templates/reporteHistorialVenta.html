@@ -20,9 +20,19 @@
  <div class="row">
 
 
-    <div class="row">
+<div class="col-sm-12">
 
-        <div class='col-md-4'>
+     <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-btns">
+            <a href="" class="minimize">−</a>
+            </div><!-- panel-btns -->
+        <h3 class="panel-title"> Historial Ventas</h3>
+        </div>
+        <div class="panel-body">
+
+
+            <div class='col-md-4'>
             <div class="form-group">
                 <label class="control-label">Inicio:</label>
                 <div class='input-group date' id='datetimepicker1' >
@@ -32,10 +42,15 @@
                         </span>
                 </div>
             </div>
-        </div>
-        <div class='col-md-4'>
+            </div>
+
+
+
+
+            <div class='col-md-4'>
+            <div class="form-group">
             <label class="control-label">Fin:</label>
-                <div class="form-group">
+                
                     <div class='input-group date' id='datetimepicker2'  >
                         <input type='text' class="form-control"  id = "dateValueFin"/>
                         <span class="input-group-addon">
@@ -43,28 +58,25 @@
                         </span>
                     </div>
                 </div>
-        </div>
+            </div>
 
-      
-          
-        <div class='col-md-4'>
+            <div class='col-md-4'>
             <label class="control-label">Acci&oacute;n:</label>
             <div class="form-group">
                   <button id="buscar" class="btn btn-primary">Buscar</button>
-            
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
+            </div>
+
+            <div class="col-md-4 ">
             <div class="form-group">
                   <label for="totalVentasFechas" class="control-label">Total:</label>
                   
                       <input type="text" class="form-control" id="totalVentasFechas" placeholder="Total de Ventas" readOnly="readOnly">
             </div>
-        </div>
-    </div>
-<!-- tabla 2 -->
+            </div>
+            
+
+            <!-- tabla 2 -->
 
         <div class="table-responsive">
                 <div id="table1_wrapper" class="dataTables_wrapper no-footer">
@@ -111,11 +123,21 @@
                  </tbody>
                </table>
            </div>
+        </div>
+
+
+
+
+        </div>
     </div>
+
+</div>
+
+
 
 <!-- tabla 2-->
         
-        <div aria-hidden="true" aria-labelledby="myLargeModalLabel" role="dialog" tabindex="-1" class="modal fade bs-example-modal-lg" style="display: none;">
+    <div aria-hidden="true" aria-labelledby="myLargeModalLabel" role="dialog" tabindex="-1" class="modal fade bs-example-modal-lg" style="display: none;">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -157,6 +179,7 @@
 {% block javascript %}
     {% load staticfiles %}
     <script src="{% static "static/js/general/jquery.datatables.min.js"%}"></script>
+    <script type="text/javascript" src="{% static "static/js/general/tableEs.js"%}" charset="utf-8"> </script>
     <script src="{% static "static/js/general/moment.min.js"%}"></script>
     <script src="{% static "static/js/general/bootstrap-datetimepicker.min.js"%}"></script>
     <script src="{% static "static/js/general/moment-local.es.js"%}" charset="UTF-8"></script>
