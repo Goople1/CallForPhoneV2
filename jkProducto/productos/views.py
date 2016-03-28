@@ -1,4 +1,5 @@
-from django.shortcuts import render_to_response ,HttpResponse
+# -*- coding: utf-8 -*-
+from django.shortcuts import render_to_response , HttpResponse
 from django.template.context import RequestContext
 from  .models import Marca , TipoProducto
 from  sucursales.models import Sucursal , DetalleSucursalAlmacen
@@ -13,18 +14,18 @@ def home(request):
 
 def iniciarSesion(request):
 	template='login.html'
-	return render_to_response(template,{},context_instance=RequestContext(request)) 
+	return render_to_response(template,{},context_instance=RequestContext(request))
 
 def filtroproductos(request):
 
 
 	#obtener  todas las  sucursales
-	try : 
+	try :
 		sucursales = Sucursal.objects.filter(id_estadoSucursal = 1).order_by("nombre")
-	except Exception ,e : 
+	except Exception ,e :
 		sucursales = None		
 
-	#obtener todas las Marcas 
+	#obtener todas las Marcas
 
 	try:
 		marcas = Marca.objects.all().order_by("nombre")
@@ -33,7 +34,7 @@ def filtroproductos(request):
 		marcas = None
 
 
-	try: 
+	try:
 		tipos = TipoProducto.objects.all().order_by("nombre")
 	except Exception,e:
 		print e
@@ -41,7 +42,7 @@ def filtroproductos(request):
 
 
 	template = "filtroProductos.html"
-	return render_to_response(template , {"sucursales":sucursales , "marcas" : marcas , "tipos":tipos} ,context_instance = RequestContext(request)) 
+	return render_to_response(template , {"sucursales":sucursales , "marcas" : marcas , "tipos":tipos} ,context_instance = RequestContext(request))
 
 def filtrocriterio(request):
 
@@ -58,7 +59,7 @@ def filtrocriterio(request):
 			productos = DetalleSucursalAlmacen.objects.all()
 			if productos:
 				data = [Utilidades().detalle_sucursal_almacen_to_json(producto) for producto in productos]
-			else : 
+			else :
 				data = []
 
 			return HttpResponse(json.dumps(data) , content_type='application/json')
@@ -71,7 +72,7 @@ def filtrocriterio(request):
 				if productos:
 
 					data = [Utilidades().detalle_sucursal_almacen_to_json(producto) for producto in productos]
-				else : 
+				else :
 
 					data = []
 
@@ -87,7 +88,7 @@ def criteriobusqueda(suc,pro,tipo):
 
 	criterio = {}
 
-	#any() retorna   True si alguna condicion es True 
+	#any() retorna   True si alguna condicion es True
 	
 	valor = [suc,pro,tipo]
 	if  not any(valor) :
@@ -95,12 +96,12 @@ def criteriobusqueda(suc,pro,tipo):
 		# try:
 		# 	todo = DetalleSucursalAlmacen.objects.all()
 		# except Exception,e:
-		# 	print e 
+		# 	print e
 		# 	return HttpResponse("Servidor OFf")
 
 		return criterio
 
-	else: 
+	else:
 
 		campos = ["suc","prod","tipo"]
 		my_dict = dict(zip(campos,valor))
