@@ -4,10 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.conf.urls.static import static 
 
-
-
 from django.apps import apps
-
 from sucursales.views import invitePage
 from ventas import views 
 from internetWeb import views as internet

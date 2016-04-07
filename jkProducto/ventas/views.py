@@ -92,7 +92,8 @@ def venta (request):
 
             trabajador_sucursal_id = trabajador.sucursal.id
             lista_productos = DetalleSucursalAlmacen.objects.filter(sucursal_id = trabajador_sucursal_id)
-            template = "homeVentas.html"
+            #template = "homeVentas.html"
+            template = 'imprimir.html'
             venta  = True
             return  render_to_response( template , {"venta":venta,"productos": lista_productos, "trabajador":trabajador, "datos":datos} , context_instance = RequestContext(request))
 

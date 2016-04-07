@@ -240,7 +240,7 @@ def listSucursalL(request,id , page = 1):
 
 				#1.-  obtener la cantidad de productos en la Sucursal ....
 				detalle_sucursal_almacen_productos = DetalleSucursalAlmacen.objects.filter(sucursal_id = sucursal)
-<<<<<<< HEAD
+
 				#2.-  designar la cantidad productos tiene que haber por pagina ... por el momento para esta fase de desarrollo probare con 4 por pagina , lo conversado con MSJ es 10 aprox hasta 15 max
 				page = request.GET.get('page' , 1)
 
@@ -272,19 +272,7 @@ def listSucursalL(request,id , page = 1):
 
 
 
-				
-=======
-				"""
-				p = Paginator(detalle_sucursal_almacen_productos, 1)
-				print "test"
-				print p.count
-				print p.num_pages
-				print p.page_range
-				page1 = p.page(1)
-				print page1
-				print page1.object_list
-				"""
->>>>>>> 27649ea556808d8e076819972eb2f9df447de202
+
 			except Exception, e:
 				return HttpResponse("Problemas del Server")
 
@@ -296,12 +284,10 @@ def listSucursalL(request,id , page = 1):
 		#template = "listaProductosSucursalAlmacen.html"
 		template = "ListarProductosOriginal.html"
 		datos = request.session["datos"]
-<<<<<<< HEAD
+
 		
 		return render_to_response (template, {'producto_x_page':producto_x_page , 'sucursal':sucursal , 'datos':datos} , context_instance = RequestContext(request))
-=======
-		return render_to_response (template,locals() ,context_instance = RequestContext(request))
->>>>>>> 27649ea556808d8e076819972eb2f9df447de202
+
 	else: 
 		return HttpResponseRedirect("/ventas/")
 

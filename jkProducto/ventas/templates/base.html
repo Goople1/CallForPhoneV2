@@ -10,7 +10,9 @@
         <link rel="shortcut icon" href="{% static "static/images/favicon.png "%}" type="image/png">
         <link href="{% static "static/css/style.default.css"%}" rel="stylesheet">
         <link href="{% static "static/css/jquery.datatables.css"%}" rel="stylesheet">
+{% block css %}
 
+{% endblock %}
         <title>{% block title %}
 
                 {{datos.empresa}}
