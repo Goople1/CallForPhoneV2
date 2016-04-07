@@ -2,12 +2,20 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+<<<<<<< HEAD
 from django.conf.urls.static import static 
 
 from django.apps import apps
 from sucursales.views import invitePage
 from ventas import views 
+=======
+#from django.conf.urls.static import static
+from django.apps import apps
+from ventas import views
+>>>>>>> 03fd38295e886303316e77f72407620a2f10c18c
 from internetWeb import views as internet
+from sucursales.views import invitePage
+
 
 admin.site.login = login_required(admin.site.login)
 admin.autodiscover()
@@ -26,15 +34,15 @@ urlpatterns = patterns('',
     url(r'^ventas/', include('ventas.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^mantenimientoSucursal/', include('sucursales.urls')),
- 
+
 
 
     #url(r'^admin/', include('empleados_login.urls')),
-)
+    )
 
 if not apps.is_installed('asistencia'):
 
-    urlpatterns+=patterns('',        
+    urlpatterns+=patterns('',
     url(r'^asistencia/$', invitePage.as_view() , name = "invite"),
     url(r'^asistencia/[\w-]+/$', invitePage.as_view() , name = "reporteAsistencia"),
     )
@@ -50,7 +58,7 @@ else:
 
 if not apps.is_installed('internetWeb'):
 
-    urlpatterns+=patterns('',        
+    urlpatterns+=patterns('',
     url(r'^$', invitePage.as_view() , name = "invite"),
 
     )
@@ -66,7 +74,7 @@ else:
     )
 
 urlpatterns += patterns('sucursales.views',
-    
+
     #url(r'^mantenimientoSucursal/$', 'mantenimientoSucursal', name='mantenimientoSucursal'),
     #url(r'^mantenimientoSucursal/add/$', 'addSucursal', name='add'),
     #url(r'^mantenimientoSucursal/edit/$', 'editSucursal', name='edit'),
@@ -76,31 +84,19 @@ urlpatterns += patterns('sucursales.views',
     #url(r'^mantenimientoSucursal/list/(?P<id>[\w-]+)/$', 'listSucursalL',name='listSucursalL'),
     # url(r'^mantenimientoSucursal/dameStock/$', 'dameStock',name='stock'),
     # url(r'^mantenimientoSucursal/StockDetalleSucursalAlamcen/$', 'StockDetalleSucursalAlmacen',name='stockDetSecAl'),
-    # url(r'^mantenimientoSucursal/addProductotoSucursal/$', 'addProductotoSucursal',name='addProductotoSucursal'),   
-    # url(r'^mantenimientoSucursal/editProductotoSucursal/$', 'editProductotoSucursal',name='editProductotoSucursal'), 
-    # url(r'^mantenimientoSucursal/historialVentas/$', 'historialVentas',name='historialVentas'), 
-    # url(r'^mantenimientoSucursal/historialVentas/(?P<id>[\w-]+)/$', 'Historial_ventas_Sucursal_Admin',name='histoSucursalVentasAdm'), 
-    #url(r'^mantenimientoSucursal/detalle/ver/$', 'prueba',name='algo1'), 
-    url(r'^export/(?P<suc_id>[0-9]+)$', 'export',name='export'), 
-
-
-
-
-
-    
-
- )
+    # url(r'^mantenimientoSucursal/addProductotoSucursal/$', 'addProductotoSucursal',name='addProductotoSucursal'),
+    # url(r'^mantenimientoSucursal/editProductotoSucursal/$', 'editProductotoSucursal',name='editProductotoSucursal'),
+    # url(r'^mantenimientoSucursal/historialVentas/$', 'historialVentas',name='historialVentas'),
+    # url(r'^mantenimientoSucursal/historialVentas/(?P<id>[\w-]+)/$', 'Historial_ventas_Sucursal_Admin',name='histoSucursalVentasAdm'),
+    #url(r'^mantenimientoSucursal/detalle/ver/$', 'prueba',name='algo1'),
+    url(r'^export/(?P<suc_id>[0-9]+)$', 'export',name='export'),
+    )
 
 urlpatterns += patterns('productos.views',
 
     url(r'^producto/filtroproducto/$', 'filtroproductos',name='filtroproductos'),
     url(r'^producto/filtrocriterio/$', 'filtrocriterio',name='filtrocriterio'),
-    
-
-
-
-
-    ) 
+    )
 
 
 

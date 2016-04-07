@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # from django.db.models import ForeignKey 
 from django.utils import timezone
 import locale
@@ -19,8 +20,7 @@ class Utilidades():
 				return 0
 		return 0
 
-	def hola (self):
-		print 5
+
 
 
 	# def mifuncion(self,model_instance):

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response , HttpResponse
 from django.template.context import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
@@ -240,7 +241,10 @@ def listSucursalL(request,id , page = 1):
 
 				#1.-  obtener la cantidad de productos en la Sucursal ....
 				detalle_sucursal_almacen_productos = DetalleSucursalAlmacen.objects.filter(sucursal_id = sucursal)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 03fd38295e886303316e77f72407620a2f10c18c
 				#2.-  designar la cantidad productos tiene que haber por pagina ... por el momento para esta fase de desarrollo probare con 4 por pagina , lo conversado con MSJ es 10 aprox hasta 15 max
 				page = request.GET.get('page' , 1)
 
@@ -264,6 +268,7 @@ def listSucursalL(request,id , page = 1):
 				#4.-  SABER si tiene Pagina anterior 
 				#5.-  SABER si TIENE pagina Siguiente
 				#6.-  Si es la ultima pagina 
+<<<<<<< HEAD
 			
 				
 
@@ -273,6 +278,8 @@ def listSucursalL(request,id , page = 1):
 
 
 
+=======
+>>>>>>> 03fd38295e886303316e77f72407620a2f10c18c
 			except Exception, e:
 				return HttpResponse("Problemas del Server")
 
@@ -284,10 +291,14 @@ def listSucursalL(request,id , page = 1):
 		#template = "listaProductosSucursalAlmacen.html"
 		template = "ListarProductosOriginal.html"
 		datos = request.session["datos"]
+<<<<<<< HEAD
 
 		
 		return render_to_response (template, {'producto_x_page':producto_x_page , 'sucursal':sucursal , 'datos':datos} , context_instance = RequestContext(request))
 
+=======
+		return render_to_response (template, {'producto_x_page':producto_x_page , 'sucursal':sucursal , 'datos':datos} , context_instance = RequestContext(request))
+>>>>>>> 03fd38295e886303316e77f72407620a2f10c18c
 	else: 
 		return HttpResponseRedirect("/ventas/")
 
