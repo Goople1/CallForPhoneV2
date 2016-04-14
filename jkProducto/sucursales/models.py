@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 from django.db import models
-from django.core.validators import RegexValidator
+#from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import transaction, IntegrityError
@@ -194,20 +194,7 @@ class SucursalTrabajador(models.Model):
 
 	class Meta:
 		verbose_name_plural = "Trabajadores"	
-#Modelo Cliente  , no deberia estar  aqui pero por el momento
-class Cliente(models.Model):
-	razon_social = models.CharField(max_length=50 , blank=True);
-	nombre = models.CharField(max_length=50)
-	apellidos = models.CharField(max_length=50)
-	telefono = models.CharField(max_length=10)
-	dni = models.CharField(unique=True, max_length = 8 ,validators=[ RegexValidator(regex = '\d{8}', message="DNI no tiene 8 digitos", code="invalido")])
-	direccion = models.CharField(max_length=50 , blank=True)	
-	ruc = models.CharField(max_length=11 , blank=True)
-	correo = models.EmailField(blank=True)
 
-
-	def __unicode__(self):
-		return "Cliente : [%s] %s %s " %(self.razon_social,self.nombre , self.apellidos)
 
 
 

@@ -22,6 +22,53 @@
                   <div class="panel-body">
                       
 
+<div class="row text-center">
+     <label class="radio-inline">
+      <input type="radio" value="1" class="rdbOpcion" name="optradio" checked="checked">An&oacute;nimo
+    </label>
+    <label class="radio-inline">
+      <input type="radio" value="2" class="rdbOpcion" name="optradio">Buscar
+    </label>
+    <label class="radio-inline">
+      <input type="radio" value="3" class="rdbOpcion" name="optradio">Registrar
+    </label>
+</div>
+<div id="divFormCliente" class="hidden">
+  <form class="form-horizontal" role="form">
+    <h4>Cliente</h4>
+  <div class="form-group">
+    <div class="col-xs-12 col-md-12 col-sm-12">
+      <label class="col-xs-2 col-md-2 col-sm-2  control-label" for="txtDocumento">Documento:</label>
+      <div class="col-xs-4 col-md-4 col-sm-4">
+        <input type="text" disabled="disabled" class="form-control" id="txtDocumento" placeholder="RUC o DNI"/>
+        <input type="hidden" id="hdnCliente" value="" />
+      </div>
+      <div class="col-xs-3 col-md-3 col-sm-3">
+        <button type="button" class="btn btn-info" id="btnBuscarCliente"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+      </div>
+      <div class="col-xs-3 col-md-3 col-sm-3">
+        <button type="button" class="btn btn-success" id="btnAddCliente" disabled="disabled"><span class="glyphicon glyphicon-user"></span> Registrar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-xs-12 col-md-12 col-sm-12">
+      <label class="col-xs-2 col-md-2 col-sm-2  control-label" for="txtDocumento">Raz&oacute;n Social / Nombres y Apellidos:</label>
+      <div class="col-xs-4 col-md-4 col-sm-4">
+        <input type="text" class="form-control" id="txtRazonDisabled" placeholder="Raz&oacute;n Social / Nombres y Apellidos" disabled="disabled">
+      </div>
+      
+    </div>
+  </div>
+
+  </form>
+</div>
+
+
+
+
+
 <!-- <div class="container" style="display: inline;"> -->
           <form class="form-sales col-lg-12">
              <!--<h4 class="form-sales-heading col-lg-6" id="fecha">Fecha: 13/03/2015</h4>
@@ -268,6 +315,36 @@
 </div>
 
 	
+<!-- Modal content Cliente Nuevo-->
+    <div id="divADddCliente" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="panel panel-success">
+          <div class="panel-heading">
+            <h4>Registrar Cliente</h4>
+          </div>
+          <div class="panel-body">
+            <div class="modal-body" id="divCliente">
+              
+              <form class="form-horizontal" role="form" action="#" method="post">
+                  {% csrf_token %}
+                  {{ registrar_cliente }}
+         
+              </form>
+
+
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" id="btnRegCliAceptar" data-dismiss="modal">Aceptar</button>
+              <button type="button" class="btn btn-danger" id="btnRegCliCancelar" data-dismiss="modal">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- End Modal Content -->
+
 
 
 
@@ -283,10 +360,7 @@
 
 <script src="{% static "static/js/general/csrf.js"%}"></script>
 <script src="{% static "static/js/general/jquery-ui-1.10.3.min.js"%}"></script>
-<script src="{% static "static/js/general/select2.min.js"%}"></script>
-<script type="text/javascript"  src="{% static "static/js/venta/agregarVenta.js" %}"></script>
-<script type="text/javascript"  src="{% static "static/js/venta/modificarVenta.js" %}"></script>
-    
+<script src="{% static "static/js/general/select2.min.js"%}"></script>   
 <script type="text/javascript">
 
     
@@ -937,7 +1011,8 @@ $('body').delegate('.cantidadPro','blur', function(){
     </script>
 
 
-
+<script type="text/javascript"  src="{% static "static/js/venta/agregarVenta.js" %}"></script>
+<script type="text/javascript"  src="{% static "static/js/venta/modificarVenta.js" %}"></script>
 
 	<!--END JS ADDED-->
 	

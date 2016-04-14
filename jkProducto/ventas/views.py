@@ -16,7 +16,9 @@ from sucursales.models import SucursalTrabajador,DetalleSucursalAlmacen
 #,Sucursal
 from sucursales.utilidades import Utilidades
 from .models import  Venta , DetalleVenta
+from cliente.models import Cliente
 from .forms import FormInciarSesion
+from cliente.forms import ClienteForm
 from asistencia.models import AsistenciaTrabajador
 #from almacen.models import Almacen
 #from productos.models import Producto
@@ -77,7 +79,6 @@ def lista_producto(request):
 
 @login_required(login_url='/cuenta/')
 def venta (request):	
-
     if request.method == "GET":
 
         datos = request.session["datos"]
@@ -92,10 +93,11 @@ def venta (request):
 
             trabajador_sucursal_id = trabajador.sucursal.id
             lista_productos = DetalleSucursalAlmacen.objects.filter(sucursal_id = trabajador_sucursal_id)
-            #template = "homeVentas.html"
-            template = 'imprimir.html'
+            template = "homeVentas.html"
+            #template = 'imprimir.html'
+            registrar_cliente = ClienteForm(request.POST)
             venta  = True
-            return  render_to_response( template , {"venta":venta,"productos": lista_productos, "trabajador":trabajador, "datos":datos} , context_instance = RequestContext(request))
+            return  render_to_response( template , {"venta":venta,"productos": lista_productos, "trabajador":trabajador, "datos":datos,'registrar_cliente': registrar_cliente} , context_instance = RequestContext(request))
 
         else :
             if datos.get("cargo") == "admi":
@@ -109,25 +111,19 @@ def venta (request):
 @login_required(login_url='/login/')
 @transaction.atomic()
 def addVenta(request):
-
-
-    print "asdfasd"
-
-
     if request.method == "POST":
+        estado_venta = False
+        id_venta = 0
+        respuesta = ''
         try:
             with transaction.atomic():
-
-
+                #estado_venta = True
                 trabajador = SucursalTrabajador.objects.get(trabajador = request.user.id)
                 my_json_products_to_dict = json.loads(request.POST.get("json_detalle_venta"))
                 total = Utilidades().validarIngresoNum(request.POST.get("total"))
-
-                print ">>>>POST"
+                print "POST"
                 print request.session.get("venta_id_to_modificar",False)
-
                 if (bool(request.session.get("venta_id_to_modificar",False)) & bool(request.session.get("detalle_venta_dict_producto",False))):
-
                     print "IF"
                     venta_to_modificar = request.session.get("venta_id_to_modificar")
                     detalle_venta_load_products = request.session.get("detalle_venta_dict_producto")
@@ -135,9 +131,7 @@ def addVenta(request):
                     venta.estado = False
                     venta.nombre_ventas_descripcion = 'ELI'
                     venta.save()
-
                     #cargar productos_to_load
-
                     if detalle_venta_load_products:
                         for producto in detalle_venta_load_products:
                             cantidad =  Utilidades().validarIngresoNum(producto.get("cantidad"))
@@ -146,31 +140,65 @@ def addVenta(request):
                             det_sucu_alm_prod_to_add.stock += cantidad
                             det_sucu_alm_prod_to_add.save()
 
-
                         if my_json_products_to_dict:
                             respuesta = crearVenta(trabajador, total, my_json_products_to_dict, estado="MOD", referencia=venta_to_modificar)
                         else :
                             respuesta = "Json Vacio"
-
-                        del request.session["venta_id_to_modificar"]
-                        del request.session["detalle_venta_dict_producto"]
-
-
-
-
+                        
                 else:
-
                     print "ELSE"
+                    mensaje = True
+                    #validar la opc elegida
+                    #opcion 1 - Anonimo
+                    #opcion 2 - buscar
+                    #opcion 3 - registrar Nuevo
+                    radioVenta = request.POST.get("radioTipoVenta","")
+                    if radioVenta == "2":
+                        ##buscar cliente
+                        print "why2"
+                        try:
+                            clienteNuevo = Cliente.objects.get(id = request.POST.get("hdnCliente", ""))
+                        except Exception, e:
+                            mensaje = False
+                    elif radioVenta == "3":
+                        
+                        #registar cliente
+                        print "wh3"
+                        print request.POST.get('clienteNuevoR')
+                        dict_cliente = json.loads(request.POST.get('clienteNuevoR',{}))
+                        print dict_cliente
+                        print "adasd"
+                        txtRUC = dict_cliente.get('txtRucDni','')
+                        txtRazon = dict_cliente.get('txtRazonNombre','')
+                        cmbTipoCliente = dict_cliente.get('cmbTipoCliente','')
+                        txtDireccion = dict_cliente.get('txtDireccion','')
+                        txtCorreo = dict_cliente.get('txtCorreo','')
+                        if txtRUC != '' and txtRazon != '' and cmbTipoCliente != '' and txtCorreo !='':
+                            try:
+                                clienteNuevo = Cliente.objects.create(ruc_dni=txtRUC, razon_social_nombre= txtRazon, tipo_cliente= cmbTipoCliente, correo= txtCorreo, direccion= txtDireccion )
+                            except Exception, e:
+                                print "error registrar cliente"
+                                print e
+                                mensaje = False
+                    print "why"
+                    if mensaje:
+                        if my_json_products_to_dict:
+                            if radioVenta in ('2','3'):
+                                id_venta, respuesta = crearVenta(trabajador, total, my_json_products_to_dict,clienteNuevo)
+                                print "slr"
+                                print id_venta,respuesta
+                            else:
+                                id_venta, respuesta = crearVenta(trabajador, total, my_json_products_to_dict)
 
-                    if my_json_products_to_dict:
-                        respuesta = crearVenta(trabajador, total, my_json_products_to_dict)
-                    else :
-                        respuesta = "Json Vacio"
+                        else :
+                            respuesta = "Json Vacio"
+                    else:
+                        respuesta = "Ha ocurrido un error"
 
+                #rederict = reverse('home_ventas')
+                #test para imprimir
+                #rederict = reverse('imprimirVenta')
 
-
-
-                rederict = reverse('home_ventas')
 
 
                         # if request.session.get("venta_id_to_modificar"):
@@ -213,24 +241,42 @@ def addVenta(request):
                         #         raise IntegrityError
                     # else :
                         # return HttpResponse("JSON VACIO")
-        except :
+        except Exception, e:
+            print e
             transaction.rollback()
+            #estado_venta = False
             respuesta = "no se Pudo Agregar la venta , intentelo nuevamente"
         else:
+            estado_venta = True
             transaction.commit()
+           
         finally:
-            rpt = {"mensaje": respuesta , "redirect": rederict}
+            print "la ptmr"
+            print id_venta
+            print respuesta
+            if estado_venta:
+                print "asd"
+                try:
+                    redirect = reverse('imprimirVenta',kwargs={'venta_id':id_venta})
+                except Exception, e:
+                    print e
+                print ">redirect"
+                print redirect
+                print "asfassgg"
+            else:
+                redirect = reverse('home_ventas')
+
+            rpt = { "mensaje": respuesta , "redirect": redirect }
+            print rpt
             return HttpResponse(json.dumps(rpt) , content_type='application/json')
 
 
 
-def crearVenta(trabajador,total,list_products,estado='NUE',referencia=None):
-
+def crearVenta(trabajador,total,list_products,clienteNuevo = None,estado='NUE',referencia=None) :
     try:
         with transaction.atomic():
-
             print ">>>>>Estado , Referencia" , estado , referencia
-            venta = Venta(empleado = trabajador , sucursal = trabajador.sucursal , total = total, nombre_ventas_descripcion = estado , referencia = referencia)
+            venta = Venta(empleado = trabajador , sucursal = trabajador.sucursal , total = total, nombre_ventas_descripcion = estado , referencia = referencia, cliente = clienteNuevo)
             venta.save()
             print "fin venta"
             #detalle_Venta
@@ -262,12 +308,16 @@ def crearVenta(trabajador,total,list_products,estado='NUE',referencia=None):
                 print "fin for"
     except :
         transaction.rollback()
-        mensaje = "no se Pudo Agregar la venta , intentelo nuevamente"
+        mensaje = "No se Pudo Agregar la venta , intentelo nuevamente"
     else:
         transaction.commit()
 
     finally:
-        return mensaje
+        id_venta  = venta.id
+        print">>id_venta"
+        print id_venta
+        return (id_venta,mensaje)
+        #return mensaje
 
 
 @login_required(login_url='/login/')
@@ -578,27 +628,17 @@ def reporte_venta (request):
 
 
 
-
-
-
 def detalle_venta(request):
-
-
     if request.method  == "GET":
-
-
         if request.user.is_staff:
             return HttpResponseRedirect("/admin/")
-
         elif  request.user.is_active:
             try:
                 trabajador =  SucursalTrabajador.objects.get(trabajador = request.user.id)
             except Exception, e:
                 print e
                 return HttpResponse("error")
-
             codido =Utilidades().validarIngresoNum(request.GET.get("codigo"))
-
             try:
                 venta = Venta.objects.get(id = codido)
             except Exception, e:
@@ -656,6 +696,49 @@ def sessionData(request):
                 print e
 
         return request.session['datos']
+
+
+
+def imprimirVenta(request,venta_id):
+
+    if request.method == "GET":
+        venta = None
+        #id_venta  = request.GET.get("venta_id",0)
+        
+        try:
+            venta = Venta.objects.get(id= venta_id)
+            print "venta",venta
+        except Exception, e:
+            print e
+        try:
+            detalle_venta = DetalleVenta.objects.filter(venta_id=venta)
+            print "detalle_venta" ,detalle_venta
+
+        except Exception, e:
+            print e
+
+        template = 'imprimir.html'
+        return render_to_response(template,{'venta':venta,'detalle_venta':detalle_venta},context_instance=RequestContext(request))
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

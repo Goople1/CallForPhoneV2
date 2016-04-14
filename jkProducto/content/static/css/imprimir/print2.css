@@ -1,20 +1,65 @@
-#cabecera, #menu, #lateral, #comentarios {
-  display: none !important;
+fieldset {
+    border: 2px groove threedface;
+    padding: 5px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    font-size: 16px;
+}
+legend
+{
+	display: block;
+    width: auto;
+    padding: 0 5px;
+    margin-bottom: 0;
+   /* font-size: inherit;*/
+    line-height: inherit;
+    border: auto;
+    border-bottom: none !important;
+    font-size: 26px;
+}
+fieldset.scheduler-border {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+
 }
 
-body, #contenido, #principal, #pie {
-  float: none !important;
-  width: auto !important;
-  margin:  0 !important;
-  padding: 0 !important;
+
+fieldset.empresa
+{
+	margin-top:15%  !important;  
 }
 
-body { color: #000; font: 100%/150% Georgia, "Times New Roman", Times, serif; }
-
-a:after {
-  content: " (" attr(href) ") ";
+fieldset.cliente
+{
+	text-align:left;
 }
 
-a:before {
-  content: " (" attr(href) ") ";
+
+
+legend.scheduler-border {
+    margin: 5% 5% !important;
+    font-size: 1.4em !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    border-style: hidden !important;
+}
+
+
+
+.invoice-title h2, .invoice-title h3 {
+    display: inline-block;
+}
+
+.table > tbody > tr > .no-line {
+    border-top: none;
+}
+
+.table > thead > tr > .no-line {
+    border-bottom: none;
+}
+
+.table > tbody > tr > .thick-line {
+    border-top: 2px solid;
 }

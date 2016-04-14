@@ -56,6 +56,12 @@ class Utilidades():
 		to_json = {"producto":str(ObjDetalleVenta.detalle_Sucursal_almacen_id.producto_id), "tipo_precio" : ObjDetalleVenta.tipo_precio ,"cantidad" :ObjDetalleVenta.cantidad , "precio":ObjDetalleVenta.precio , "descripcion" : ObjDetalleVenta.descripcion ,"importe": ObjDetalleVenta.importe , "precio_real":ObjDetalleVenta.precio_real}
 		return to_json
 
+	def cliente_to_json(self,ObjCli):
+		print "cliente"
+		#print strftime("%a, %d %b %Y %H:%M:%S")
+		to_json = {"id": ObjCli.id , "razon_social_nombre" : str(ObjCli.razon_social_nombre) , "telefono": str(ObjCli.telefono), "ruc_dni" : str(ObjCli.ruc_dni) , "correo": (ObjCli.correo) , "tipo_cliente":ObjCli.tipo_cliente	}
+		return to_json
+
 
 
 

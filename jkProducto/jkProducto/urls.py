@@ -2,19 +2,13 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
-<<<<<<< HEAD
-from django.conf.urls.static import static 
+from django.apps import apps
+from sucursales.views import invitePage
 
-from django.apps import apps
-from sucursales.views import invitePage
-from ventas import views 
-=======
-#from django.conf.urls.static import static
-from django.apps import apps
 from ventas import views
->>>>>>> 03fd38295e886303316e77f72407620a2f10c18c
+#from django.conf.urls.static import static
 from internetWeb import views as internet
-from sucursales.views import invitePage
+from cliente import views as clienteViews
 
 
 admin.site.login = login_required(admin.site.login)
@@ -32,6 +26,8 @@ urlpatterns = patterns('',
     url(r'^logout/', views.cerrarSesion , name='cerrarSesion'),
 
     url(r'^ventas/', include('ventas.urls')),
+    #url(r'^clientes/', include('clientes.urls')),
+    url(r'^clientes/', clienteViews.buscarCliente , name='buscarCliente'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^mantenimientoSucursal/', include('sucursales.urls')),
 

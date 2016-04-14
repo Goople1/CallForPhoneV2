@@ -16,7 +16,7 @@ import djqscsv
 import datetime
 
 from .models import Sucursal, DetalleSucursalAlmacen, HistorialDetalleSucursalAlmacen,HistorialSucursal
-from almacen.models import DetalleAlmacen 
+from almacen.models import DetalleAlmacen
 from productos.models import Producto
 from sucursales.utilidades import Utilidades
 from ventas.models import Venta
@@ -127,7 +127,7 @@ def Historial_ventas_Sucursal_Admin(request,id):
 def historialSucursal(request):
 
 	if is_admin(request.user.id):
-		historialSucursal = [] 
+		historialSucursal = []
 		try:
 			
 			historialSucursal  = HistorialSucursal.objects.all().order_by('-fecha')
@@ -151,8 +151,8 @@ def addSucursalA(request,id):
 
 		template = 'registrarProductoOriginal.html'
 
-		#para Sacar los productos  que ya existen en  los DetallesSucursalAlmacen  de una Sucursal 
-		sucursal_id = id 
+		#para Sacar los productos  que ya existen en  los DetallesSucursalAlmacen  de una Sucursal
+		sucursal_id = id
 
 		try:
 			Sucursal.objects.get(pk=sucursal_id)
@@ -222,12 +222,10 @@ def editSucursalE(request,id):
 
 @login_required(login_url='/cuenta/')
 def listSucursalL(request,id , page = 1):
-
-
 	#verificar si el user que ha ingresado es admin , de lo contrario , seria un vendedor :D
 	if is_admin(request.user.id):
 
-		#verificar que el  parametro que se obtiene por  la URL , sea un numero 
+		#verificar que el  parametro que se obtiene por  la URL , sea un numero
 		sucursal_id = Utilidades().validarIngresoNum(id)
 		try:
 
@@ -236,15 +234,11 @@ def listSucursalL(request,id , page = 1):
 
 			try:
 
-				#Aca se obtiene TODOS los productos que han sido ASIGNADOS a la SUCURSAL , tener en cuenta que los productos Existentes son Sacados del ALMACEN 
+				#Aca se obtiene TODOS los productos que han sido ASIGNADOS a la SUCURSAL , tener en cuenta que los productos Existentes son Sacados del ALMACEN
 				#A RODAR
 
 				#1.-  obtener la cantidad de productos en la Sucursal ....
 				detalle_sucursal_almacen_productos = DetalleSucursalAlmacen.objects.filter(sucursal_id = sucursal)
-<<<<<<< HEAD
-
-=======
->>>>>>> 03fd38295e886303316e77f72407620a2f10c18c
 				#2.-  designar la cantidad productos tiene que haber por pagina ... por el momento para esta fase de desarrollo probare con 4 por pagina , lo conversado con MSJ es 10 aprox hasta 15 max
 				page = request.GET.get('page' , 1)
 
@@ -252,8 +246,7 @@ def listSucursalL(request,id , page = 1):
 
 				pagination = Paginator(detalle_sucursal_almacen_productos, 4)
 
-
-				#3.-  SABER en que numero de Pagina se esta actualmente 
+				#3.-  SABER en que numero de Pagina se esta actualmente
 
 				try:
 					producto_x_page = pagination.page(page)
@@ -265,41 +258,24 @@ def listSucursalL(request,id , page = 1):
         			producto_x_page = paginator.page(pagination.num_pages)
 
 
-				#4.-  SABER si tiene Pagina anterior 
+				#4.-  SABER si tiene Pagina anterior
 				#5.-  SABER si TIENE pagina Siguiente
-				#6.-  Si es la ultima pagina 
-<<<<<<< HEAD
-			
-				
+				#6.-  Si es la ultima pagina
 
-
-
-
-
-
-
-=======
->>>>>>> 03fd38295e886303316e77f72407620a2f10c18c
 			except Exception, e:
 				return HttpResponse("Problemas del Server")
 
 		
-		except Exception, e : 
-			print e  
+		except Exception, e :
+			print e
 			mensaje ="<html>	<head>		<title></title>		</head>		<body>			<h1> PAGE NOT FOUND!</h1>		</body>		</html>"
 			return HttpResponse(mensaje)
 		#template = "listaProductosSucursalAlmacen.html"
 		template = "ListarProductosOriginal.html"
 		datos = request.session["datos"]
-<<<<<<< HEAD
 
-		
 		return render_to_response (template, {'producto_x_page':producto_x_page , 'sucursal':sucursal , 'datos':datos} , context_instance = RequestContext(request))
-
-=======
-		return render_to_response (template, {'producto_x_page':producto_x_page , 'sucursal':sucursal , 'datos':datos} , context_instance = RequestContext(request))
->>>>>>> 03fd38295e886303316e77f72407620a2f10c18c
-	else: 
+	else:
 		return HttpResponseRedirect("/ventas/")
 
 @login_required(login_url='/cuenta/')
@@ -337,7 +313,7 @@ def dameStock(request):
 		else:
 			mensaje = "imposible de encontrar el Producto "
 			return HttpResponse(mensaje)
-	else : 
+	else :
 		return HttpResponse("Only Get")
 
 
@@ -354,7 +330,7 @@ def addProductotoSucursal(request):
 			if stock_add > 0 :
 
 				#print "pase is digit"
-				try : 
+				try :
 					detalle_almacen = DetalleAlmacen.objects.get(producto_id = producto_id )
 				except Exception,e:
 					print e
@@ -372,10 +348,10 @@ def addProductotoSucursal(request):
 					mensaje = "Producto no Encontrado,Pruebe otra vez"
 					return HttpResponse(mensaje)
 				
-				try : 
+				try :
 					sucursal = Sucursal.objects.get(id = sucursal_id)
 				except ObjectDoesNotExist, e:
-					print e 
+					print e
 					mensaje = "Es posible que la Sucursal no Exista, Intente otra vez"
 					return HttpResponse(mensaje)
 
@@ -388,13 +364,13 @@ def addProductotoSucursal(request):
 				#se Crea el DetalleSucursalAlamcen
 
 				try:
-					detalleSA = DetalleSucursalAlmacen(stock = stock_add, producto_id = producto , sucursal_id =  sucursal) 
+					detalleSA = DetalleSucursalAlmacen(stock = stock_add, producto_id = producto , sucursal_id =  sucursal)
 					
 					detalleSA.save()
 					HistorialDetalleSucursalAlmacen.objects.create(stock_actual =detalleSA.stock ,id_detalle_sucursal_almacen=detalleSA)
 
-				except Exception , e : 
-					print e 
+				except Exception , e :
+					print e
 					mensaje = "no se puede Guardar los Datos , Parece Que ya Existen , Intente Otro vez"
 					return HttpResponse(mensaje)
 
@@ -404,10 +380,10 @@ def addProductotoSucursal(request):
 
 			else:
 				return HttpResponse("Algo va mal ")
-		else : 
+		else :
 			return HttpResponse("No se Eligio ningun Producto")
 
-	else: 
+	else:
 		return HttpResponse("No es posible esta accion por metodo Get")
 
 @login_required(login_url='/cuenta/')
@@ -453,7 +429,7 @@ def editProductotoSucursal(request):
 		sucursal_id  = Utilidades().validarIngresoNum(request.POST.get("sucursal_id",0))
 
 		producto_id = Utilidades().validarIngresoNum(request.POST.get("producto_id",0))
-		#funcion que cuando no sea un numero me retorne 0 
+		#funcion que cuando no sea un numero me retorne 0
 		stock_add = Utilidades().validarIngresoNum(request.POST.get("stock_add",0))
 		# stock_dispo = request.POST.get("stock_dispo")
 
@@ -478,7 +454,7 @@ def editProductotoSucursal(request):
 					print e
 					return HttpResponse ("Problemas con el Server")
 
-				if(detalle_almacen.stock >= stock_add): 
+				if(detalle_almacen.stock >= stock_add):
 					detalle_almacen.stock-=stock_add
 					antes_dsa = producto_detalle_sucursal_almacen.stock
 					producto_detalle_sucursal_almacen.stock+=stock_add
@@ -500,7 +476,7 @@ def editProductotoSucursal(request):
 			print mensaje
 			return HttpResponse(mensaje)
 
-	else: 
+	else:
 		return HttpResponse(" Problemas Con el Server")
 
 
@@ -516,7 +492,7 @@ def is_admin(user_id):
 
  		return True
 
-	else: 
+	else:
 		return False
 
 def export(request , suc_id):
@@ -550,7 +526,7 @@ def ver_detalle(request):
 			det = DetalleVenta.objects.filter(venta_id = venta.id)
 
 			if det:
-				data = [Utilidades().detalle_venta_to_json(detalle) for detalle in det] 
+				data = [Utilidades().detalle_venta_to_json(detalle) for detalle in det]
 
 
 			else :
@@ -585,7 +561,7 @@ def getVentasbyDateRange(request):
 
 		#print fecha_inicio , " --- " , fecha_fin
 		rpt = criteriobusqueda(fecha_inicio,fecha_fin)
-		 # buscar todas la ventas en ese rango de fechas : 
+		 # buscar todas la ventas en ese rango de fechas :
 		#ventas_date_range = Venta.objects.filter(fecha_emision__range=(fecha_inicio, fecha_fin))
 		try:
 			#ventas_date_range = Venta.objects.filter(Q(fecha_emision__gte=(datetime.date(day = fecha_inicio[0] , month = fecha_inicio[1] , year = fecha_inicio[2]))), Q(estado = True))
@@ -616,17 +592,17 @@ def criteriobusqueda(fecIni,fecFin):
 	criterio = {}
 	regla = {'estado': True }
 	criterio.update(regla)
-	#any() retorna   True si alguna condicion es True 
+	#any() retorna   True si alguna condicion es True
 	
 	valor = [fecIni,fecFin]
 	if  not any(valor) :
 		# try:
 		# 	todo = DetalleSucursalAlmacen.objects.all()
 		# except Exception,e:
-		# 	print e 
+		# 	print e
 		# 	return HttpResponse("Servidor OFf")
 		return criterio
-	else: 
+	else:
 
 		campos = ["fecIni","fecFin"]
 		my_dict = dict(zip(campos,valor))
@@ -689,13 +665,13 @@ class invitePage (TemplateView):
 #         return request.session['datos']
 #     else:
 #         try:
-#             trabajador = SucursalTrabajador.objects.get(trabajador = request.user)  
+#             trabajador = SucursalTrabajador.objects.get(trabajador = request.user)
 #             if trabajador.cargo.lower() == "empl":
 #                 request.session["datos"] = {"empresa": trabajador.sucursal.nombre,"nombre":trabajador.trabajador.get_full_name()}
 #             else :
 #                 if trabajador.cargo.lower() == "admi":
 #                     request.session["datos"] = {"empresa": trabajador.sucursal.id_almacen.nombre_empresa,"nombre":trabajador.trabajador.get_full_name()}
-#         except Exception ,e : 
+#         except Exception ,e :
 #             if acceso.is_staff:
 #                 request.session['datos'] = {"empresa": "Administrador","nombre":request.user.get_full_name()}
 #             return request.session['datos']

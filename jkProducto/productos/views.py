@@ -9,40 +9,32 @@ from sucursales.utilidades import Utilidades
 import json
 # Create your views here.
 def home(request):
-	template = 'ventas.html'
-	return render_to_response(template,{},context_instance=RequestContext(request))
+    template = 'ventas.html'
+    return render_to_response(template,{},context_instance=RequestContext(request))
 
 def iniciarSesion(request):
-	template='login.html'
-	return render_to_response(template,{},context_instance=RequestContext(request))
+    template='login.html'
+    return render_to_response(template,{},context_instance=RequestContext(request))
 
 def filtroproductos(request):
-
-
-	#obtener  todas las  sucursales
-	try :
-		sucursales = Sucursal.objects.filter(id_estadoSucursal = 1).order_by("nombre")
-	except Exception ,e :
-		sucursales = None		
-
-	#obtener todas las Marcas
-
-	try:
-		marcas = Marca.objects.all().order_by("nombre")
-	except Exception,e:
-		print e;
-		marcas = None
-
-
-	try:
-		tipos = TipoProducto.objects.all().order_by("nombre")
-	except Exception,e:
-		print e
-		tipos = None
-
-
-	template = "filtroProductos.html"
-	return render_to_response(template , {"sucursales":sucursales , "marcas" : marcas , "tipos":tipos} ,context_instance = RequestContext(request))
+    #obtener  todas las  sucursales
+    try :
+        sucursales = Sucursal.objects.filter(id_estadoSucursal = 1).order_by("nombre")
+    except Exception ,e :
+        sucursales = None		
+        #obtener todas las Marcas
+        try:
+            marcas = Marca.objects.all().order_by("nombre")
+        except Exception,e:
+            print e;
+            marcas = None
+        try:
+            tipos = TipoProducto.objects.all().order_by("nombre")
+        except Exception,e:
+            print e
+            tipos = None
+        template = "filtroProductos.html"
+    return render_to_response(template , {"sucursales":sucursales , "marcas" : marcas , "tipos":tipos} ,context_instance = RequestContext(request))
 
 def filtrocriterio(request):
 

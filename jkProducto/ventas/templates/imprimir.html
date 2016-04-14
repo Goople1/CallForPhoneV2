@@ -15,7 +15,7 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="invoice-title">
-                <h2>American Import Movil</h2><h3 class="pull-right">Orden # 12345</h3>
+                <h2>American Import Movil</h2><h3 class="pull-right">Orden {{venta.id}}</h3>
             </div>
            <!-- <hr> -->
             <div class="row">
@@ -23,8 +23,8 @@
                     <!--<address> -->
                         <fieldset class="scheduler-border empresa">
                             <legend class="scheduler-border">Sucursal</legend>
-                            <strong>Import Acces Movil</strong><br/>
-                            <strong>Las Malvinas 643</strong>
+                            <strong>{{venta.sucursal.nombre}}</strong><br/>
+                            <strong>{{venta.sucursal.direccion}}</strong>
 
                         </fieldset>
                   <!--  <strong>Billed To:</strong><br>
@@ -50,6 +50,45 @@
                         Springfield, ST 54321
                     -->
                   <!--   </address> -->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <fieldset>
+                        <legend>Cliente</legend>
+                      <div class="row">  
+
+
+                        <div class='col-xs-6 col-md-6'>
+                            <div class="form-group">
+                                <label class="control-label">Raz&oacute;n Social / Nombres y Apellidos:</label>
+                           
+                            </div>
+                        </div> 
+                        <div class='col-xs-6 col-md-6 text-center'>
+                            <div class="form-group">
+                                <label class="control-label">RUC / CI:</label>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                         <div class='col-xs-6 col-md-6'>
+                            <div class="form-group">
+                                <label class="control-label">Fecha de Emisi&oacute;n:</label>
+                           
+                            </div>
+                        </div> 
+                        <div class='col-xs-6 col-md-6 text-center'>
+                            <div class="form-group">
+                                <label class="control-label">Gu&iacute;a de Remisi&oacute;n</label>
+                               
+                            </div>
+                        </div>
+                    </div>
+
+
+                    </fieldset>
                 </div>
             </div>
           <!--  <div class="row">
@@ -89,13 +128,17 @@
                             </thead>
                             <tbody>
                                 <!-- foreach ($order->lineItems as $line) or some such thing here -->
+
+                                {% for  det in detalle_venta %}
                                 <tr>
-                                    <td>BS-200</td>
-                                    <td class="text-center">$10.99</td>
-                                    <td class="text-center">1</td>
-                                    <td class="text-right">$10.99</td>
+                                    <td>{{det.detalle_Sucursal_almacen_id.producto_id.codigo}}</td>
+                                    <td class="text-center">{{det.precio}}</td>
+                                    <td class="text-center">{{det.cantidad}}</td>
+                                    <td class="text-right">{{det.importe}}</td>
                                 </tr>
-                                <tr>
+
+                                {% endfor%}
+<!--                                 <tr>
                                     <td>BS-400</td>
                                     <td class="text-center">$20.00</td>
                                     <td class="text-center">3</td>
@@ -124,7 +167,7 @@
                                     <td class="no-line"></td>
                                     <td class="no-line text-center"><strong>Total</strong></td>
                                     <td class="no-line text-right">$685.99</td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>

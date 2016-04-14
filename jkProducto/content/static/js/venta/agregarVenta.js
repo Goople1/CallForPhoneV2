@@ -84,7 +84,7 @@ console.log(jsonObj)
 
 			})
 		.fail(function(data){
-			alert(" A ocurrido un Error", data);
+			alert("UPS! , a ocurrido un Error", data);
 		});
 
 	    /*success: function(result) {
@@ -128,3 +128,16 @@ else {
 
 
 });
+
+$("#btnAddCliente").on("click",function(){
+		
+		popUp();
+});
+	
+function popUp()
+{
+	$('#divADddCliente').modal({
+		backdrop: 'static',
+	    keyboard: false
+	});
+}

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
-from .models import Sucursal, SucursalTrabajador ,Cliente#,EstadoSucursal
+from .models import Sucursal, SucursalTrabajador #,Cliente#,EstadoSucursal
 #,HistorialSucursal
 #from productos.models import Producto, Marca, TipoProducto
 #from actions import export_as_csv
@@ -29,8 +29,8 @@ class SucursalTrabajadorAdmin(admin.ModelAdmin):
 	search_fields = ('sucursal',)
 	#list_editable = ('sucursal',)
 
-class ClienteAdmin(admin.ModelAdmin):
-	list_display = ('nombre','apellidos','telefono','dni','ruc' ,'correo' , 'direccion')
+#class ClienteAdmin(admin.ModelAdmin):
+#	list_display = ('nombre','apellidos','telefono','dni','ruc' ,'correo' , 'direccion')
 
 class AlmacenAdmin(admin.ModelAdmin):
 	list_display = ('nombre_empresa','ruc','departamento','fecha_registro', 'descripcion','telefono','celular',)
@@ -43,4 +43,4 @@ class AlmacenAdmin(admin.ModelAdmin):
 #admin.site.register(DetalleAlmacen,DetalleAlmacenAdmin)
 admin.site.register(Sucursal, SucursalAdmin)
 admin.site.register(SucursalTrabajador, SucursalTrabajadorAdmin)
-admin.site.register(Cliente, ClienteAdmin)
+#admin.site.register(Cliente, ClienteAdmin)

@@ -1,0 +1,21 @@
+fieldset
+{
+	border: 2px solid #000;
+    border-radius: 20px;
+    min-width: auto;
+    padding: 2%;
+    margin: auto;
+    border: auto;
+}
+
+legend
+{
+
+	width: auto;
+	margin-bottom: auto;
+}
+
+fieldset.cliente
+{
+	text-align:left;
+}

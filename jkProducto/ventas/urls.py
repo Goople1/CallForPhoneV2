@@ -21,6 +21,8 @@ urlpatterns = patterns('',
 	#url(r'^reporte/$',views.home_empleado_menu_reporte , name='menuReporte'),
 	url(r'^(?i)home/$',views.home_empleado_menu_reporte , name='home'),
 
+	url(r'^(?i)imprimirVenta/(?P<venta_id>[0-9]+)/$',views.imprimirVenta , name='imprimirVenta'),
+
 
 
 
