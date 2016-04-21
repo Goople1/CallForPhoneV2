@@ -143,8 +143,7 @@ def addVenta(request):
                         if my_json_products_to_dict:
                             respuesta = crearVenta(trabajador, total, my_json_products_to_dict, estado="MOD", referencia=venta_to_modificar)
                         else :
-                            respuesta = "Json Vacio"
-                        
+                            respuesta = "Json Vacio"                      
                 else:
                     print "ELSE"
                     mensaje = True
@@ -155,19 +154,14 @@ def addVenta(request):
                     radioVenta = request.POST.get("radioTipoVenta","")
                     if radioVenta == "2":
                         ##buscar cliente
-                        print "why2"
                         try:
                             clienteNuevo = Cliente.objects.get(id = request.POST.get("hdnCliente", ""))
                         except Exception, e:
                             mensaje = False
-                    elif radioVenta == "3":
-                        
+                    elif radioVenta == "3":                
                         #registar cliente
-                        print "wh3"
                         print request.POST.get('clienteNuevoR')
                         dict_cliente = json.loads(request.POST.get('clienteNuevoR',{}))
-                        print dict_cliente
-                        print "adasd"
                         txtRUC = dict_cliente.get('txtRucDni','')
                         txtRazon = dict_cliente.get('txtRazonNombre','')
                         cmbTipoCliente = dict_cliente.get('cmbTipoCliente','')
@@ -180,7 +174,6 @@ def addVenta(request):
                                 print "error registrar cliente"
                                 print e
                                 mensaje = False
-                    print "why"
                     if mensaje:
                         if my_json_products_to_dict:
                             if radioVenta in ('2','3'):
@@ -243,26 +236,22 @@ def addVenta(request):
                         # return HttpResponse("JSON VACIO")
         except Exception, e:
             print e
+            estado_venta = False
             transaction.rollback()
-            #estado_venta = False
+            
             respuesta = "no se Pudo Agregar la venta , intentelo nuevamente"
         else:
             estado_venta = True
             transaction.commit()
            
         finally:
-            print "la ptmr"
             print id_venta
             print respuesta
             if estado_venta:
-                print "asd"
                 try:
                     redirect = reverse('imprimirVenta',kwargs={'venta_id':id_venta})
                 except Exception, e:
                     print e
-                print ">redirect"
-                print redirect
-                print "asfassgg"
             else:
                 redirect = reverse('home_ventas')
 
@@ -700,11 +689,10 @@ def sessionData(request):
 
 
 def imprimirVenta(request,venta_id):
-
+    datos = request.session['datos']
     if request.method == "GET":
         venta = None
         #id_venta  = request.GET.get("venta_id",0)
-        
         try:
             venta = Venta.objects.get(id= venta_id)
             print "venta",venta
@@ -718,7 +706,7 @@ def imprimirVenta(request,venta_id):
             print e
 
         template = 'imprimir.html'
-        return render_to_response(template,{'venta':venta,'detalle_venta':detalle_venta},context_instance=RequestContext(request))
+        return render_to_response(template,{'venta':venta,'detalle_venta':detalle_venta,'datos':datos},context_instance=RequestContext(request))
 
 
     

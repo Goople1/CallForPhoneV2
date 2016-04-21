@@ -1,12 +1,28 @@
-#cabecera, #menu, #lateral, #comentarios {
+/*#cabecera, #menu, #lateral, #comentarios {
   display: none !important;
 }
-
+*/
+.leftpanel, .logopanel, .leftpanelinner,
+ .rightpanel, .headerbar , .pageheader,.divBtnImprimir
+ {
+ 	display: none !important;
+ 	margin:  0 !important;
+  	padding: 0 !important;
+ }
+/*
 body, #contenido, #principal, #pie {
   float: none !important;
   width: auto !important;
   margin:  0 !important;
   padding: 0 !important;
+}
+*/
+body, .mainpanel, .contentpanel, .row, .col-xs-12 {
+  float: none !important;
+  width: auto !important;
+  margin:  0 !important;
+  padding: 0 !important;
+
 }
 
 body { color: #000; font: 100%/150% Georgia, "Times New Roman", Times, serif; }

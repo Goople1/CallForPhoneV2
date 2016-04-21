@@ -8,14 +8,13 @@
 {% endblock css %}
 {% block content %}
 
-    
-
-</style>
-
     <div class="row">
+        <div class="row col-xs-12 divBtnImprimir text-right"> 
+            <button type="button" id="btnImprimir" class="btn btn-success">Imprimir <span class="glyphicon glyphicon-print"></span></button>
+        </div>
         <div class="col-xs-12">
             <div class="invoice-title">
-                <h2>American Import Movil</h2><h3 class="pull-right">Orden {{venta.id}}</h3>
+                <h2>{{venta.sucursal.id_almacen.nombre_empresa}}</h2><h3 class="pull-right">Orden {{venta.id}}</h3>
             </div>
            <!-- <hr> -->
             <div class="row">
@@ -39,9 +38,9 @@
                    <!-- <address> -->
                         <fieldset class="scheduler-border cliente">
                             <legend class="scheduler-border">Nota de Venta</legend>
-                            <strong>Ruc:</strong>2066610000 <br/>
+                            <strong>Ruc:</strong>  {{ venta.cliente.ruc_dni|default:"An&oacute;nimo" }} <br/>
                             <strong>Nro:</strong>003-333-111 <br/>
-                            <strong>Fecha:</strong>07 de Abril 2016 <br/>
+                            <strong>Fecha:</strong>{{venta.fecha_emision | date:" D d M Y"}}<br/>
                         </fieldset>
                    <!-- <strong>Shipped To:</strong><br>
                         Jane Smith<br>
@@ -59,29 +58,29 @@
                       <div class="row">  
 
 
-                        <div class='col-xs-6 col-md-6'>
+                        <div class='col-xs-8 col-md-8'>
                             <div class="form-group">
-                                <label class="control-label">Raz&oacute;n Social / Nombres y Apellidos:</label>
+                                <label class="control-label">Raz&oacute;n Social / Nombres y Apellidos:  {{ venta.cliente.razon_social_nombre|default:"An&oacute;nimo" }}</label>
                            
                             </div>
                         </div> 
-                        <div class='col-xs-6 col-md-6 text-center'>
+                        <div class='col-xs-4 col-md-4 text-center'>
                             <div class="form-group">
-                                <label class="control-label">RUC / CI:</label>
+                                <label class="control-label">RUC / CI:  {{ venta.cliente.ruc_dni|default:"An&oacute;nimo" }}</label>
                                
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                         <div class='col-xs-6 col-md-6'>
+                         <div class='col-xs-8 col-md-8'>
                             <div class="form-group">
-                                <label class="control-label">Fecha de Emisi&oacute;n:</label>
+                                <label class="control-label">Fecha de Emisi&oacute;n: {{venta.fecha_emision | date:" D d M Y"}}</label>
                            
                             </div>
                         </div> 
-                        <div class='col-xs-6 col-md-6 text-center'>
+                        <div class='col-xs-4 col-md-4 text-center'>
                             <div class="form-group">
-                                <label class="control-label">Gu&iacute;a de Remisi&oacute;n</label>
+                                <label class="control-label">Gu&iacute;a de Remisi&oacute;n </label>
                                
                             </div>
                         </div>
@@ -113,17 +112,17 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><strong>Order summary</strong></h3>
+                    <h3 class="panel-title"><strong>Nota de Venta</strong></h3>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
                         <table class="table table-condensed">
                             <thead>
                                 <tr>
-                                    <td><strong>Item</strong></td>
-                                    <td class="text-center"><strong>Price</strong></td>
-                                    <td class="text-center"><strong>Quantity</strong></td>
-                                    <td class="text-right"><strong>Totals</strong></td>
+                                    <td><strong>Producto</strong></td>
+                                    <td class="text-center"><strong>Precio</strong></td>
+                                    <td class="text-center"><strong>Cantidad</strong></td>
+                                    <td class="text-right"><strong>Total</strong></td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -138,36 +137,7 @@
                                 </tr>
 
                                 {% endfor%}
-<!--                                 <tr>
-                                    <td>BS-400</td>
-                                    <td class="text-center">$20.00</td>
-                                    <td class="text-center">3</td>
-                                    <td class="text-right">$60.00</td>
-                                </tr>
-                                <tr>
-                                    <td>BS-1000</td>
-                                    <td class="text-center">$600.00</td>
-                                    <td class="text-center">1</td>
-                                    <td class="text-right">$600.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="thick-line"></td>
-                                    <td class="thick-line"></td>
-                                    <td class="thick-line text-center"><strong>Subtotal</strong></td>
-                                    <td class="thick-line text-right">$670.99</td>
-                                </tr>
-                                <tr>
-                                    <td class="no-line"></td>
-                                    <td class="no-line"></td>
-                                    <td class="no-line text-center"><strong>Shipping</strong></td>
-                                    <td class="no-line text-right">$15</td>
-                                </tr>
-                                <tr>
-                                    <td class="no-line"></td>
-                                    <td class="no-line"></td>
-                                    <td class="no-line text-center"><strong>Total</strong></td>
-                                    <td class="no-line text-right">$685.99</td>
-                                </tr> -->
+
                             </tbody>
                         </table>
                     </div>
@@ -179,6 +149,25 @@
 
 
 {% endblock content %}
+
+{% block javascript %}
+
+    {% load staticfiles %}
+<script type="text/javascript">
+
+    
+
+    $(document).ready(function(){
+
+        $("#btnImprimir").on("click", function(){
+              window.print();
+        });
+
+
+    });
+</script>
+    
+{% endblock javascript %}
 
 
 
