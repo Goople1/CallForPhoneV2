@@ -27,7 +27,7 @@ from asistencia.models import AsistenciaTrabajador
 #fdef para el Home_empleado
 #from django.utils import timezone
 
-@login_required(login_url='/cuenta/')
+@login_required(login_url='/login/')
 def home_ventas(request):
     print request.user.id
     #user_id =
@@ -58,7 +58,7 @@ def home_ventas(request):
 
 
 
-@login_required(login_url='/cuenta/')
+@login_required(login_url='/login/')
 def lista_producto(request):
 
 
@@ -77,7 +77,7 @@ def lista_producto(request):
 
 
 
-@login_required(login_url='/cuenta/')
+@login_required(login_url='/login/')
 def venta (request):	
     if request.method == "GET":
 
@@ -688,25 +688,43 @@ def sessionData(request):
 
 
 
+@login_required(login_url='/login/')
 def imprimirVenta(request,venta_id):
-    datos = request.session['datos']
+    
+
     if request.method == "GET":
+        
+        print "GET"
+
         venta = None
         #id_venta  = request.GET.get("venta_id",0)
+        trabajador = None
+        try:
+            trabajador =  SucursalTrabajador.objects.get(trabajador = request.user.id)
+            print "slr" , trabajador 
+        except Exception, e:
+            user = User.objects.get(id =request.user.id)
+            if user.is_staff:
+                return HttpResponseRedirect("/admin/")
+        
+
         try:
             venta = Venta.objects.get(id= venta_id)
             print "venta",venta
         except Exception, e:
             print e
-        try:
-            detalle_venta = DetalleVenta.objects.filter(venta_id=venta)
-            print "detalle_venta" ,detalle_venta
 
-        except Exception, e:
-            print e
 
-        template = 'imprimir.html'
-        return render_to_response(template,{'venta':venta,'detalle_venta':detalle_venta,'datos':datos},context_instance=RequestContext(request))
+        if trabajador.sucursal.id == venta.sucursal.id:
+            try:
+                detalle_venta = DetalleVenta.objects.filter(venta_id=venta)
+                print "detalle_venta" ,detalle_venta
+            except Exception, e:
+                print e
+
+            datos = request.session['datos']
+            template = 'imprimir.html'
+            return render_to_response(template,{'venta':venta,'detalle_venta':detalle_venta,'datos':datos},context_instance=RequestContext(request))
 
 
     
