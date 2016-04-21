@@ -16,7 +16,7 @@
             <div class="row">
             <div class="invoice-title">
                 <h2>{{venta.sucursal.id_almacen.nombre_empresa}}</h2>
-                <h3 class="pull-right">Orden {{venta.id}}</h3>
+               <!-- <h3 class="pull-right">Orden {{venta.id}}</h3>-->
             </div>
             </div>
            <!-- <hr> -->
@@ -44,8 +44,8 @@
                    <!-- <address> -->
                         <fieldset class="scheduler-border cliente">
                             <legend class="scheduler-border">Nota de Venta</legend>
-                            <strong>Ruc:</strong>  {{ venta.cliente.ruc_dni|default:"An&oacute;nimo" }} <br/>
-                            <strong>Nro:</strong>  {{ venta.cliente.id }} <br/>
+                            <strong>Ruc:</strong>  {{ venta.sucursal.id_almacen.ruc|default:"An&oacute;nimo" }} <br/>
+                            <strong>Nro:</strong>  {{venta.id}}<br/>
                             <strong>Fecha:</strong>{{venta.fecha_emision | date:" D d M Y"}}<br/>
                         </fieldset>
                    <!-- <strong>Shipped To:</strong><br>
@@ -86,7 +86,20 @@
                         </div> 
                         <div class='col-xs-4 col-md-4 text-center'>
                             <div class="form-group">
-                                <label class="control-label">Gu&iacute;a de Remisi&oacute;n </label>
+                                <label class="control-label">Tel&eacute;fono: {{ venta.cliente.telefono|default:"No Tiene" }} </label>
+                               
+                            </div>
+                        </div>
+
+                        <div class='col-xs-8 col-md-8'>
+                            <div class="form-group">
+                                <label class="control-label">Direcci&oacute;n: {{ venta.cliente.direccion|default:"An&oacute;nimo" }}</label>
+                           
+                            </div>
+                        </div> 
+                        <div class='col-xs-4 col-md-4 text-center'>
+                            <div class="form-group">
+                                <label class="control-label">Email: {{ venta.cliente.correo|default:"No Tiene" }} </label>
                                
                             </div>
                         </div>
