@@ -29,7 +29,7 @@ from ventas.models import DetalleVenta
 
 # Create your views here.
 
-@login_required(login_url='/cuenta/')
+@login_required(login_url='/login/')
 def mantenimientoSucursal(request):
 	#template = 'MantenimientoAsignacionSucursales.html'
 	#template = 'modificarProductoSucursalOriginal.html'
@@ -47,7 +47,7 @@ def mantenimientoSucursal(request):
 	else :
 		return HttpResponseRedirect("/ventas/")
 
-@login_required(login_url='/cuenta/')
+@login_required(login_url='/login/')
 def addSucursal(request):
 	if is_admin(request.user.id):
 		template='ListarSucursales.html'
@@ -62,7 +62,7 @@ def addSucursal(request):
 	else :
 		return HttpResponseRedirect("/ventas/")
 
-@login_required(login_url='/cuenta/')
+@login_required(login_url='/login/')
 def editSucursal(request):
 	if is_admin(request.user.id):
 		template='ListarSucursales.html'
@@ -77,7 +77,7 @@ def editSucursal(request):
 	else:
 		return HttpResponseRedirect("/ventas/")
 
-@login_required(login_url='/cuenta/')
+@login_required(login_url='/login/')
 def listSucursal(request):
 	if is_admin(request.user.id):
 		template='ListarSucursales.html'
@@ -91,7 +91,7 @@ def listSucursal(request):
 	else:
 		return HttpResponseRedirect("/ventas/")
 
-@login_required(login_url='/cuenta/')
+@login_required(login_url='/login/')
 def historialVentas(request):
 	if is_admin(request.user.id):
 		template = "IndiceOriginal.html"
@@ -103,7 +103,7 @@ def historialVentas(request):
 	else:
 		return HttpResponseRedirect("/ventas/")
 
-@login_required(login_url='/cuenta/')
+@login_required(login_url='/login/')
 def Historial_ventas_Sucursal_Admin(request,id):
 
 	if is_admin(request.user.id):
@@ -123,7 +123,7 @@ def Historial_ventas_Sucursal_Admin(request,id):
 	else:
 		return HttpResponseRedirect("/ventas/")
 
-@login_required(login_url='/cuenta/')
+@login_required(login_url='/login/')
 def historialSucursal(request):
 
 	if is_admin(request.user.id):
@@ -141,7 +141,7 @@ def historialSucursal(request):
 	else:
 		return HttpResponseRedirect("/ventas/")
 
-@login_required(login_url='/cuenta/')
+@login_required(login_url='/login/')
 def addSucursalA(request,id):
 
 	#template = 'AddProductosSucursal.html'
@@ -187,7 +187,7 @@ def addSucursalA(request,id):
 		return HttpResponseRedirect("/ventas/")
 
 		
-@login_required(login_url='/cuenta/')
+@login_required(login_url='/login/')
 def editSucursalE(request,id):
 	if is_admin(request.user.id):
 		#template  = "modificarProductoSucursal.html"
@@ -220,7 +220,7 @@ def editSucursalE(request,id):
 
 
 
-@login_required(login_url='/cuenta/')
+@login_required(login_url='/login/')
 def listSucursalL(request,id , page = 1):
 	#verificar si el user que ha ingresado es admin , de lo contrario , seria un vendedor :D
 	if is_admin(request.user.id):
@@ -278,7 +278,7 @@ def listSucursalL(request,id , page = 1):
 	else:
 		return HttpResponseRedirect("/ventas/")
 
-@login_required(login_url='/cuenta/')
+@login_required(login_url='/login/')
 def listPages(request):
 	page = request.GET.get('page')
 	pass
@@ -287,7 +287,7 @@ def listPages(request):
 def registrarPedidoSucursal(request):
 	pass
 
-@login_required(login_url='/cuenta/')
+@login_required(login_url='/login/')
 def dameStock(request):
 
 
@@ -317,7 +317,7 @@ def dameStock(request):
 		return HttpResponse("Only Get")
 
 
-@login_required(login_url='/cuenta/')
+@login_required(login_url='/login/')
 def addProductotoSucursal(request):
 
 	if request.method == "POST":
@@ -386,7 +386,7 @@ def addProductotoSucursal(request):
 	else:
 		return HttpResponse("No es posible esta accion por metodo Get")
 
-@login_required(login_url='/cuenta/')
+@login_required(login_url='/login/')
 def StockDetalleSucursalAlmacen(request):
 
 	
@@ -421,7 +421,7 @@ def StockDetalleSucursalAlmacen(request):
 		return HttpResponse(mensaje)
 
 
-@login_required(login_url='/cuenta/')
+@login_required(login_url='/login/')
 def editProductotoSucursal(request):
 
 	if request.method == "POST":
