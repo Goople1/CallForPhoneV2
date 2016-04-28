@@ -1,9 +1,9 @@
 fieldset {
-    border: 2px groove threedface;
+    /*border: 2px groove threedface;*/
     padding: 5px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
-    border-radius: 20px;
+    /*border-radius: 20px;*/
     font-size: 16px;
 }
 legend
@@ -19,7 +19,7 @@ legend
     font-size: 26px;
 }
 fieldset.scheduler-border {
-    border: 1px groove #ddd !important;
+   /* border: 1px groove #ddd !important;*/
     padding: 0 1.4em 1.4em 1.4em !important;
     margin: 0 0 1.5em 0 !important;
 
@@ -28,7 +28,7 @@ fieldset.scheduler-border {
 
 fieldset.empresa
 {
-	margin-top:15%  !important;  
+	/*margin-top:15%  !important;  */
 }
 
 fieldset.cliente
@@ -50,6 +50,13 @@ legend.scheduler-border {
 
 .invoice-title h2, .invoice-title h3 {
     display: inline-block;
+}
+table {
+    border-collapse: collapse;
+}
+
+table, td, th {
+    border: 2px solid black;
 }
 
 .table > tbody > tr > .no-line {
