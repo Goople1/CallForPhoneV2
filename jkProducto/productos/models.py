@@ -46,7 +46,7 @@ class Producto(models.Model):
 	marca = models.ForeignKey(Marca)
 	tipo_producto = models.ForeignKey(TipoProducto)
 	#logo = models.ImageField(upload_to='fotos/',blank=True,null=True)
-	imagen = models.ImageField(upload_to='productos/',blank=True,null=True)
+	imagen = models.ImageField(upload_to='productos/',blank=True,null=True, default='touchTactil.png')
 	class Meta:
 		verbose_name_plural = "Mantenimiento de Productos"
 		unique_together = ('codigo', 'color','marca','tipo_producto')

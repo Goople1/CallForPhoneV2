@@ -91,6 +91,7 @@ class Sucursal(models.Model):
 	def clean(self):
 		self.codigo_puesto = self.codigo_puesto.capitalize()
 		self.nombre = self.nombre.capitalize()
+		self.direccion = self.direccion.upper()
 		validate_only_one_instance(self, Constante.CANTIDAD_SUCURSAL_PBASCICO)
 	class Meta:
 		verbose_name_plural = "Mantenimiento de Sucursales"
@@ -166,8 +167,11 @@ class SucursalTrabajador(models.Model):
 	def save(self):
 		flag = True
 		try:
-			usuario =User.objects.get(pk=self.trabajador.id)
+			usuario = User.objects.get(pk=self.trabajador.id)
 			print usuario.is_active
+			usuario.username  = usuario.username.lower()
+			if not usuario.first_name.strip() and not usuario.last_name.strip():
+				usuario.first_name = usuario.username
 			print "ACTIVADOOOO"
 			if self.cargo == 'admi':
 				usuario.is_staff = True

@@ -23,7 +23,8 @@ class Almacen(models.Model):
     celular = models.CharField(max_length=20)
     descripcion = models.TextField(max_length=400)
     def clean(self):
-        self.nombre_empresa = self.nombre_empresa.capitalize()
+        self.nombre_empresa = self.nombre_empresa.upper()
+        self.direccion = self.direccion.upper()
         validate_only_one_instance(self, Constante.CANTIDAD_EMPRESA)
 
     class Meta:
