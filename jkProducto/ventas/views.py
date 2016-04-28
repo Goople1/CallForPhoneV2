@@ -188,52 +188,7 @@ def addVenta(request):
                     else:
                         respuesta = "Ha ocurrido un error"
 
-                #rederict = reverse('home_ventas')
-                #test para imprimir
-                #rederict = reverse('imprimirVenta')
 
-
-
-                        # if request.session.get("venta_id_to_modificar"):
-                        #     venta = Venta(empleado = trabajador , sucursal = trabajador.sucursal , total = total, ventas_descripcion = "MOD" , referencia = request.session.get('venta_id_to_modificar'))
-
-                        #     venta.save()
-                        # else:
-                        #     venta = Venta(empleado = trabajador , sucursal = trabajador.sucursal , total = total)
-
-                        # #En my_json_products_to_dict estan todos los productos  que se agregan a la venta		
-                        # for producto_dict in my_json_products_to_dict :
-                        #     cantidad =  Utilidades().validarIngresoNum(producto_dict.get("cantidad"))
-                        #     tipo_precio = producto_dict.get("tipo_precio")
-                        #     precio  =  producto_dict.get("precio_unitario")
-                        #     importe = producto_dict.get("importe")
-                        #     producto2 = producto_dict.get("producto_id")
-                        #     descripcion = producto_dict.get("descripcion")
-                        #     #Saber que  el Producto Existe :[Porsiaca]
-                        #     detalle_sucursal_producto = DetalleSucursalAlmacen.objects.get(producto_id = producto2 , sucursal_id = trabajador.sucursal)
-
-
-                        #     if tipo_precio == "mayor":
-                        #         precio_real = detalle_sucursal_producto.producto_id.precio_x_mayor
-                        #     if  tipo_precio == "menor":
-                        #         precio_real = detalle_sucursal_producto.producto_id.precio_x_menor
-
-
-                        #     if detalle_sucursal_producto.stock  >= cantidad:
-                        #         detalle_sucursal_producto.stock-= cantidad
-                        #         detalle_venta = DetalleVenta(venta_id = venta,detalle_Sucursal_almacen_id = detalle_sucursal_producto , cantidad = cantidad , tipo_precio  =  tipo_precio , precio =precio , importe = importe, descripcion = descripcion , precio_real = precio_real)
-                        #         detalle_venta.save()
-                        #         detalle_sucursal_producto.save()
-                        #         mensaje = "Venta Realiza con Exito"
-                        #         rederict = reverse('home_ventas')
-                        #     else:
-                        #         mensaje = "no se Pudo Agregar la venta , intentelo mas tarde"
-                        #         rederict = reverse('home_ventas')
-                        #         print rederict
-                        #         print mensaje
-                        #         raise IntegrityError
-                    # else :
-                        # return HttpResponse("JSON VACIO")
         except Exception, e:
             print e
             estado_venta = False
