@@ -128,6 +128,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 LOGIN_URL = '/login/'
 
 
-
+AUTHENTICATION_BACKENDS = (
+    'ventas.backendsIniciarSesion.EmailOrUsernameModelBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 # STATICFILES_STORAGE ='django.contrib.staticfiles.storage.CachedStaticFilesStorage'
