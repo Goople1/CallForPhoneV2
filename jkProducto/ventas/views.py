@@ -272,8 +272,8 @@ def crearVenta(trabajador,total,list_products,clienteNuevo = None,estado='NUE',r
             for producto in list_products:
                 cantidad =  Utilidades().validarIngresoNum(producto.get("cantidad"))
                 tipo_precio = producto.get("tipo_precio")
-                precio  =  producto.get("precio_unitario")
-                importe = producto.get("importe")
+                precio  =  producto.get("precio_unitario").replace(",",".")
+                importe = producto.get("importe").replace(",",".")
                 producto_id = producto.get("producto_id")
                 descripcion = producto.get("descripcion")
                 #Saber que  el Producto Existe :[Porsiaca]
