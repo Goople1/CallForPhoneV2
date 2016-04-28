@@ -20,50 +20,81 @@
                       {% endif %}           
                    </div>
                   <div class="panel-body">
+
+
+
+{% if venta %}
+
+      <div class="row text-center">
+           <label class="radio-inline">
+            <input type="radio" value="1" class="rdbOpcion" name="optradio" checked="checked">An&oacute;nimo
+          </label>
+          <label class="radio-inline">
+            <input type="radio" value="2" class="rdbOpcion" name="optradio">Buscar
+          </label>
+          <label class="radio-inline">
+            <input type="radio" value="3" class="rdbOpcion" name="optradio">Registrar
+          </label>
+      </div>
+      <div id="divFormCliente" class="hidden">
+        <form class="form-horizontal" role="form">
+          <h4>Cliente</h4>
+        <div class="form-group">
+          <div class="col-xs-12 col-md-12 col-sm-12">
+            <label class="col-xs-2 col-md-2 col-sm-2  control-label" for="txtDocumento">Documento:</label>
+            <div class="col-xs-4 col-md-4 col-sm-4">
+              <input type="text" disabled="disabled" class="form-control" id="txtDocumento" placeholder="RUC o DNI"/>
+              <input type="hidden" id="hdnCliente" value="" />
+            </div>
+            <div class="col-xs-3 col-md-3 col-sm-3">
+              <button type="button" class="btn btn-info" id="btnBuscarCliente"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+            </div>
+            <div class="col-xs-3 col-md-3 col-sm-3">
+              <button type="button" class="btn btn-success" id="btnAddCliente" disabled="disabled"><span class="glyphicon glyphicon-user"></span> Registrar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-xs-12 col-md-12 col-sm-12">
+            <label class="col-xs-2 col-md-2 col-sm-2  control-label" for="txtDocumento">Raz&oacute;n Social / Nombres y Apellidos:</label>
+            <div class="col-xs-4 col-md-4 col-sm-4">
+              <input type="text" class="form-control" id="txtRazonDisabled" placeholder="Raz&oacute;n Social / Nombres y Apellidos" disabled="disabled">
+            </div>
+            
+          </div>
+        </div>
+
+        </form>
+      </div>
+
+{% elif  modificar %}
+
+        <div class="form-group">
+
+          <div class="col-xs-12 col-md-12 col-sm-12">
+            <label class="col-xs-2 col-md-2 col-sm-2  control-label" for="txtDocumento">Documento:</label>
+            <div class="col-xs-4 col-md-4 col-sm-4">
+              <input type="text" class="form-control" id="txtRazonDisabled"  value= "{{ObjVenta.cliente.ruc_dni|default:'An&oacute;nimo'}}" disabled="disabled">
+            </div>
+            
+          </div>
+
+
+
+          <div class="col-xs-12 col-md-12 col-sm-12">
+            <label class="col-xs-2 col-md-2 col-sm-2  control-label" for="txtDocumento">Raz&oacute;n Social / Nombres y Apellidos:</label>
+            <div class="col-xs-4 col-md-4 col-sm-4">
+              <input type="text" class="form-control" id="txtRazonDisabled" value = "{{ObjVenta.cliente.razon_social_nombre|default:'An&oacute;nimo'}}" disabled="disabled">
+            </div>
+            
+          </div>
+        </div>
+
+
+{% endif %}                    
                       
 
-<div class="row text-center">
-     <label class="radio-inline">
-      <input type="radio" value="1" class="rdbOpcion" name="optradio" checked="checked">An&oacute;nimo
-    </label>
-    <label class="radio-inline">
-      <input type="radio" value="2" class="rdbOpcion" name="optradio">Buscar
-    </label>
-    <label class="radio-inline">
-      <input type="radio" value="3" class="rdbOpcion" name="optradio">Registrar
-    </label>
-</div>
-<div id="divFormCliente" class="hidden">
-  <form class="form-horizontal" role="form">
-    <h4>Cliente</h4>
-  <div class="form-group">
-    <div class="col-xs-12 col-md-12 col-sm-12">
-      <label class="col-xs-2 col-md-2 col-sm-2  control-label" for="txtDocumento">Documento:</label>
-      <div class="col-xs-4 col-md-4 col-sm-4">
-        <input type="text" disabled="disabled" class="form-control" id="txtDocumento" placeholder="RUC o DNI"/>
-        <input type="hidden" id="hdnCliente" value="" />
-      </div>
-      <div class="col-xs-3 col-md-3 col-sm-3">
-        <button type="button" class="btn btn-info" id="btnBuscarCliente"><span class="glyphicon glyphicon-search"></span> Buscar</button>
-      </div>
-      <div class="col-xs-3 col-md-3 col-sm-3">
-        <button type="button" class="btn btn-success" id="btnAddCliente" disabled="disabled"><span class="glyphicon glyphicon-user"></span> Registrar</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class="col-xs-12 col-md-12 col-sm-12">
-      <label class="col-xs-2 col-md-2 col-sm-2  control-label" for="txtDocumento">Raz&oacute;n Social / Nombres y Apellidos:</label>
-      <div class="col-xs-4 col-md-4 col-sm-4">
-        <input type="text" class="form-control" id="txtRazonDisabled" placeholder="Raz&oacute;n Social / Nombres y Apellidos" disabled="disabled">
-      </div>
-      
-    </div>
-  </div>
-
-  </form>
-</div>
 
 
 

@@ -141,9 +141,9 @@ def addVenta(request):
                             det_sucu_alm_prod_to_add.save()
 
                         if my_json_products_to_dict:
-                            respuesta = crearVenta(trabajador, total, my_json_products_to_dict, estado="MOD", referencia=venta_to_modificar)
+                            id_venta, respuesta, flag = crearVenta(trabajador, total, my_json_products_to_dict, estado="MOD", referencia=venta_to_modificar)
                         else :
-                            respuesta = "Json Vacio"                      
+                            respuesta = "No se ha Podido Modificar esta Venta , intentelo luego"                      
                 else:
                     print "ELSE"
                     mensaje = True
@@ -177,11 +177,15 @@ def addVenta(request):
                     if mensaje:
                         if my_json_products_to_dict:
                             if radioVenta in ('2','3'):
-                                id_venta, respuesta = crearVenta(trabajador, total, my_json_products_to_dict,clienteNuevo)
-                                print "slr"
+                                id_venta, respuesta, flag = crearVenta(trabajador, total, my_json_products_to_dict,clienteNuevo)
+                                print " ###slr"
                                 print id_venta,respuesta
                             else:
-                                id_venta, respuesta = crearVenta(trabajador, total, my_json_products_to_dict)
+                                id_venta, respuesta, flag = crearVenta(trabajador, total, my_json_products_to_dict) 
+
+
+                                print "Else Print Anonimo"
+                                print id_venta, respuesta 
 
                         else :
                             respuesta = "Json Vacio"
@@ -192,23 +196,22 @@ def addVenta(request):
         except Exception, e:
             print e
             estado_venta = False
+            respuesta = "no se Pudo Agregar la venta , intentelo nuevamente"
             transaction.rollback()
             
-            respuesta = "no se Pudo Agregar la venta , intentelo nuevamente"
         else:
             estado_venta = True
             transaction.commit()
            
         finally:
-            print id_venta
-            print respuesta
-            if estado_venta:
+            
+            if estado_venta and flag:
                 try:
                     redirect = reverse('imprimirVenta',kwargs={'venta_id':id_venta})
                 except Exception, e:
                     print e
             else:
-                redirect = reverse('home_ventas')
+                redirect = "#"
 
             rpt = { "mensaje": respuesta , "redirect": redirect }
             print rpt
@@ -218,6 +221,8 @@ def addVenta(request):
 
 def crearVenta(trabajador,total,list_products,clienteNuevo = None,estado='NUE',referencia=None) :
     try:
+        mensaje = ""
+        flag = True
         with transaction.atomic():
             print ">>>>>Estado , Referencia" , estado , referencia
             venta = Venta(empleado = trabajador , sucursal = trabajador.sucursal , total = total, nombre_ventas_descripcion = estado , referencia = referencia, cliente = clienteNuevo)
@@ -237,6 +242,7 @@ def crearVenta(trabajador,total,list_products,clienteNuevo = None,estado='NUE',r
                     precio_real = detalle_sucursal_producto.producto_id.precio_x_mayor
                 if  tipo_precio == "menor":
                     precio_real = detalle_sucursal_producto.producto_id.precio_x_menor
+
                 if detalle_sucursal_producto.stock  >= cantidad:
                     detalle_sucursal_producto.stock-= cantidad
                     detalle_venta = DetalleVenta(venta_id = venta,detalle_Sucursal_almacen_id = detalle_sucursal_producto , cantidad = cantidad , tipo_precio  =  tipo_precio , precio =precio , importe = importe, descripcion = descripcion , precio_real = precio_real)
@@ -247,12 +253,13 @@ def crearVenta(trabajador,total,list_products,clienteNuevo = None,estado='NUE',r
                     else :
                         mensaje  = "Venta modificada con Exito"
                 else:
-                    mensaje = "La Cantidad Solicitada del Productos es Mayor a la del Stock Actual"
+                    mensaje = "La Cantidad Solicitada del Productos: %s  es Mayor a la del Stock Actual" %(str(detalle_sucursal_producto.producto_id.codigo))
                     raise IntegrityError
                 print "fin for"
     except :
+        #mensaje = "No se Pudo Agregar la venta , intentelo nuevamente"
+        flag = False
         transaction.rollback()
-        mensaje = "No se Pudo Agregar la venta , intentelo nuevamente"
     else:
         transaction.commit()
 
@@ -260,7 +267,7 @@ def crearVenta(trabajador,total,list_products,clienteNuevo = None,estado='NUE',r
         id_venta  = venta.id
         print">>id_venta"
         print id_venta
-        return (id_venta,mensaje)
+        return (id_venta,mensaje,flag)
         #return mensaje
 
 
@@ -656,7 +663,6 @@ def imprimirVenta(request,venta_id):
         trabajador = None
         try:
             trabajador =  SucursalTrabajador.objects.get(trabajador = request.user.id)
-            print "slr" , trabajador 
         except Exception, e:
             user = User.objects.get(id =request.user.id)
             if user.is_staff:
