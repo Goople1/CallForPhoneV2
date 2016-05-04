@@ -543,7 +543,7 @@ def ver_detalle(request):
 
 
 
-
+import time
 @login_required(login_url='/login/')
 def getVentasbyDateRange(request):
 	if request.method == 'GET':

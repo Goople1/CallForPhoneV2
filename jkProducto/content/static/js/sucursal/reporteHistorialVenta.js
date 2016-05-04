@@ -1,9 +1,12 @@
  jQuery(document).ready(function() {
     
     "use strict";
+    var pleaseWaitDiv =$("#pleaseWaitDialog");
     
-    jQuery('#table1').dataTable();
-    
+$(document).on({
+    ajaxStart: function() { pleaseWaitDiv.modal();  },
+     ajaxStop: function() { pleaseWaitDiv.modal('hide'); }    
+});
    
     
     // Select2
@@ -38,64 +41,76 @@
             $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
         });
     //Boton para buscar el resultado de la fechas en un Rango de días 
-    $("#buscar").on("click", function(){
+       $("#buscar").on("click", function(){
+
+
         var fechaInicio  =  $("#dateValueInicio").val();
         console.log("#fechaInicial:  " ,fechaInicio);
         var fechaFinal = $("#dateValueFin").val();
         console.log("fechaFinal:  " ,fechaFinal);
+
+
+
         $.ajax({
             data:{'fechaInicio' : fechaInicio  , 'fechaFinal' : fechaFinal},
             url : "/mantenimientoSucursal/ventasRangoFecha/",
             type:'GET',
+
         })
+
         .done(function(data){
   //          alert("test1");
+
             //var info = $.parseJSON(data);
+
 //            alert("test1.5");
             var total = data.slice((data.length-1),(data.length))
             data =  data.slice(0,data.length-1)
             console.log(total)
+
             //console.log(info);
+
             $('#totalVentasFechas').val(total[0].total);
             var tabla_body = $("#result");
+
+
             tabla_body.empty();
+
             var result = [];
+
+
+
             for (var i = 0 ; i < data.length ; i++){
+
+
                   var row = $("<tr>"+
                     "<td>"+(i+1)+"</td>"+
                     "<td>"+data[i].empleado+"</td>"+
                     "<td>"+data[i].total+"</td>"+
                     "<td>"+data[i].fecha_emision+"</td>"+
-                    "<td>"+data[i].tipo+"</td>"+
                     
+
                     "<td> <a  class ='ventaDetalle' href ='#' data-venta = " + data[i].id +" "+ "data-target ='.bs-example-modal-lg' data-toggle='modal'>ver</a><td>"+ 
                     "</tr>");
+
                     result.push(row)
+
             }
+
+
                 tabla_body.append(result);
+
+
+
         })
         .fail(function(){
+
         });
+
         //alert(fechaInicial,"",fechaFinal);
+
     });
 //---------------------------------------------------------------------------------------
-    $("#buscarTotal").on("click", function(){
-        var fechaInicio  =  $("#dateValueInicio").val();
-        var fechaFinal = $("#dateValueFin").val();
-        $.ajax({
-            data:{'fechaInicio' : fechaInicio  , 'fechaFinal' : fechaFinal},
-            url : "/mantenimientoSucursal/totalVentasRangoFecha/",
-            type:'GET',
-        })
-        .done(function(data){
-            console.log(data);
-           // alert(data.suma_totales_venta);
-            $('.modal-body').text(data.suma_totales_venta);
-            $('.ganacia-example-modal-sm').modal('show');
-        })
-        .fail(function(){
-        });
-    });
     // // Show aciton upon row hover
     // jQuery('.table-hidaction tbody tr').hover(function(){
     //   jQuery(this).find('.table-action-hide a').animate({opacity: 1});
