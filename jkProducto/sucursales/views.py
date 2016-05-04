@@ -507,7 +507,7 @@ def export(request , suc_id):
 	return djqscsv.render_to_csv_response(data,field_header_map = {'producto_id__tipo_producto__nombre': 'TIPO','producto_id__marca__nombre':'MARCA','producto_id__codigo': 'MODELO' , 'producto_id__color':'COLOR', 'producto_id__precio_x_menor': 'PRECIO por Menor' , 'producto_id__precio_x_mayor': 'Precio por Mayor'})
 
 
-@login_required(login_url='/cuenta/')
+@login_required(login_url='/login/')
 def ver_detalle(request):
 	
 
@@ -544,17 +544,17 @@ def ver_detalle(request):
 
 
 
-@login_required(login_url='/cuenta/')
+@login_required(login_url='/login/')
 def getVentasbyDateRange(request):
 	if request.method == 'GET':
 		sum_ventas = {}
+		ventas_date_range = []
+		venta_json_format = []
 		fecha_inicio = request.GET.get("fechaInicio","")
 		fecha_fin = request.GET.get("fechaFinal","")
 		if fecha_inicio.strip() !="":
 			fecha_inicio = map(int ,request.GET.get("fechaInicio").split("/"))
-		#	print fecha_inicio
 			fecha_inicio = timezone.make_aware(datetime.datetime(day = int(fecha_inicio[0]) , month = int(fecha_inicio[1]) , year = int(fecha_inicio[2])))
-		
 		if fecha_fin.strip() != "":
 			fecha_fin = request.GET.get("fechaFinal").split("/")
 			fecha_fin = timezone.make_aware(datetime.datetime(day = int(fecha_fin[0]) , month = int(fecha_fin[1]) , year = int(fecha_fin[2]) , hour =23  , minute  = 59 , second = 50 ))
@@ -576,12 +576,14 @@ def getVentasbyDateRange(request):
 			sum_ventas  = ventas_date_range.aggregate(total  =  Sum(F('total')))
 
 			print sum_ventas
-		except Exception, e:			
+		except Exception, e:
+			venta_json_format.append(str(e))			
 			print e
-		#print "test 123"
-		venta_json_format = [Utilidades().venta_to_json(venta) for venta in ventas_date_range]
-		#print venta_json_format
-		venta_json_format.append(sum_ventas)
+		else:
+			#print "test 123"
+			venta_json_format = [Utilidades().venta_to_json(venta) for venta in ventas_date_range]
+			#print venta_json_format
+			venta_json_format.append(sum_ventas)
 		#venta_json_format.update(sum_ventas)
 		#print venta_json_format
 		return HttpResponse( json.dumps(venta_json_format) , content_type='application/json')
@@ -627,7 +629,7 @@ def clean_dict_for_value_0 (data):
 	return d
 
 
-@login_required(login_url='/cuenta/')
+@login_required(login_url='/login/')
 def getGananciabyDateRange(request):
 
 	#print "LA GANACIA ES.............."

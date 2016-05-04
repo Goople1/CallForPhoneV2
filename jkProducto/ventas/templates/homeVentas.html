@@ -109,7 +109,6 @@
                       <label for="inputName" class="sr-only">Cliente</label>
                       <input type="text" id="inputName" class="form-control" placeholder="Nombre del cliente" required autofocus>
                   </div>
-
                   <div class="input-group col-lg-2 id="pormenor"">
                        <button type="button" class="btn btn-success">Por menor</button> 
                   </div>
@@ -345,7 +344,7 @@
   </div>
 </div>
 
-	
+  
 <!-- Modal content Cliente Nuevo-->
     <div id="divADddCliente" class="modal fade" role="dialog">
       <div class="modal-dialog">
@@ -379,42 +378,31 @@
 
 
 
-	
+  
 {% endblock content %}
 
 
 {% block javascript %}
 
-	{% load staticfiles %}
+  {% load staticfiles %}
 
-	<!-- JS ADDED-->
+  <!-- JS ADDED-->
 
 <script src="{% static "static/js/general/csrf.js"%}"></script>
 <script src="{% static "static/js/general/jquery-ui-1.10.3.min.js"%}"></script>
 <script src="{% static "static/js/general/select2.min.js"%}"></script>   
 <script type="text/javascript">
-
     
-
     $(document).ready(function(){
-
          $("#total").val(calcular_total()); 
     });
-
-
-
     $(document).ready(function(){
-
   
         var pro = [];
         var aux_pro=[];
-
                 {% for producto in  productos %}
-
-
             pro ["{{producto.producto_id.id}}"]= { 
       "id" : "{{producto.producto_id}}",
-
       "estado":"1",
       "stock" : "{{producto.stock}}",
       "producto": {
@@ -423,80 +411,50 @@
                      "id" : "{{producto.producto_id.id}}",
                      "precio_por_mayor":"{{producto.producto_id.precio_x_mayor}}",
                      "precio_por_menor":"{{producto.producto_id.precio_x_menor}}",
-
                      "marca":{
                         "nombre":"{{producto.producto_id.marca.nombre}}"
                      } ,
-
                    "tipo_producto":{
-
                        "nombre":"{{producto.producto_id.tipo_producto.nombre}}"
                     }
-
-
                   }
-
           }
           
         {% endfor %}
-
-
-
        {% if modificar %}
           {% for detalle in detalle_venta %}
-
           //console.log("{{detalle.detalle_Sucursal_almacen_id.producto_id.id}}")
             pro["{{detalle.detalle_Sucursal_almacen_id.producto_id.id}}"].estado = 0
             aux_pro["{{detalle.detalle_Sucursal_almacen_id.producto_id.id}}"] =true;
-
-
           {%endfor%}
-
          
        {% endif %}
-
-
-
        //console.log("producto",pro);
        //console.log("productoAux",aux_pro);
         var to_cmb  = pro;
          comAux="";
-
   $('body').delegate("#tab_logic tbody tr .delete","click" , function(){
-
     var cmbProducto = $(this).parent().parent().parent().find('td:eq(1)').children();
-
-    	//console.log("ROW ???? " , $(this).parent().parent().parent())
+      //console.log("ROW ???? " , $(this).parent().parent().parent())
    
       $(this).parent().parent().parent().fadeTo(400, 0, function () { 
       $(this).remove();
     });
-  	
-    	cambiarEstadoOff(cmbProducto.val());
-
-    	
+    
+      cambiarEstadoOff(cmbProducto.val());
+      
       
       setTimeout(function(){
         $("#total").val(calcular_total());
        },800);
     return false;
   
-
-
   }); 
-
  $("body").delegate('.cmb_producto','focus', function () {
-
-
           var row = $(this).parent().parent();
           row.find('td:eq(3)').children().val(1);
           row.find('td:eq(5)').children().val(0);
           row.find('td:eq(6)').children().val(0);
-
-
-
-
-
     var ppp = $(this);
     //console.log("dllFocus:",ppp.val());
     var au_p = aux_pro[ppp.val()];
@@ -511,23 +469,17 @@
     if(typeof pre !== "undefined" && pre.toString()!="0")
     {
       cambiarEstadoOff(pre);
-
     }
     create_cmb(to_cmb,ppp.prop("id"));
     ppp.data('previous', ppp.val());
-
     $("#total").val(calcular_total()); 
     //console.log("new focuss-"+ddl.val());
 }).on('change','.cmb_producto', function () {
     var nnn = $(this);
     //console.log("dllChange:",nnn.val())
     //console.log(this);
-
     var previous = nnn.data('previous');
     var actual=nnn.val();
-
-
-
     if(actual.toString()!="0")
     {
       cambiarEstadoON(actual);
@@ -539,12 +491,9 @@
     }
     
     nnn.data('previous',actual);  
-
     $("#total").val(calcular_total()); 
     
 });
-
-
     function cambiarEstadoOff(llave)
     {
       //console.log("on")
@@ -564,16 +513,13 @@
       }
     }
    
-
    function create_cmb(lista,iden){
-
     var  auxComb = document.getElementById(iden);
     var combo = (auxComb) ? auxComb:-1;
     //console.log("combix",combo)
     if(parseInt(combo) == -1 )
     {
       //console.log("combo nuevo");
-
       combo = $("<select></select>").attr("class", "cmb_producto").attr("id","cmb"+iden);  
     }
     else
@@ -582,15 +528,11 @@
        $("#"+iden).empty();
     }
   
-
     //console.log(lista)
     var keys = Object.keys(lista)
-
     //console.log(keys)
-
     $("<option/>" ,{value:0,text: "Elegir..."}).appendTo(combo);
     for(var i = 0  ;  i<keys.length  ; i++) {
-
           p = lista[keys[i]]
          
           if(p.estado.toString()=="1")
@@ -598,54 +540,30 @@
             $("<option />", {value: p.producto.id, text: p.id}).appendTo(combo);
           }
      }
-
      return combo;
     }
-
-
     function create_cmb_to_tipoPrecio(iden){
-
         combo =  $("<select></select>").attr("class" , "combo_precio").attr( "id" , "cmb_pre"+iden );
-
         $("<option/>",{value: "menor"  ,  text : "P. menor"}).appendTo(combo);
         $("<option/>",{value: "mayor"  ,  text : "P. mayor"}).appendTo(combo);
-
         return combo;
-
     }
-
-
    
 function calcular_importe( cantidad, precio ){
   var importe  = parseFloat(cantidad) * parseFloat(precio); 
   return importe;
 }
-
-
 function getPrecio(producto , tipo){
     if(tipo =="menor"){
-
       return producto.producto.precio_por_menor
-
     }
-
     if(tipo =="mayor"){
-
       return producto.producto.precio_por_mayor
     }
-
 }
-
-
-
-
-
 // $('body').delegate("#tab_logic tbody tr","click" , function(){ 
-
-
 //   //var col = $(this).parent().children().index($(this)); 
 //   //var row = $(this).parent().parent().children().index($(this).parent()); 
-
 //   var ComboProducto = $(this).find('td:eq(1)').find("select");
 //   var ComboTipoPrecio = $(this).find('td:eq(2)').find("select");
 //   var inputCantidad  = $(this).find('td:eq(3)').find("input:text");
@@ -657,19 +575,14 @@ function getPrecio(producto , tipo){
 //   var valueComboProducto = ComboProducto.val();
   
 //      if(valueComboProducto != 0 && valueComboProducto > 0){
-
 //           var producto =  pro[valueComboProducto];
 //           var tipoPrecio = ComboTipoPrecio.val();
 //           var cantidad = inputCantidad.val();
 //           inputPrecioUnitario.val( getPrecio(producto,tipoPrecio))
 //           var precio = inputPrecioUnitario.val();
-
-
 //           console.log("tipoPrecio  , Cantidad  ,  precio"  , tipoPrecio,cantidad , precio);
 //            inputImporte.val(calcular_importe(cantidad,precio));
-
 //      }
-
 //      else {
 //           inputImporte.val("");
 //           inputCantidad.val(1);
@@ -677,55 +590,31 @@ function getPrecio(producto , tipo){
 //      }
 //  $("#total").val(calcular_total());       
 // });
-
   $("body").delegate(".cmb_producto","change",function(){
-
       var valueComboProducto = $(this).val()
       var row = $(this).parent().parent();
-
       if(valueComboProducto != 0 && valueComboProducto > 0){      
-
           var producto = pro[valueComboProducto];
           var tipoPrecio = row.find('td:eq(2)').children().val();
           var cantidad = row.find('td:eq(3)').children().val();
-
           row.find('td:eq(5)').children().val(getPrecio(producto,tipoPrecio));
           var precio = row.find('td:eq(5)').children().val();
-
-
        //   console.log("tipoPrecio  , Cantidad  ,  precio"  , tipoPrecio,cantidad , precio);
           row.find('td:eq(6)').children().val(calcular_importe(cantidad,precio));
-
-
-
       }
-
        else {
           row.find('td:eq(3)').children().val(1);
           row.find('td:eq(5)').children().val(0);
           row.find('td:eq(6)').children().val(0);
-
         }
-
     $("#total").val(calcular_total());    
-
   });
-
-
-
   $("body").delegate(".combo_precio" , "change" , function(){
-
-
-
           var tipoPrecio = $(this).val();
-
           var row = $(this).parent().parent();
          // console.log(row);
-
           var valueComboProducto = row.find('td:eq(1)').children().val();
-
           if(valueComboProducto != 0 && valueComboProducto > 0){      
-
           var producto = pro[valueComboProducto];
           var cantidad = row.find('td:eq(3)').children().val();
           row.find('td:eq(5)').children().val(getPrecio(producto,tipoPrecio));
@@ -733,51 +622,33 @@ function getPrecio(producto , tipo){
           row.find('td:eq(6)').children().val(calcular_importe(cantidad,precio));
           $("#total").val(calcular_total());    
           } 
-
           else {
-
             alert("Selecciona un producto ");
           }
-
   });
-
-
-
-
-
   $('body').delegate(".cantidadPro",'keyup' , function(){
-
           var row = $(this).parent().parent();
           var cantidad = 1;
           //var inputPrecioUnitario=$(this).parent().parent().parent().find('td:eq(5)').find("input:text");
           var inputPrecioUnitario=row.find('td:eq(5)').find("input:text");
           var inputImporte = row.find('td:eq(6)').find("input:text");
-
           // este input inporte hace referencia a  primero que encuentra ,  no a la fila que pertenece
             try{
-
               cantidad = parseInt($(this).val());
               //console.log("CANTIDAD : " , cantidad  ,  $(this).val() )  ;
                if (!isNaN(cantidad)){
                     console.log("si es numero");
                     $(this).val(cantidad);
                }
-
-
                else{
                   console.log("no es numero");
                   cantidad = 1;
                   $(this).val("")
-
                }
               
             }
-
             catch(exception){
-
              $(this).val(1); 
-
-
             }
             finally
             {
@@ -787,9 +658,7 @@ function getPrecio(producto , tipo){
               $("#total").val(calcular_total()); 
             }
         });
-
   $('body').delegate(".precioPro",'keyup' , function(){
-
           var row = $(this).parent().parent();
           var precio  = $(this).val();
           var cantidad = row.find('td:eq(3)').children().val(); 
@@ -797,13 +666,11 @@ function getPrecio(producto , tipo){
           //var inputPrecioUnitario=row.find('td:eq(5)').find("input:text");
           var inputImporte = row.find('td:eq(6)').children();
           // este input inporte hace referencia a  primero que encuentra ,  no a la fila que pertenece
-
           //Si el precio Unitario es ""
           if($.trim(precio) == "")
           {
             return;
           }
-
             try{
               precio = parseFloat($(this).val());
               //console.log("CANTIDAD : " , cantidad  ,  $(this).val() )  ;
@@ -811,50 +678,31 @@ function getPrecio(producto , tipo){
     
                     $(this).val(precio);
                }
-
-
                else{
-
-
                   var valueComboProducto = row.find('td:eq(1)').children().val();
                   
                   var tipoPrecio = row.find('td:eq(2)').children().val();
                   
                   producto = pro[valueComboProducto];
-
-
-
                   $(this).val(getPrecio(producto,tipoPrecio));
                   precio = $(this).val();
-
-
                }
               
             }
-
             catch(exception){
-
                 var valueComboProducto = row.find('td:eq(1)').children().val();
                 var tipoPrecio = row.find('td:eq(2)').children().val();
                 producto = pro[valueComboProducto];
-
-
-
                 $(this).val(getPrecio(producto,tipoPrecio));
-
-
             }
             finally
             {
               
-
               inputImporte.val(calcular_importe(cantidad,precio));
               $("#total").val(calcular_total()); 
             }
         });
-
  $('body').delegate(".precioPro",'blur' , function(){
-
           var row = $(this).parent().parent();
           var precio  = $(this).val();
           var cantidad = row.find('td:eq(3)').children().val(); 
@@ -869,54 +717,33 @@ function getPrecio(producto , tipo){
     
                     $(this).val(precio);
                }
-
-
                else{
-
-
                   var valueComboProducto = row.find('td:eq(1)').children().val();
                   
                   var tipoPrecio = row.find('td:eq(2)').children().val();
                   
                   producto = pro[valueComboProducto];
-
-
-
                   $(this).val(getPrecio(producto,tipoPrecio));
                   precio = $(this).val();
-
-
                }
               
             }
-
             catch(exception){
-
                 var valueComboProducto = row.find('td:eq(1)').children().val();
                 var tipoPrecio = row.find('td:eq(2)').children().val();
                 producto = pro[valueComboProducto];
-
-
-
                 $(this).val(getPrecio(producto,tipoPrecio));
-
-
             }
             finally
             {
               
-
               inputImporte.val(calcular_importe(cantidad,precio));
               $("#total").val(calcular_total()); 
             }
         });
-
-
-
 $('body').delegate('.cantidadPro','blur', function(){
         var cantidad = 1;
         var  row = $(this).parent().parent();
-
        // var inputPrecioUnitario=$(this).parent().parent().parent().find('td:eq(5)').find("input:text");
         var inputPrecioUnitario=row.find('td:eq(5)').find("input:text");
       // var inputImporte = $(this).parent().parent().parent().find('td:eq(6)').find("input:text");
@@ -926,7 +753,6 @@ $('body').delegate('.cantidadPro','blur', function(){
           try
           { 
             cantidad = parseInt($(this).val());
-
             if(isNaN(cantidad))
             {
               $(this).val(1);
@@ -939,112 +765,64 @@ $('body').delegate('.cantidadPro','blur', function(){
           }
           finally
           {
-
             var precio = inputPrecioUnitario.val();
-
             inputImporte.val(calcular_importe(cantidad,precio))
             $("#total").val(calcular_total()); 
           }
           
       });
-
-
   //console.log(find('td:eq(0)'));
-
    var i=1;
    var max =  Object.keys(pro).length;
-
    
    $("#add_row").click(function(){
-
            cantidadFilas = $("#tab_logic tbody tr").length;
            //console.log("cantidad" , cantidadFilas)
            var list = [];
-
          //console.log("Valor   i : " ,   i )
-
           
-
           if (cantidadFilas < max)  {
-
             $("#tab_logic tbody").append('<tr id="addr'+i+'"> </tr>')
-
-
             $('#addr'+i).html("<td>"+ (i+1) +"</td> <td id= 'cmbd"+i+"'>  </td>  <td id = 'cmb_precio"+i+"'></td> <td><input name='inputCantidad"+i+"' type='text' class='form-control cantidadPro input-md' value ='1' /></td><td><input  name='inputProductName"+i+"' type='text' class='form-control input-md'></td><td><input  name='unitPrice"+i+"' type='text' class='form-control input-md precioPro'></td><td><input  name='inputImport"+i+"' type='text' class='form-control input-md'></td><td><div class='col-lg-1'><a class='pull-center btn btn-default delete'>-</a></div></td>");
-
-
             $('#cmbd'+i).append(create_cmb(to_cmb,i));
             $('#cmb_precio'+i).append(create_cmb_to_tipoPrecio(i));
-
             i++;
-
-
-
-
             //$('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
-
           }
-
           else {
             console.log("Ya no se pueden agregar más ");
           }
     });
-
   });      
-
-
   function calcular_total(){
-
-
     var total  = 0 ; 
-
     $("#tab_logic tbody tr").each(function(){
-
     
-
        var importe = $(this).find('td:eq(6)').children().val();
-
-
        total+= parseFloat(validarEntrada(parseFloat(importe)));
-
     });
-
     if(isNaN(total))
     {
       total=0;
     }
     return total;
-
-
-
   }
-
   function validarEntrada(numero)
   {
-
     if(!isNaN(numero) && numero !="" && numero>=0) {
       
       return numero;
     }
-
     else{
         return 0;
       }
   }
-
-
-
-
-
-
-
-
     </script>
 
 
 <script type="text/javascript"  src="{% static "static/js/venta/agregarVenta.js" %}"></script>
 <script type="text/javascript"  src="{% static "static/js/venta/modificarVenta.js" %}"></script>
 
-	<!--END JS ADDED-->
-	
+  <!--END JS ADDED-->
+  
 {% endblock javascript %}
