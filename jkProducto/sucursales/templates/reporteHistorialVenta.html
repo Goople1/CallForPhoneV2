@@ -4,6 +4,8 @@
      <link href="{% static "static/css/jquery.datatables.css"%}" rel="stylesheet">
     <link href="{% static "static/css/bootstrap-datetimepicker.min.css"%}" rel="stylesheet">
 
+
+
     <style type="text/css">
 
     .Eliminada{
@@ -75,6 +77,9 @@
             </div>
             </div>
             
+           <!--  <div id="loading">
+                <img src="{% static "static/img/loaders/500.gif"%}" />  
+           </div> -->
 
             <!-- tabla 2 -->
 
@@ -171,6 +176,21 @@
     </div>
   </div>
 </div>
+
+
+<!--Loading -->
+<div class="modal" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-header">
+            <h1 class="text-center">Procesando...</h1>
+        </div>
+        <div class="modal-body">
+          
+           <div class="text-center">
+            <img src="{% static "static/img/loaders/reload.gif"%}"> 
+            </div> 
+        </div>
+    </div>
+
 
 
     
