@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import  HttpResponse
 import json
 
 from sucursales.utilidades import Utilidades

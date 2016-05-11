@@ -371,11 +371,11 @@ def addProductotoSucursal(request):
 
 				except Exception , e :
 					print e
-					mensaje = "no se puede Guardar los Datos , Parece Que ya Existen , Intente Otro vez"
+					mensaje = "no se puede Guardar los Datos , Parece Que ya Existen , Intente Otra vez"
 					return HttpResponse(mensaje)
 
 				detalle_almacen.save()
-				return HttpResponse("Done!")
+				return HttpResponse("Se ha Asignado el Producto Correctamente")
 				#SeGuardan Los cambios para el Stock de DetalleAlmacen
 
 			else:

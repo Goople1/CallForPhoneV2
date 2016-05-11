@@ -8,7 +8,7 @@ class Cliente(models.Model):
 	#nombre = models.CharField(max_length=50)
 	#apellidos = models.CharField(max_length=50)
 	telefono = models.CharField(max_length=15, blank=True , null=True)
-	ruc_dni = models.CharField(unique=True, max_length = 8 ,validators=[ RegexValidator(regex = '\d{8}', message="DNI no tiene 8 digitos", code="invalido")])
+	ruc_dni = models.CharField(unique=True, max_length = 11 ,validators=[ RegexValidator(regex = '(^[0-9]{8}$|^[0-9]{11}$)', message="Solo se Permite 8 u 11 Digitos", code="invalido")])
 	direccion = models.CharField(max_length=70 , blank=True, null=True,)	
 	#ruc = models.CharField(max_length=11 , blank=True)
 	correo = models.EmailField( max_length='200')
