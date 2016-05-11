@@ -78,20 +78,8 @@
                         </div>
                     </div>
                     <div class="row">
-                         <div class='col-xs-8 col-md-8'>
-                            <div class="form-group">
-                                <label class="control-label">Fecha de Emisi&oacute;n: {{venta.fecha_emision | date:" D d M Y"}}</label>
-                           
-                            </div>
-                        </div> 
-                        <div class='col-xs-4 col-md-4 text-center'>
-                            <div class="form-group">
-                                <label class="control-label">Tel&eacute;fono: {{ venta.cliente.telefono|default:"No Tiene" }} </label>
-                               
-                            </div>
-                        </div>
 
-                        <div class='col-xs-8 col-md-8'>
+                         <div class='col-xs-8 col-md-8'>
                             <div class="form-group">
                                 <label class="control-label">Direcci&oacute;n: {{ venta.cliente.direccion|default:"An&oacute;nimo" }}</label>
                            
@@ -103,6 +91,17 @@
                                
                             </div>
                         </div>
+
+
+                       
+                        <div class='col-xs-4 col-md-4 text-left'>
+                            <div class="form-group">
+                                <label class="control-label">Tel&eacute;fono: {{ venta.cliente.telefono|default:"No Tiene" }} </label>
+                               
+                            </div>
+                        </div>
+
+                       
                     </div>
 
 
