@@ -1,10 +1,10 @@
 fieldset {
-    /*border: 2px groove threedface;*/
+    border: 2px groove threedface;
     padding: 5px;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
-    /*border-radius: 20px;*/
-    font-size: 12px;
+    border-radius: 20px;
+    font-size: 16px;
 }
 legend
 {
@@ -12,25 +12,23 @@ legend
     width: auto;
     padding: 0 5px;
     margin-bottom: 0;
-    font-weight: bold !important;
    /* font-size: inherit;*/
     line-height: inherit;
     border: auto;
     border-bottom: none !important;
-    font-size: 16px;
+    font-size: 26px;
 }
 fieldset.scheduler-border {
-   /* border: 1px groove #ddd !important;*/
+    border: 1px groove #ddd !important;
     padding: 0 1.4em 1.4em 1.4em !important;
     margin: 0 0 1.5em 0 !important;
 
 }
-legend.scheduler-border {
-    margin: 5% 5% !important;
-   /* font-size: 1.4em !important;*/
-    
-    text-align: left !important;
-    border-style: hidden !important;
+
+
+fieldset.empresa
+{
+	margin-top:15%  !important;  
 }
 
 fieldset.cliente
@@ -38,15 +36,20 @@ fieldset.cliente
 	text-align:left;
 }
 
-.invoice-title h2, .invoice-title h3 {
-    display: inline-block;
-}
-table {
-    border-collapse: collapse;
+
+
+legend.scheduler-border {
+    margin: 5% 5% !important;
+    font-size: 1.4em !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    border-style: hidden !important;
 }
 
-table, td, th {
-    border: 2px solid black;
+
+
+.invoice-title h2, .invoice-title h3 {
+    display: inline-block;
 }
 
 .table > tbody > tr > .no-line {
@@ -59,9 +62,4 @@ table, td, th {
 
 .table > tbody > tr > .thick-line {
     border-top: 2px solid;
-}
-
-
-.form-group {
-    margin-bottom: 0px; 
 }
