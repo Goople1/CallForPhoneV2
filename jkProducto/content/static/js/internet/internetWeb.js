@@ -52,7 +52,9 @@
 
     else {
 
-      var resp = "<div class ='item'> NO  EXISTEN COINCIDENCIAS </div>"
+      $(".item").remove();
+
+      var resp = "<div class ='item'> NO HAY DATOS DISPONIBLES  </div>"
 
      $("#result").append(resp);
     }

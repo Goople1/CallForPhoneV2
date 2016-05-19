@@ -154,8 +154,20 @@ var spinner = jQuery('.spinner').spinner();
 
     .done(function(data){
 
-      alert(data);
-      window.location.reload();
+    $('.modal-body').text(data)
+       //buscar Otra opc para refrescar la pagina para que se actulice la nueva lista de DetalleAlmacen
+    $('.bs-example-modal-sm').modal('show');
+    
+             setTimeout(function(){
+
+                window.location.reload();
+    
+              },3000);
+
+
+
+
+    
 
 
     })

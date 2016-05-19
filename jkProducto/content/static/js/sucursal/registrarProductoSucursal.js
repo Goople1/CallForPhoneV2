@@ -139,16 +139,23 @@ $("#stock_add").on("blur",function(){
                 //console.log(data);
                 $('.modal-body').text(data)
                 //buscar Otra opc para refrescar la pagina para que se actulice la nueva lista de DetalleAlmacen
+                $('.bs-example-modal-sm').modal('show');
+              setTimeout(function(){
+
                 window.location.reload();
-              
+              },3000);
+
                 }
                       
                 else{
                   $('.modal-body').text("No hay stock disponible")
-                  console.log("no hay nada");
+                   $('.bs-example-modal-sm').modal('show');
+                  
                 }
 
-                $('.bs-example-modal-sm').modal('show');
+
+
+
               } 
 
           });

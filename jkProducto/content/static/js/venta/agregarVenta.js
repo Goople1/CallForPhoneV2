@@ -28,6 +28,17 @@ function validarOpcionElegida(radioOpcion)
 	return validarOpcElegBand;
 }
 
+
+function isValidEmail(mail)
+{
+    return /^\w+([\.\+\-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(mail);
+}
+
+function isValidRucOrDni(documento){
+	return  /(^[0-9]{8}$|^[0-9]{11}$)/.test(documento);
+}
+
+
 $(document).on({
     'show.bs.modal': function () {
         var zIndex = 1040 + (10 * $('.modal:visible').length);
@@ -51,6 +62,8 @@ function buscarCliente()
 {
 	var auxCliente = $.trim($("#hdnCliente").val());
 	var auxClienteBand=true;
+
+
 	if( auxCliente == "")
 	{
 		auxClienteBand =false;
@@ -58,18 +71,52 @@ function buscarCliente()
 		$('.error-modal').modal('show');
 	}
 	return auxClienteBand;
+
+
 }
 function validarRegistrarCliente()
 {
 	var valRegClieBand=true
-	var txtRucDni = $.trim($("#txtRucDni").val());
+	var RucDni = isValidRucOrDni($.trim($("#txtRucDni").val()));
 	var txtRazonNombre = $.trim($("#txtRazonNombre").val());
-	var txtCorreo = $.trim($("#txtCorreo").val());
-	if(txtRucDni == "" || txtRazonNombre == "" || txtCorreo =="")
+	var Correo = isValidEmail($.trim($("#txtCorreo").val()));
+	var mensaje = "";
+	var rpt;
+
+	if(txtRazonNombre == "")
 	{
+		mensaje = "<li>Registrar. Al menos debe de ingresar datos en el ruc, razon / nombre y el correo. Para seguir con la venta </li>"
+		// $('.error-modal .modal-body').text(mensaje);
+		// $('.error-modal').modal('show');
+
+	}
+
+
+	if(!RucDni){
+
+		
+		mensaje += "<li>Solo se Permite 8 u 11 digitos</li>"
+
+	}
+
+	if(!Correo){
+
+	    
+	    mensaje += "<li>Campo de Correo Inválido</li>"
+		// $('.error-modal .modal-body').text();
+		// $('.error-modal').modal('show');
+	}
+
+	if (mensaje!=""){
+
 		valRegClieBand = false;
-		$('.error-modal .modal-body').text("Registrar. Al menos debe de ingresar datos en el ruc, razon / nombre y el correo. Para seguir con la venta");
+		rpt = $("<ul></ul>");
+		rpt.append(mensaje);
+		$('.error-modal .modal-body').empty();
+		$('.error-modal .modal-body').append(rpt);
 		$('.error-modal').modal('show');
+
+
 
 	}
 
@@ -150,7 +197,12 @@ if(!validarOpcionElegida(radioTipoVenta))
 			console.log("i" , i );
 
 
+
+
+			//cambiar
+			//*********************************
 			comboValue = $(this).find("td:eq(1)").children().val()
+			//************************************
 
 
 			if (  comboValue !=0 && comboValue > 0) {
@@ -220,7 +272,7 @@ if(jsonObj.length != 0 ){
 
 			})
 		.fail(function(data){
-			alert("UPS! , a ocurrido un Error", data);
+			alert("a ocurrido un Error", data);
 		});
 
 	    /*success: function(result) {

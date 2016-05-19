@@ -1,5 +1,14 @@
 
+function changeDisabled(id){
+  
+	console.log($("#cmbTotal > option[value='"+id+"']").prop("disabled","true"));
+}
+
 $("#btn-modificar").on("click" , function(){
+ var hdnCmb = $(".hdnCmb");
+
+ 
+
 
 
 var jsonObj = [];
@@ -51,6 +60,7 @@ var jsonObj = [];
 
 
 
+
  	//	total = $("#total").val()
 
  	var venta_id = $("#venta_id").val()
@@ -81,6 +91,11 @@ var jsonObj = [];
         			
 
         			$('*:disabled').removeAttr('disabled');
+        			$(".delete").removeAttr('disabled');
+        			$("#txtRazonDisabled").prop("disabled",true);
+        			$("#txtDocumentoDisabled").prop("disabled",true);
+        			$(".txtProdDisabled").prop("disabled",true);
+        			
         			$("#btn-modificar").attr('disabled','disabled');
 
         			break ;
@@ -93,6 +108,13 @@ var jsonObj = [];
 
 
     	}
+
+    	for(var f=0; f<hdnCmb.length;f++)
+          {
+          
+            changeDisabled(hdnCmb[f].value);
+            
+          }
 
 
 

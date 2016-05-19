@@ -78,6 +78,10 @@
                               <small class="text-muted">Tipo: {{producto.producto_id.tipo_producto}}</small><br />
                             </div>
                         </div>
+
+                      {% empty%}
+
+                        <h3> No se han Asignado Productos a esta Sucursal </h3>
                         
                       {% endfor %}
                         
