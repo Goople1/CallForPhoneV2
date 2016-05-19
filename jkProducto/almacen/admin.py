@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Almacen, DetalleAlmacen
-
+from productos.models import Producto
 from actions import export_as_csv
 
 # Register your models here.
@@ -12,9 +12,12 @@ class DetalleAlmacenAdmin(admin.ModelAdmin):
     search_fields = ['producto_id__tipo_producto__nombre','producto_id__codigo']
     list_editable =('adicional_stock',)
     actions = [export_as_csv]
-
-    
-
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(DetalleAlmacenAdmin, self).get_form(request, obj, **kwargs)
+        detalle_sucursal_almacen_productos = DetalleAlmacen.objects.all()
+        id_producto_detalle_sucu_almacen = [deta.producto_id.id for deta in  detalle_sucursal_almacen_productos]
+        form.base_fields['producto_id'].queryset = Producto.objects.exclude(pk__in = id_producto_detalle_sucu_almacen)
+        return form
 
     def precio_Mayor(self, obj):
         return obj.producto_id.precio_x_mayor

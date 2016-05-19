@@ -51,6 +51,7 @@ class DetalleAlmacen(models.Model):
 			stock_antes = self.stock
 			self.stock += agregar
 			self.adicional_stock = 0
+			print "NOMINATION"
 			super(DetalleAlmacen, self).save()
 			try:
 				HistorialDetalleAlmacen.objects.create(
@@ -59,9 +60,18 @@ class DetalleAlmacen(models.Model):
 					detalle_almacen_id = self
 				)
 			except Exception, e:
+				print "paima"
 				print '%s' %(e)
 		else:
-			super(DetalleAlmacen, self).save()
+			print "sadasd"
+			try:
+				super(DetalleAlmacen, self).save()
+			except Exception, e:
+				print DetalleAlmacen.id_almacen
+				print "error"
+				print e
+				raise e
+			
 
 class HistorialDetalleAlmacen(models.Model):
 	adicional_producto = models.PositiveIntegerField()
