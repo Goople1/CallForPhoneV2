@@ -112,6 +112,7 @@ def venta (request):
 @transaction.atomic()
 def addVenta(request):
     if request.method == "POST":
+        print "resolviendo bug"
         estado_venta = False
         id_venta = 0
         respuesta = ''
@@ -141,6 +142,9 @@ def addVenta(request):
                             det_sucu_alm_prod_to_add.save()
 
                         if my_json_products_to_dict:
+                            #eliminar sessiones creadas, cuando todo sale bien
+                            del request.session['venta_id_to_modificar']
+                            del request.session['detalle_venta_dict_producto']
                             id_venta, respuesta, flag = crearVenta(trabajador, total, my_json_products_to_dict, estado="MOD", referencia=venta_to_modificar)
                         else :
                             respuesta = "No se ha Podido Modificar esta Venta , intentelo luego"                      

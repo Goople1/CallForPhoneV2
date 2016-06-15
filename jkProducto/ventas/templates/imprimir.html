@@ -139,6 +139,7 @@
                                 <tr>
                                     <td class="text-center"><strong>Cantidad</strong></td>
                                     <td class="text-center"><strong>Producto</strong></td>
+                                    <td class="text-center"><strong>Color</strong></td>
                                     <td class="text-center"><strong>Marca</strong></td>
                                     <td class="text-center"><strong>Precio</strong></td>
                                     
@@ -151,7 +152,8 @@
                                 {% for  det in detalle_venta %}
                                 <tr>
                                     <td class="text-center">{{det.cantidad}}</td>
-                                    <td  class="text-center">{{det.detalle_Sucursal_almacen_id.producto_id.codigo}}</td>
+                                    <td  class="text-center">{{det.detalle_Sucursal_almacen_id.producto_id.tipo_producto.nombre}}-{{det.detalle_Sucursal_almacen_id.producto_id.codigo}}</td>
+                                     <td  class="text-center">{{det.detalle_Sucursal_almacen_id.producto_id.get_color_display }}</td>
                                     <td  class="text-center">{{det.detalle_Sucursal_almacen_id.producto_id.marca.nombre}}</td>
                                     <td class="text-center">{{det.precio}}</td>
                                    

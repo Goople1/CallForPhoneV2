@@ -459,6 +459,7 @@
   
         var pro = [];
         var aux_pro=[];
+        var tipoPrecioAux=0;
        
 
                 {% for producto in  productos %}
@@ -798,7 +799,7 @@ function getPrecio(producto , tipo){
 
 
           var tipoPrecio = $(this).val();
-
+          tipoPrecioAux = tipoPrecio;
           var row = $(this).parent().parent();
          // console.log(row);
 
@@ -1078,15 +1079,8 @@ function changeDisabled(id){
 }
 
 
-
-
-$('.select2-input').on("keydown", function(e) { 
-
-
-  if (e.keyCode == 13) {
-     
-   // $("#select2-drop-mask").click();
-   //  $('#name').focus(); 
+function accionAgregarProducto()
+{
 
        var idOption = $("#cmbTotal").val();
        
@@ -1101,7 +1095,7 @@ $('.select2-input').on("keydown", function(e) {
 
           
 
-          if (cantidadFilas < max)  {
+          if (cantidadFilas < max && idOption != 0)  {
 
             $("#tab_logic tbody").append('<tr id="addr'+i+'"> </tr>')
 
@@ -1117,7 +1111,12 @@ $('.select2-input').on("keydown", function(e) {
             changeDisabled(idOption);
 
             $('#cmb_precio'+i).append(create_cmb_to_tipoPrecio(i));
-
+            if(tipoPrecioAux!=0)
+            {
+  $('#cmb_precio'+i+' option[value="' + tipoPrecioAux + '"]').prop('selected',true);
+            }
+      
+           
           
 
 
@@ -1154,13 +1153,31 @@ $('.select2-input').on("keydown", function(e) {
           else {
             console.log("Ya no se pueden agregar más ");
           }
+}
+
+$('.select2-input').on("keydown", function(e) { 
 
 
-
-
+  if (e.keyCode == 13) {  
+   // $("#select2-drop-mask").click();
+   //  $('#name').focus(); 
+   //accionAgregarProducto();
     e.preventDefault(); 
     }
-   });
+
+});
+
+$('#cmbTotal').on("click",function(){
+
+var cmbAddActual = $(this);
+  if ( cmbAddActual != 0 && !cmbAddActual.is(':disabled') )
+  {
+    accionAgregarProducto();
+     e.preventDefault(); 
+  }
+  
+
+});
 
 
 // $(document).keypress(function (e) {
@@ -1266,11 +1283,6 @@ $('.select2-input').on("keydown", function(e) {
         return 0;
       }
   }
-
-
-
-
-
 
 
     </script>

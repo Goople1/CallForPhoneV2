@@ -54,7 +54,7 @@ class Producto(models.Model):
 	def clean(self):
 		validate_only_one_instance(self, Constante.CANTIDAD_PRODUCTO)
 	def __unicode__(self):
-		return u'%s,color: %s,marca: %s,tipo: %s' % (self.codigo,self.get_color_display(),self.marca.nombre,self.tipo_producto.nombre)
+		return u'%s/%s/ color: %s/ Marca: %s/ Tipo: %s' % (self.nombre_comercial,self.codigo,self.get_color_display(),self.marca.nombre,self.tipo_producto.nombre)
 
 """
 class ProductoAlmacen(models.Model):
