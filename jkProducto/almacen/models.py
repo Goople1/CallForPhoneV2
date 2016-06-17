@@ -29,8 +29,11 @@ class Almacen(models.Model):
 
     class Meta:
         verbose_name="Empresa"
-    def __unicode__(self):
-        return u'%s' % (self.nombre_empresa)		
+
+	def __unicode__(self):
+		return u'%s' % (self.nombre_empresa)
+	def __str__(self):
+		return self.nombre_empresa		
 
 class DetalleAlmacen(models.Model):
 	id_almacen = models.ForeignKey(Almacen) 
@@ -51,7 +54,6 @@ class DetalleAlmacen(models.Model):
 			stock_antes = self.stock
 			self.stock += agregar
 			self.adicional_stock = 0
-			print "NOMINATION"
 			super(DetalleAlmacen, self).save()
 			try:
 				HistorialDetalleAlmacen.objects.create(
@@ -60,10 +62,8 @@ class DetalleAlmacen(models.Model):
 					detalle_almacen_id = self
 				)
 			except Exception, e:
-				print "paima"
 				print '%s' %(e)
 		else:
-			print "sadasd"
 			try:
 				super(DetalleAlmacen, self).save()
 			except Exception, e:
@@ -71,7 +71,9 @@ class DetalleAlmacen(models.Model):
 				print "error"
 				print e
 				raise e
-			
+
+	def __unicode__(self):
+		return u'%s' % (self.producto_id.nombre_comercial)
 
 class HistorialDetalleAlmacen(models.Model):
 	adicional_producto = models.PositiveIntegerField()

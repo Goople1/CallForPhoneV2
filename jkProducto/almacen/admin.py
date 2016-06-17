@@ -13,10 +13,19 @@ class DetalleAlmacenAdmin(admin.ModelAdmin):
     list_editable =('adicional_stock',)
     actions = [export_as_csv]
     def get_form(self, request, obj=None, **kwargs):
+        print "kalena"
         form = super(DetalleAlmacenAdmin, self).get_form(request, obj, **kwargs)
-        detalle_sucursal_almacen_productos = DetalleAlmacen.objects.all()
-        id_producto_detalle_sucu_almacen = [deta.producto_id.id for deta in  detalle_sucursal_almacen_productos]
-        form.base_fields['producto_id'].queryset = Producto.objects.exclude(pk__in = id_producto_detalle_sucu_almacen)
+        if not obj:
+            #agregar           
+            detalle_sucursal_almacen_productos = DetalleAlmacen.objects.all()
+            id_producto_detalle_sucu_almacen = [deta.producto_id.id for deta in  detalle_sucursal_almacen_productos]
+            form.base_fields['producto_id'].queryset = Producto.objects.exclude(pk__in = id_producto_detalle_sucu_almacen)
+            return form
+        #modificar
+        try:
+            form.base_fields['producto_id'].queryset = Producto.objects.filter(pk = obj.producto_id.id)
+        except Exception, e:
+            print e
         return form
 
     def precio_Mayor(self, obj):
