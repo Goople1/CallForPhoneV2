@@ -7,10 +7,10 @@ jQuery(document).ready(function(){
   });
 
  // Spinner
-var spinner = jQuery('.spinner').spinner();
-  spinner.spinner('value', 0);
-  spinner.spinner({min: 0});
-});
+// var spinner = jQuery('.spinner').spinner();
+//   spinner.spinner('value', 0);
+//   spinner.spinner({min: 0});
+ });
 
 
     $('#cmb_producto').on("change",function(){
@@ -71,7 +71,54 @@ var spinner = jQuery('.spinner').spinner();
      });
 
 
+//Permitir que solo se digiten numero en el teclado
+    $("#stock_disminuir").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13]) !== -1 ||
+             // Allow: Ctrl+A, Command+A
+            (e.keyCode == 65 && ( e.ctrlKey === true || e.metaKey === true ) ) || 
+             // Allow: home, end, left, right, down, up
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+                 // let it happen, don't do anything
+                 return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
 
+ $("#stock_disminuir").keyup(function(e){
+
+
+      var stk_less = parseInt($(this).val());
+      var stk_dispo = parseInt($("#stock_actual").val());
+
+      console.log("stk_add" , stk_less  + " and " +  "stk_dispo" , stk_dispo);
+
+      bool = stk_less <= stk_dispo 
+      console.log(bool);
+
+
+      if( (stk_less <= stk_dispo)  )
+      {
+         $("#guardar").removeAttr("disabled", "disabled");
+      }
+      else{
+        $("#guardar").attr("disabled", "disabled");
+
+      }
+
+      if (stk_less === 0) {
+
+        $("#guardar").attr("disabled", "disabled");
+
+      }
+
+
+
+
+   });
 
 //Permitir que solo se digiten numero en el teclado
     $("#stock_adcional").keydown(function (e) {
@@ -124,7 +171,20 @@ var spinner = jQuery('.spinner').spinner();
    });
 
 
-
+$("#chbModificar").click( function(){
+   if( $(this).is(':checked') )
+    {
+      $("#stock_adcional").val(0);
+      $("#stock_adcional").prop("disabled",true);
+      $("#stock_disminuir").prop("disabled",false);
+    }
+    else
+    {
+      $("#stock_disminuir").val(0);
+      $("#stock_adcional").prop("disabled",false);
+      $("#stock_disminuir").prop("disabled",true);
+    }
+});
 
 
  $("#guardar").on("click" , function(){
@@ -134,6 +194,13 @@ var spinner = jQuery('.spinner').spinner();
   var  producto_id =  $("#cmb_producto").val();
   var stock_add = $("#stock_adcional").val();
   var stock_dispo = $("#stock_dispo").val();
+  var tipo_modificar = false;
+  var stock_disminuir = $("#stock_disminuir").val();
+  if($("chbModificar").is(':checked') )
+  {
+    tipo_modificar = true;
+  }
+  
 
   $.ajax({
 
@@ -142,6 +209,8 @@ var spinner = jQuery('.spinner').spinner();
       "sucursal_id" : sucursal_id,
       "producto_id" : producto_id,
       "stock_add" : stock_add,
+      "stock_disminuir" : stock_disminuir,
+      "tipo_modificar" : tipo_modificar,
       "stock_dispo" : stock_dispo,
 
     },
@@ -154,20 +223,8 @@ var spinner = jQuery('.spinner').spinner();
 
     .done(function(data){
 
-    $('.modal-body').text(data)
-       //buscar Otra opc para refrescar la pagina para que se actulice la nueva lista de DetalleAlmacen
-    $('.bs-example-modal-sm').modal('show');
-    
-             setTimeout(function(){
-
-                window.location.reload();
-    
-              },3000);
-
-
-
-
-    
+      alert(data);
+      window.location.reload();
 
 
     })

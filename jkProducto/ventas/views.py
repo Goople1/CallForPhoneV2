@@ -145,7 +145,7 @@ def addVenta(request):
                             #eliminar sessiones creadas, cuando todo sale bien
                             del request.session['venta_id_to_modificar']
                             del request.session['detalle_venta_dict_producto']
-                            id_venta, respuesta, flag = crearVenta(trabajador, total, my_json_products_to_dict, estado="MOD", referencia=venta_to_modificar)
+                            id_venta, respuesta, flag = crearVenta(trabajador, total, my_json_products_to_dict,venta.cliente ,estado="MOD", referencia=venta_to_modificar)
                         else :
                             respuesta = "No se ha Podido Modificar esta Venta , intentelo luego"                      
                 else:

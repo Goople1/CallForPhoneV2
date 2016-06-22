@@ -36,7 +36,7 @@
                       <div class="col-sm-9">
                         <div class="row">
                           <div class="col-sm-3"> 
-                            <input type="text"  id="stock_dispo" readonly="readonly" class="form-control" />
+                            <input type="text" value="0" id="stock_dispo" readonly="readonly" class="form-control" />
                             
                           </div>
                           <div class="col-sm-8"></div>
@@ -50,7 +50,7 @@
                       <div class="col-sm-9">
                         <div class="row">
                           <div class="col-sm-3">
-                               <input type="text" id="stock_actual" readonly="readonly" class="form-control" />
+                               <input type="text" value="0" id="stock_actual" readonly="readonly" class="form-control" />
                           </div>
                           <span class="help-block">Stock registrado actual, en la sucursal.</span>
                         </div>
@@ -62,13 +62,34 @@
                       <div class="col-sm-9">
                         <div class="row">
                           <div class="col-sm-3">
-                            <input type="text" id="stock_adcional" class="spinner form-control" />
+                            <input type="text" value="0" id="stock_adcional" class=" form-control" />
                           </div>
                         
                            <div role="alert" class="col-sm-9 alert alert-danger fade in hide numIncorrecto" style="padding: 9px;">
                               <strong>Error!</strong> Ingrese un n&uacute;mero correcto o mayor a "0"
                             </div>
                             <div role="alert" class="col-sm-9 alert alert-danger fade in hide numMaximo" style="padding: 9px;">
+                              <strong>Error!</strong> Ingrese un n&uacute;mero menor a la cantidad m&aacute;xima en stock.
+                            </div>
+                        </div>
+                      </div>
+                </div>
+
+                <div class="form-group">
+                      <label class="col-sm-3 control-label">Stock Disminuir:</label>
+                      <div class="col-sm-9">
+                        <div class="row">
+                          <div class="col-sm-3">
+                            <input type="text" value="0" id="stock_disminuir" class=" form-control" disabled="disabled"/>
+                          </div><span></span>
+                          <div class="col-sm-3">
+                            <input type="checkbox" id="chbModificar"value="">
+                          </div>
+                        
+                           <div role="alert" class="col-sm-6 alert alert-danger fade in hide numIncorrecto" style="padding: 9px;">
+                              <strong>Error!</strong> Ingrese un n&uacute;mero correcto o mayor a "0"
+                            </div>
+                            <div role="alert" class="col-sm-6 alert alert-danger fade in hide numMaximo" style="padding: 9px;">
                               <strong>Error!</strong> Ingrese un n&uacute;mero menor a la cantidad m&aacute;xima en stock.
                             </div>
                         </div>

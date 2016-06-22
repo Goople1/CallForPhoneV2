@@ -432,13 +432,16 @@ def editProductotoSucursal(request):
 		#funcion que cuando no sea un numero me retorne 0
 		stock_add = Utilidades().validarIngresoNum(request.POST.get("stock_add",0))
 		# stock_dispo = request.POST.get("stock_dispo")
+		stock_disminuir = Utilidades().validarIngresoNum(request.POST.get("stock_disminuir",0))
+		#si se va a disminuirs
+		tipo_modificar = request.POST.get("tipo_modificar","false")
+		print "disminuir"
+		if(producto_id != 0 ) & (producto_id > 0):
 
+			if (stock_add !=0 or stock_disminuir != 0 ):
 
-		if(producto_id != 0 )& (producto_id > 0):
-
-			if (stock_add !=0) & (producto_id > 0):
-
-
+				print "disminuir1"
+				print tipo_modificar
 				try:
 					producto_detalle_sucursal_almacen = DetalleSucursalAlmacen.objects.get(sucursal_id=sucursal_id , producto_id=producto_id)
 				except Exception,e :
@@ -453,19 +456,35 @@ def editProductotoSucursal(request):
 				except Exception, e:
 					print e
 					return HttpResponse ("Problemas con el Server")
-
-				if(detalle_almacen.stock >= stock_add):
-					detalle_almacen.stock-=stock_add
-					antes_dsa = producto_detalle_sucursal_almacen.stock
-					producto_detalle_sucursal_almacen.stock+=stock_add
-					detalle_almacen.save()
-					producto_detalle_sucursal_almacen.save()
-					HistorialDetalleSucursalAlmacen.objects.create(stock_actual =antes_dsa,stock_adicional= stock_add,id_detalle_sucursal_almacen=producto_detalle_sucursal_almacen)
-					return HttpResponse("Modificacion  del Producto hecha")
+				if tipo_modificar == "false":
+					print "disminuir 2"
+					if(detalle_almacen.stock >= stock_add):
+						detalle_almacen.stock-=stock_add
+						antes_dsa = producto_detalle_sucursal_almacen.stock
+						producto_detalle_sucursal_almacen.stock+=stock_add
+						detalle_almacen.save()
+						producto_detalle_sucursal_almacen.save()
+						HistorialDetalleSucursalAlmacen.objects.create(stock_actual =antes_dsa,stock_adicional= stock_add,id_detalle_sucursal_almacen=producto_detalle_sucursal_almacen)
+						return HttpResponse("Modificacion  del Producto hecha")
+					else:
+						mensaje = "La Cantidad En el Almacen  no es Suficiente para su Pedido"
+						print mensaje
+						return HttpResponse(mensaje)
 				else:
-					mensaje = "La Cantidad En el Almacen  no es Suficiente para su Pedido"
-					print mensaje
-					return HttpResponse(mensaje)
+					#disminuir en sucursal aumentar en almacen
+					print "disminuir3"
+					if producto_detalle_sucursal_almacen.stock >= stock_disminuir:
+						detalle_almacen.stock += stock_disminuir
+						antes_dsa = producto_detalle_sucursal_almacen.stock
+						producto_detalle_sucursal_almacen.stock-= stock_disminuir
+						detalle_almacen.save()
+						producto_detalle_sucursal_almacen.save()
+						HistorialDetalleSucursalAlmacen.objects.create(stock_actual =antes_dsa,stock_adicional= stock_add,id_detalle_sucursal_almacen=producto_detalle_sucursal_almacen)
+						return HttpResponse("Modificacion  del Producto hecha")
+					else:
+						mensaje = "No se puede disminuir la cantidad deseada, ya que es mayor al stock de la sucursal"
+						return HttpResponse(mensaje)
+
 			else:
 
 				mensaje = "no se Puede Agregar esta cantidad  , Cambiela porfavor"

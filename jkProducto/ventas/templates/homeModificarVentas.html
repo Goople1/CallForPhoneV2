@@ -33,6 +33,8 @@
 
 		                            <th class="sorting" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Empleado: activate to sort column ascending" style="width: 233px;">C&oacute;digo de Comprobante</th>
 
+		                            <th class="sorting" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Empleado: activate to sort column ascending" style="width: 233px;">Cliente</th>
+
 		                            <th class="sorting" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Empleado: activate to sort column ascending" style="width: 233px;">Realizado por</th>
 
 		                            <th class="sorting center" tabindex="0" aria-controls="table1" rowspan="1" colspan="1" aria-label="Monto Venta: activate to sort column ascending" style="width: 153px;">Monto Venta</th>
@@ -52,7 +54,9 @@
 
 		                            <td class ="gradeA {% cycle 'odd' 'even' %}"> {{forloop.counter}}</td>
 		                            <td>{{venta.id}}</td>
-		                            <td>{{venta.empleado.trabajador.get_full_name}}</td>
+		                            <td>{{venta.empleado.trabajador.get_full_name |title}}</td>
+		                            <td>{{venta.cliente.ruc_dni |default:"An&oacute;nimo" }}-{{venta.cliente.razon_social_nombre|title |default:"An&oacute;nimo" }}</td>
+
 		                            <td class = "center">{{venta.total}}</td>
 		                            <td class ="center">{{venta.fecha_emision| date:" D d M Y" }}  {{venta.fecha_emision|date:"P"}}</td>
 		                            <td class = "center"><a href="{% url "detalleventa" venta.id%}">Ver detalle</a></td>
