@@ -13,7 +13,6 @@ class DetalleAlmacenAdmin(admin.ModelAdmin):
     list_editable =('adicional_stock',)
     actions = [export_as_csv]
     def get_form(self, request, obj=None, **kwargs):
-        print "kalena"
         form = super(DetalleAlmacenAdmin, self).get_form(request, obj, **kwargs)
         if not obj:
             #agregar           
