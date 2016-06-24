@@ -196,7 +196,7 @@ $("#chbModificar").click( function(){
   var stock_dispo = $("#stock_dispo").val();
   var tipo_modificar = false;
   var stock_disminuir = $("#stock_disminuir").val();
-  if($("chbModificar").is(':checked') )
+  if($("#chbModificar").is(':checked') )
   {
     tipo_modificar = true;
   }
