@@ -125,13 +125,10 @@ def addVenta(request):
                 print "POST"
                 print request.session.get("venta_id_to_modificar",False)
                 if (bool(request.session.get("venta_id_to_modificar",False)) & bool(request.session.get("detalle_venta_dict_producto",False))):
-                    print "IF"
+                    print "modificar"
                     venta_to_modificar = request.session.get("venta_id_to_modificar")
                     detalle_venta_load_products = request.session.get("detalle_venta_dict_producto")
                     venta = Venta.objects.get(id = venta_to_modificar)
-                    venta.estado = False
-                    venta.nombre_ventas_descripcion = 'ELI'
-                    venta.save()
                     #cargar productos_to_load
                     if detalle_venta_load_products:
                         for producto in detalle_venta_load_products:
@@ -143,13 +140,18 @@ def addVenta(request):
 
                         if my_json_products_to_dict:
                             #eliminar sessiones creadas, cuando todo sale bien
-                            del request.session['venta_id_to_modificar']
-                            del request.session['detalle_venta_dict_producto']
+                            print venta.cliente
                             id_venta, respuesta, flag = crearVenta(trabajador, total, my_json_products_to_dict,venta.cliente ,estado="MOD", referencia=venta_to_modificar)
+                            if flag:
+                                del request.session['venta_id_to_modificar']
+                                del request.session['detalle_venta_dict_producto']
+                                venta.estado = False
+                                venta.nombre_ventas_descripcion = 'ELI'
+                                venta.save()
                         else :
                             respuesta = "No se ha Podido Modificar esta Venta , intentelo luego"                      
                 else:
-                    print "ELSE"
+                    print "nuevo"
                     mensaje = True
                     #validar la opc elegida
                     #opcion 1 - Anonimo
@@ -257,6 +259,7 @@ def crearVenta(trabajador,total,list_products,clienteNuevo = None,estado='NUE',r
                     else :
                         mensaje  = "Venta modificada con Exito"
                 else:
+                    flag = False
                     mensaje = "La Cantidad Solicitada del Productos: %s  es Mayor a la del Stock Actual" %(str(detalle_sucursal_producto.producto_id.codigo))
                     raise IntegrityError
                 print "fin for"

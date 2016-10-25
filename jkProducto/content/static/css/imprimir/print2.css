@@ -1,10 +1,10 @@
 fieldset {
-    border: 2px groove threedface;
-    padding: 5px;
+    /*border: 2px groove threedface;*/
+    padding: 5px !important;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
-    border-radius: 20px;
-    font-size: 16px;
+    /*border-radius: 20px;*/
+    font-size: 12px;
 }
 legend
 {
@@ -12,23 +12,29 @@ legend
     width: auto;
     padding: 0 5px;
     margin-bottom: 0;
+    font-weight: bold !important;
    /* font-size: inherit;*/
     line-height: inherit;
     border: auto;
     border-bottom: none !important;
-    font-size: 26px;
+    font-size: 16px;
 }
 fieldset.scheduler-border {
-    border: 1px groove #ddd !important;
-    padding: 0 1.4em 1.4em 1.4em !important;
+   /* border: 1px groove #ddd !important;*/
+  /*  padding: 0 1.4em 1.4em 1.4em !important;
     margin: 0 0 1.5em 0 !important;
-
+*/
+padding-top: 0 !important;
+margin-top: 0 !important;
+padding-bottom: 0 !important;
+margin-bottom: 0 !important;
 }
-
-
-fieldset.empresa
-{
-	margin-top:15%  !important;  
+legend.scheduler-border {
+    margin: 0% 0% !important;
+   /* font-size: 1.4em !important;*/
+    
+    text-align: left !important;
+    border-style: hidden !important;
 }
 
 fieldset.cliente
@@ -36,20 +42,15 @@ fieldset.cliente
 	text-align:left;
 }
 
-
-
-legend.scheduler-border {
-    margin: 5% 5% !important;
-    font-size: 1.4em !important;
-    font-weight: bold !important;
-    text-align: left !important;
-    border-style: hidden !important;
-}
-
-
-
 .invoice-title h2, .invoice-title h3 {
     display: inline-block;
+}
+table {
+    border-collapse: collapse;
+}
+
+table, td, th {
+    border: 2px solid black;
 }
 
 .table > tbody > tr > .no-line {
@@ -63,3 +64,19 @@ legend.scheduler-border {
 .table > tbody > tr > .thick-line {
     border-top: 2px solid;
 }
+
+
+.form-group {
+    margin-bottom: 0 !important; 
+}
+
+.panel-heading {
+     padding: 0 !important; 
+
+}
+
+.table tbody > tr > td, .table tfoot > tr > td {
+    border-color: #eee;
+    padding: 0 !important; 
+}
+body {page-break-before:avoid !important ;}

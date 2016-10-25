@@ -29,7 +29,8 @@ jQuery(document).ready(function(){
                 
       })
         .done(function(data){
-          stock = data 
+          stock = data;
+          alert("primer ajax")
           $("#stock_dispo").val(stock);
 
         })
@@ -52,7 +53,7 @@ jQuery(document).ready(function(){
 
           })
             .done(function(data){
-
+              alert("segundo ajax");
               var stock_actual = data
               $("#stock_actual").val(stock_actual);
               console.log(data);

@@ -8,14 +8,15 @@ from sucursales.utilidades import Utilidades
 
 def empresa(request):
 	template = 'empresa.html'
+	template = 'tienda.html'
 	return render_to_response(template,context_instance = RequestContext(request))
 
 def servicio(request):
-	template = 'servicio.html'
+	template = 'servicio2.html'
 	return render_to_response(template,context_instance = RequestContext(request))
 
 def contacto(request):
-	template = 'contacto.html'
+	template = 'contacto2.html'
 	return render_to_response(template,context_instance = RequestContext(request))
 
 
@@ -51,7 +52,7 @@ def filtroproductos(request):
 
 		
 
-	template = "catalogo.html"
+	template = "catalogo2.html"
 	return render_to_response(template , {"sucursales":sucursales , "marcas" : marcas , "tipos":tipos , "todos" : productos_all} ,context_instance = RequestContext(request)) 
 
 def filtrocriterio(request):
